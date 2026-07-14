@@ -751,6 +751,12 @@ collapsibles.forEach(function(header) {
     this.parentElement.classList.toggle('active');
   });
 });
+
+document.querySelectorAll('.flashcard').forEach(function(card) {
+  card.addEventListener('click', function() {
+    this.classList.toggle('flipped');
+  });
+});
 </script>
 
 </body>
