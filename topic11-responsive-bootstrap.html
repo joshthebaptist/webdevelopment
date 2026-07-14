@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 11: Responsive Web Design & Bootstrap</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <h1>Topic 11: Responsive Web Design & Bootstrap</h1>
+
+  <div class="progress-bar">
+    <div class="progress-text">Topic Progress: 73% Complete</div>
+  </div>
+
+  <!-- SECTION 1: Why Responsive Design Matters -->
+  <h2>1. Why Responsive Web Design Matters</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — "Content is Like Water":</strong> Imagine pouring water into a glass, a bottle, or a bowl. The water adapts to whatever container you pour it into — it doesn't fight the shape, it flows into it. Your web content must do the same thing. Whether viewed on a tiny phone screen, a tablet, or a massive TV display, your content should flow and adapt to fit perfectly. As Bruce Lee famously said: <em>"Be water, my friend."</em>
+  </div>
+
+  <p>Today's web must be accessible on a <strong>huge range of devices</strong> — from smartphones to smart TVs. The desktop market share is falling compared to mobile, and there are over <strong>6 billion smartphone subscriptions worldwide</strong>. If your website doesn't work well on mobile devices, you're losing the majority of potential visitors.</p>
+
+  <div class="info-box note">
+    <strong>Key Stat:</strong> More people access the internet via mobile devices than desktops today. A non-responsive website is essentially invisible to most of the world's internet users.
+  </div>
+
+  <h3>The Problem with Fixed and Liquid Layouts</h3>
+
+  <table>
+    <tr>
+      <th>Layout Type</th>
+      <th>How It Works</th>
+      <th>Problem</th>
+    </tr>
+    <tr>
+      <td><strong>Liquid Layout</strong></td>
+      <td>Uses percentages; content reflows to fill the window</td>
+      <td>Looks squashed on small screens, unreadably long lines on large screens</td>
+    </tr>
+    <tr>
+      <td><strong>Fixed Layout</strong></td>
+      <td>Uses fixed pixel widths (e.g., 960px)</td>
+      <td>Horizontal scrollbar on small screens, wasted white space on large screens</td>
+    </tr>
+    <tr>
+      <td><strong>Responsive Layout</strong></td>
+      <td>Combines flexibility with intelligent breakpoints</td>
+      <td>None — adapts to any device and screen size!</td>
+    </tr>
+  </table>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Fixed vs Liquid vs Responsive:</strong> A fixed layout is like a rigid cardboard box — it's the same size no matter what you try to put it in. A liquid layout is like a stretchy rubber bag — it expands and contracts but might look weird at extremes. A responsive layout is like a smart fabric that changes its weave pattern depending on the temperature — it doesn't just stretch, it <em>restructures itself</em> to look great in any condition.
+  </div>
+
+  <h3>Benefits of Responsive Web Design</h3>
+
+  <div class="collapsible">
+    <div class="collapsible-header">Click to expand: Full List of RWD Benefits</div>
+    <div class="collapsible-body">
+      <ul>
+        <li><strong>Improved User Experience</strong> — Visitors can read and navigate easily on any device</li>
+        <li><strong>Increased Mobile Traffic</strong> — Your site works for the majority of users on phones</li>
+        <li><strong>Faster Development</strong> — Build once, work everywhere instead of creating separate sites</li>
+        <li><strong>Easier Maintenance</strong> — One codebase to update instead of multiple versions</li>
+        <li><strong>No Duplicate Content Penalty</strong> — One URL per page means better SEO</li>
+        <li><strong>Simpler Analytics</strong> — One set of statistics to track, not split between desktop and mobile</li>
+        <li><strong>Faster Loading</strong> — Optimized layouts mean less unnecessary data</li>
+        <li><strong>Lower Bounce Rates</strong> — Users stay when the site works on their device</li>
+        <li><strong>Higher Conversion Rates</strong> — Easy-to-use interfaces lead to more sign-ups and purchases</li>
+        <li><strong>Better SEO</strong> — Google favours mobile-friendly sites in search rankings</li>
+        <li><strong>More Social Sharing</strong> — People share links that look good on their device</li>
+        <li><strong>Better Backlinks</strong> — Other sites are more likely to link to a professional, responsive site</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Elements of RWD -->
+  <h2>2. The Four Elements of Responsive Web Design</h2>
+
+  <div class="diagram">
+    <strong>The Four Pillars of RWD</strong><br><br>
+    [ The Viewport ] &mdash;&mdash; [ Flexible Images ] &mdash;&mdash; [ Grid View ] &mdash;&mdash; [ Media Queries ]<br><br>
+    <em>Together these let your page adapt to any screen size automatically.</em>
+  </div>
+
+  <!-- 2.1 The Viewport -->
+  <h3>2.1 The Viewport</h3>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Viewport:</strong> Think of the viewport as the <em>window</em> through which a user sees your web page. A phone has a small window, a tablet has a medium window, and a desktop monitor has a large window. Without telling the browser how wide that window is, it might assume every window is 960px wide — and try to squeeze a desktop-sized page into a tiny phone screen.
+  </div>
+
+  <p>The viewport is the <strong>user's visible area</strong> of the web page. It varies from device to device. You must set it using a meta tag:</p>
+
+  <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+
+  <table>
+    <tr>
+      <th>Property</th>
+      <th>What It Does</th>
+    </tr>
+    <tr>
+      <td><code>width=device-width</code></td>
+      <td>Sets the width of the page to match the screen width of the device</td>
+    </tr>
+    <tr>
+      <td><code>initial-scale=1.0</code></td>
+      <td>Sets the initial zoom level when the page is first loaded</td>
+    </tr>
+  </table>
+
+  <div class="info-box warning">
+    <strong>Without this meta tag</strong>, mobile browsers will render the page at a desktop screen width (usually 960px or 980px), then scale it down — making everything tiny and unreadable. Always include this tag in responsive designs.
+  </div>
+
+  <!-- 2.2 Flexible Images -->
+  <h3>2.2 Flexible Images</h3>
+
+  <p>Images with fixed widths can overflow their containers on smaller screens. The solution is simple:</p>
+
+  <pre><code>img {
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+
+  <div class="info-box tip">
+    <strong>How it works:</strong> <code>max-width: 100%</code> tells the image: "Never be wider than your parent container. If the container shrinks, you shrink too." The <code>height: auto</code> maintains the image's proportions so it doesn't get stretched or squished.
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Flexible Images:</strong> Imagine a picture frame that automatically resizes to fit whatever wall you hang it on. If you move it from a large wall to a small wall, the frame shrinks — but the picture inside keeps its proportions and never gets distorted. That's exactly what <code>max-width: 100%</code> does for images.
+  </div>
+
+  <!-- 2.3 Grid View -->
+  <h3>2.3 Grid View</h3>
+
+  <p>A grid view divides the page into <strong>columns</strong>, like an invisible grid laid over your design. The most common system is a <strong>12-column grid</strong>.</p>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The 12-Column Grid:</strong> Imagine a bookshelf with 12 equal slots. You can put one book across all 12 slots (full width), or split books across 2 slots each (6 columns of 2), or 3 slots each (4 columns of 3), or 4 slots each (3 columns of 4), and so on. The 12-column grid works the same way — you choose how many of the 12 columns each element should span. 12 is chosen because it's divisible by 1, 2, 3, 4, 6, and 12 — giving you maximum flexibility.
+  </div>
+
+  <p>Here's a basic 12-column grid implementation:</p>
+
+  <pre><code>* {
+  box-sizing: border-box;
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+  width: 100%;
+}
+
+.col-1  { width: 8.33%; }
+.col-2  { width: 16.66%; }
+.col-3  { width: 25%; }
+.col-4  { width: 33.33%; }
+.col-5  { width: 41.66%; }
+.col-6  { width: 50%; }
+.col-7  { width: 58.33%; }
+.col-8  { width: 66.66%; }
+.col-9  { width: 75%; }
+.col-10 { width: 83.33%; }
+.col-11 { width: 91.66%; }
+.col-12 { width: 100%; }</code></pre>
+
+  <div class="info-box tip">
+    <strong>Why <code>box-sizing: border-box</code>?</strong> By default, padding and borders are <em>added</em> to an element's width. With <code>border-box</code>, padding and borders are included <em>inside</em> the width. This makes grid math simple — a 50% column is always exactly 50%, regardless of padding.
+  </div>
+
+  <h4>Grid Example: Three Equal Columns</h4>
+  <pre><code>&lt;div class="row"&gt;
+  &lt;div class="col-4"&gt;Column 1&lt;/div&gt;
+  &lt;div class="col-4"&gt;Column 2&lt;/div&gt;
+  &lt;div class="col-4"&gt;Column 3&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+  <h4>Grid Example: Sidebar Layout</h4>
+  <pre><code>&lt;div class="row"&gt;
+  &lt;div class="col-8"&gt;Main Content (8/12)&lt;/div&gt;
+  &lt;div class="col-4"&gt;Sidebar (4/12)&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+  <!-- 2.4 Media Queries -->
+  <h3>2.4 CSS3 Media Queries</h3>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Media Queries:</strong> Think of media queries as a <em>smart thermostat</em> for your website. Just as a thermostat checks the temperature and adjusts heating/cooling accordingly, media queries check the screen size and apply different CSS styles accordingly. "If the screen is narrow, use this style. If it's wide, use that style."
+  </div>
+
+  <p>Media queries let you apply CSS <strong>only when certain conditions are true</strong>. The <code>@media</code> rule includes CSS properties only if a condition is met:</p>
+
+  <pre><code>/* Default styles for all screens */
+body {
+  background-color: lightblue;
+}
+
+/* Only apply when browser width is 500px or less */
+@media only screen and (max-width: 500px) {
+  body {
+    background-color: lightgreen;
+  }
+}</code></pre>
+
+  <h4>Common Breakpoints</h4>
+  <table>
+    <tr>
+      <th>Device</th>
+      <th>Breakpoint</th>
+      <th>CSS Media Query</th>
+    </tr>
+    <tr>
+      <td>Smartphones</td>
+      <td>&le; 480px</td>
+      <td><code>@media (max-width: 480px)</code></td>
+    </tr>
+    <tr>
+      <td>Portrait Tablets</td>
+      <td>480px &ndash; 768px</td>
+      <td><code>@media (max-width: 768px)</code></td>
+    </tr>
+    <tr>
+      <td>Landscape Tablets</td>
+      <td>768px &ndash; 940px</td>
+      <td><code>@media (max-width: 940px)</code></td>
+    </tr>
+    <tr>
+      <td>Default Desktop</td>
+      <td>940px+</td>
+      <td>No media query needed (default)</td>
+    </tr>
+    <tr>
+      <td>Large Screens</td>
+      <td>1210px+</td>
+      <td><code>@media (min-width: 1210px)</code></td>
+    </tr>
+  </table>
+
+  <div class="info-box tip">
+    <strong>Mobile-First Approach:</strong> Write your default CSS for mobile devices, then use <code>min-width</code> media queries to add styles for larger screens. This is better than the old approach of writing desktop styles first and cramming them into small screens with <code>max-width</code>.
+  </div>
+
+  <!-- SECTION 3: UI Frameworks -->
+  <h2>3. UI Frameworks</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — UI Frameworks:</strong> Building a website from scratch is like building a house from raw materials — you cut every piece of wood, mix every bit of concrete. A UI framework is like buying <em>pre-fabricated walls, doors, and windows</em>. They're already designed to look good and fit together. You just assemble them and customize the colours and layout. You can still build a unique house, but you save enormous time on the fundamentals.
+  </div>
+
+  <p>UI frameworks are <strong>third-party packages</strong> that provide styled, ready-to-use UI components. Instead of writing all the CSS for buttons, forms, navigation bars, and alerts from scratch, you use the framework's pre-built classes.</p>
+
+  <div class="info-box note">
+    <strong>Bootstrap by the numbers:</strong> Bootstrap is the most popular CSS framework, used by millions of developers and over 40,000 companies. Created at Twitter in 2010 (originally called "Twitter Blueprint"), it has become the industry standard for rapid web development.
+  </div>
+
+  <!-- SECTION 4: Bootstrap Deep Dive -->
+  <h2>4. Bootstrap — The Complete Framework</h2>
+
+  <h3>What Bootstrap Provides</h3>
+  <p>Bootstrap is a powerful <strong>frontend framework</strong> (CSS + JavaScript) that includes ready-made HTML/CSS templates for:</p>
+
+  <div class="collapsible">
+    <div class="collapsible-header">Click to expand: Bootstrap Components</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Forms &amp; Form Controls</li>
+        <li>Buttons (multiple styles and sizes)</li>
+        <li>Navigation Bars (responsive with hamburger menu)</li>
+        <li>Dropdown Menus</li>
+        <li>Alerts &amp; Notifications</li>
+        <li>Modal Dialogs (pop-up windows)</li>
+        <li>Tabs &amp; Pill Navigation</li>
+        <li>Accordions (collapsible content)</li>
+        <li>Carousels (image sliders)</li>
+        <li>Tooltips &amp; Popovers</li>
+        <li>Typography &amp; Tables</li>
+        <li>Grid System for Layouts</li>
+        <li>And much more...</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Bootstrap Advantages</h3>
+  <table>
+    <tr>
+      <th>Advantage</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><strong>Save Time</strong></td>
+      <td>Pre-built components mean you don't start from zero</td>
+    </tr>
+    <tr>
+      <td><strong>Responsive</strong></td>
+      <td>Grid system and components adapt to all screen sizes</td>
+    </tr>
+    <tr>
+      <td><strong>Consistent Design</strong></td>
+      <td>Everything follows the same design language</td>
+    </tr>
+    <tr>
+      <td><strong>Easy to Use</strong></td>
+      <td>Simple class names like <code>.btn</code>, <code>.container</code></td>
+    </tr>
+    <tr>
+      <td><strong>Browser Compatible</strong></td>
+      <td>Tested across all major browsers</td>
+    </tr>
+    <tr>
+      <td><strong>Open Source</strong></td>
+      <td>Free to use and modify</td>
+    </tr>
+  </table>
+
+  <h3>Bootstrap File Structure</h3>
+  <pre><code>bootstrap/
+├── bootstrap.css          (or bootstrap.min.css)
+├── jquery-version.js      (jQuery dependency)
+├── bootstrap.js           (or bootstrap.min.js)
+└── fonts/
+    └── glyphicons/        (250+ icon fonts)</code></pre>
+
+  <h3>Including Bootstrap via CDN</h3>
+
+  <div class="info-box analogy">
+    <strong>Analogy — CDN (Content Delivery Network):</strong> A CDN is like a <em>global chain of libraries</em>. Instead of every developer downloading Bootstrap and hosting it on their own server, a CDN hosts Bootstrap on thousands of servers worldwide. When a user visits your site, they download Bootstrap from the <em>nearest server</em> — like picking up a book from your local library instead of ordering it from a warehouse on the other side of the world. This makes the download much faster.
+  </div>
+
+  <pre><code>&lt;!-- Bootstrap CSS --&gt;
+&lt;link rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"&gt;
+
+&lt;!-- jQuery (required by Bootstrap JS) --&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"&gt;
+&lt;/script&gt;
+
+&lt;!-- Bootstrap JS --&gt;
+&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"&gt;
+&lt;/script&gt;</code></pre>
+
+  <div class="info-box warning">
+    <strong>Order matters!</strong> jQuery must be loaded <em>before</em> Bootstrap's JavaScript file, because Bootstrap JS depends on jQuery. If you load them in the wrong order, interactive components like modals and dropdowns won't work.
+  </div>
+
+  <!-- SECTION 5: Bootstrap Grid System -->
+  <h2>5. Bootstrap Grid System</h2>
+
+  <p>Bootstrap's grid system is built on the same <strong>12-column concept</strong> we discussed earlier, but with much more power and flexibility.</p>
+
+  <h3>Key Concepts</h3>
+
+  <table>
+    <tr>
+      <th>Concept</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>.container</code></td>
+      <td>Fixed-width container (different max-widths at different breakpoints)</td>
+    </tr>
+    <tr>
+      <td><code>.container-fluid</code></td>
+      <td>Full-width container that spans 100% of the viewport</td>
+    </tr>
+    <tr>
+      <td><code>.row</code></td>
+      <td>Horizontal group of columns (must be inside a container)</td>
+    </tr>
+    <tr>
+      <td><code>.col-*-*</code></td>
+      <td>Individual columns with responsive prefix classes</td>
+    </tr>
+  </table>
+
+  <h3>Grid Column Groups</h3>
+  <p>The 12 columns can be grouped in many ways. Here are some common patterns:</p>
+
+  <pre><code>&lt;!-- Equal columns --&gt;
+&lt;div class="row"&gt;
+  &lt;div class="col-md-1"&gt;1&lt;/div&gt;  &lt;div class="col-md-1"&gt;1&lt;/div&gt;
+  &lt;div class="col-md-1"&gt;1&lt;/div&gt;  &lt;div class="col-md-1"&gt;1&lt;/div&gt;
+  &lt;div class="col-md-1"&gt;1&lt;/div&gt;  &lt;div class="col-md-1"&gt;1&lt;/div&gt;
+  &lt;div class="col-md-1"&gt;1&lt;/div&gt;  &lt;div class="col-md-1"&gt;1&lt;/div&gt;
+  &lt;div class="col-md-1"&gt;1&lt;/div&gt;  &lt;div class="col-md-1"&gt;1&lt;/div&gt;
+  &lt;div class="col-md-1"&gt;1&lt;/div&gt;  &lt;div class="col-md-1"&gt;1&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Three equal columns --&gt;
+&lt;div class="row"&gt;
+  &lt;div class="col-md-4"&gt;4/12&lt;/div&gt;
+  &lt;div class="col-md-4"&gt;4/12&lt;/div&gt;
+  &lt;div class="col-md-4"&gt;4/12&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Two unequal columns --&gt;
+&lt;div class="row"&gt;
+  &lt;div class="col-md-8"&gt;Main Content (8/12)&lt;/div&gt;
+  &lt;div class="col-md-4"&gt;Sidebar (4/12)&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Two equal halves --&gt;
+&lt;div class="row"&gt;
+  &lt;div class="col-md-6"&gt;Left (6/12)&lt;/div&gt;
+  &lt;div class="col-md-6"&gt;Right (6/12)&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Full width --&gt;
+&lt;div class="row"&gt;
+  &lt;div class="col-md-12"&gt;Full Width (12/12)&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+  <h3>Bootstrap Breakpoints (Mobile First)</h3>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Mobile First:</strong> Imagine you're designing a building. The old way was to design the penthouse first, then try to squeeze everything into a tiny studio apartment. The "mobile first" approach is the opposite — design the studio apartment beautifully, then <em>expand</em> into a penthouse. Bootstrap works this way: it starts with mobile styles and scales <em>up</em>.
+  </div>
+
+  <table>
+    <tr>
+      <th>Class Prefix</th>
+      <th>Screen Size</th>
+      <th>Min Width</th>
+      <th>Symbol</th>
+    </tr>
+    <tr>
+      <td><code>.col-xs-*</code></td>
+      <td>Extra Small (Phones)</td>
+      <td>&lt; 768px</td>
+      <td>📱</td>
+    </tr>
+    <tr>
+      <td><code>.col-sm-*</code></td>
+      <td>Small (Portrait Tablets)</td>
+      <td>&ge; 768px</td>
+      <td>📱</td>
+    </tr>
+    <tr>
+      <td><code>.col-md-*</code></td>
+      <td>Medium (Landscape Tablets)</td>
+      <td>&ge; 992px</td>
+      <td>💻</td>
+    </tr>
+    <tr>
+      <td><code>.col-lg-*</code></td>
+      <td>Large (Desktops)</td>
+      <td>&ge; 1200px</td>
+      <td>🖥️</td>
+    </tr>
+  </table>
+
+  <div class="info-box tip">
+    <strong>Example — Responsive Columns:</strong> <code>&lt;div class="col-sm-6 col-md-4 col-lg-3"&gt;</code> means: on extra small screens it takes full width (default), on small screens it takes 6/12 (half), on medium screens 4/12 (third), and on large screens 3/12 (quarter). The layout automatically restructures at each breakpoint!
+  </div>
+
+  <!-- SECTION 6: Complete Bootstrap Example -->
+  <h2>6. Complete Bootstrap Page Example</h2>
+
+  <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;My Bootstrap Page&lt;/title&gt;
+  &lt;link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;div class="container-fluid"&gt;
+    &lt;h1&gt;Hello, Bootstrap!&lt;/h1&gt;
+
+    &lt;div class="row"&gt;
+      &lt;div class="col-sm-4"&gt;
+        &lt;h2&gt;Column 1&lt;/h2&gt;
+        &lt;p&gt;This takes 4 out of 12 columns on small+ screens.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="col-sm-4"&gt;
+        &lt;h2&gt;Column 2&lt;/h2&gt;
+        &lt;p&gt;This also takes 4 columns.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class="col-sm-4"&gt;
+        &lt;h2&gt;Column 3&lt;/h2&gt;
+        &lt;p&gt;And this takes the remaining 4 columns.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;button class="btn btn-primary"&gt;Click Me&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"&gt;
+  &lt;/script&gt;
+  &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"&gt;
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <!-- SECTION 7: Summary -->
+  <h2>7. Summary</h2>
+
+  <div class="summary">
+    <h3>Key Takeaways</h3>
+    <ul>
+      <li><strong>Responsive Web Design</strong> ensures your website looks great on all devices by adapting layout and content.</li>
+      <li>The <strong>viewport meta tag</strong> is essential — it tells the browser to use the device's actual screen width.</li>
+      <li><strong>Flexible images</strong> (<code>max-width: 100%</code>) prevent images from overflowing their containers.</li>
+      <li>The <strong>12-column grid</strong> provides a flexible layout system using percentage-based widths.</li>
+      <li><strong>Media queries</strong> apply different CSS styles based on screen size conditions.</li>
+      <li><strong>Bootstrap</strong> is the most popular UI framework, providing pre-built responsive components and a powerful grid system.</li>
+      <li><strong>Mobile-first</strong> design means starting with mobile styles and scaling up.</li>
+      <li><strong>CDNs</strong> deliver Bootstrap files quickly from servers near the user.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 8: Flashcards -->
+  <h2>8. Flashcards</h2>
+
+  <div class="flashcard-container">
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What is the viewport meta tag and why is it essential?</div>
+        <div class="flashcard-back"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code><br>It tells the browser to set the page width to the device's screen width and start at 100% zoom. Without it, mobile browsers assume a 960px desktop width and scale everything down, making it tiny and unreadable.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What CSS property makes images flexible/responsive?</div>
+        <div class="flashcard-back"><code>max-width: 100%</code> with <code>height: auto</code>. This ensures images never exceed their parent container's width while maintaining proportions.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">Why is 12 used as the column count in grid systems?</div>
+        <div class="flashcard-back">12 is divisible by 1, 2, 3, 4, 6, and 12 — giving maximum flexibility for creating equal columns (halves, thirds, quarters, sixths, or full width).</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What does <code>box-sizing: border-box</code> do?</div>
+        <div class="flashcard-back">It includes padding and borders inside an element's total width, instead of adding them on top. This makes width calculations predictable — a 50% element is always exactly 50%.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What are the four Bootstrap column breakpoints?</div>
+        <div class="flashcard-back"><code>xs</code> (&lt;768px), <code>sm</code> (&ge;768px), <code>md</code> (&ge;992px), <code>lg</code> (&ge;1200px). Each defines a minimum screen width where those column styles activate.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What is the difference between <code>.container</code> and <code>.container-fluid</code> in Bootstrap?</div>
+        <div class="flashcard-back"><code>.container</code> has a fixed max-width that changes at each breakpoint (centered on the page). <code>.container-fluid</code> spans 100% of the viewport width at all times.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What does CDN stand for and what benefit does it provide?</div>
+        <div class="flashcard-back"><strong>Content Delivery Network</strong>. It hosts files on servers distributed globally, so users download resources from the nearest server — resulting in faster load times.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What does "Mobile First" mean in Bootstrap?</div>
+        <div class="flashcard-back">Bootstrap designs for mobile screens first, then uses <code>min-width</code> media queries to add styles for progressively larger screens. This ensures a solid mobile experience that scales up, rather than a desktop layout that gets crammed into small screens.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: Quiz -->
+  <h2>9. Knowledge Check</h2>
+
+  <div class="quiz" id="quiz1">
+    <p><strong>Q1:</strong> What does the <code>max-width: 100%</code> CSS property do to images?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">Makes them always display at full resolution</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">Makes them shrink to fit their parent container if needed</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">Makes them stretch to fill the entire screen</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">Removes borders from images</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz2">
+    <p><strong>Q2:</strong> How many columns does Bootstrap's grid system use?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">8</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">10</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">12</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">16</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz3">
+    <p><strong>Q3:</strong> Which meta tag is essential for responsive web design?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)"><code>&lt;meta name="description"&gt;</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)"><code>&lt;meta name="viewport"&gt;</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)"><code>&lt;meta charset="UTF-8"&gt;</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)"><code>&lt;meta name="author"&gt;</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz4">
+    <p><strong>Q4:</strong> What is the correct order to load Bootstrap files?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Bootstrap JS → jQuery → Bootstrap CSS</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">Bootstrap CSS → jQuery → Bootstrap JS</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">jQuery → Bootstrap CSS → Bootstrap JS</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Bootstrap CSS → Bootstrap JS → jQuery</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz5">
+    <p><strong>Q5:</strong> What does <code>.col-md-6</code> mean in Bootstrap?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">6 pixels wide on medium screens</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">6 out of 12 columns wide on medium screens and above</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">6 rows tall on medium screens</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">60% width on all screen sizes</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz6">
+    <p><strong>Q6:</strong> At what width do Bootstrap's <code>md</code> (medium) columns activate?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">480px</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">768px</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">992px</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">1200px</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz7">
+    <p><strong>Q7:</strong> What is a breakpoint in responsive design?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">A place where your code has a bug</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">A pause in the CSS animation</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">A screen width where the layout changes to adapt</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">The point where images stop loading</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz8">
+    <p><strong>Q8:</strong> What is the benefit of "mobile first" design?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">It makes the site load faster on desktops</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)">It ensures a solid mobile experience that scales up to larger screens</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">It eliminates the need for media queries</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">It makes the site only work on mobile devices</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <!-- Fill in the Blank -->
+  <h2>10. Fill in the Blank</h2>
+
+  <p>Complete the media query below to apply styles only when the screen is 500px wide or less:</p>
+
+  <pre><code>@media only screen and (________: 500px) {
+  body { background-color: lightgreen; }
+}</code></pre>
+
+  <div class="fill-blank">
+    <input type="text" id="blank1" placeholder="Type your answer...">
+    <button class="quiz-btn" onclick="checkBlank('blank1', 'max-width')">Check Answer</button>
+    <span class="quiz-feedback" id="blank1-feedback"></span>
+  </div>
+
+  <p>Fill in the Bootstrap class to create a column that spans 4 out of 12 columns on medium screens:</p>
+
+  <pre><code>&lt;div class="________-md-4"&gt;Content&lt;/div&gt;</code></pre>
+
+  <div class="fill-blank">
+    <input type="text" id="blank2" placeholder="Type your answer...">
+    <button class="quiz-btn" onclick="checkBlank('blank2', 'col')">Check Answer</button>
+    <span class="quiz-feedback" id="blank2-feedback"></span>
+  </div>
+
+</div>
+
+<script>
+function checkAnswer(quizId, element, isCorrect) {
+  var quiz = document.getElementById(quizId);
+  var feedback = quiz.querySelector('.quiz-feedback');
+  var options = quiz.querySelectorAll('.quiz-option');
+
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+    opt.style.opacity = '0.6';
+  });
+
+  element.style.opacity = '1';
+
+  if (isCorrect) {
+    element.style.backgroundColor = '#27ae60';
+    element.style.color = '#fff';
+    feedback.textContent = 'Correct! Well done.';
+    feedback.style.color = '#27ae60';
+  } else {
+    element.style.backgroundColor = '#e74c3c';
+    element.style.color = '#fff';
+    feedback.textContent = 'Incorrect. Try reviewing the material above.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+
+function checkBlank(inputId, correctAnswer) {
+  var input = document.getElementById(inputId);
+  var feedback = document.getElementById(inputId + '-feedback');
+  var userAnswer = input.value.trim().toLowerCase();
+
+  if (userAnswer === correctAnswer.toLowerCase()) {
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#27ae60';
+    input.style.borderColor = '#27ae60';
+  } else {
+    feedback.textContent = 'Incorrect. The answer is: ' + correctAnswer;
+    feedback.style.color = '#e74c3c';
+    input.style.borderColor = '#e74c3c';
+  }
+}
+
+var collapsibles = document.querySelectorAll('.collapsible-header');
+collapsibles.forEach(function(header) {
+  header.addEventListener('click', function() {
+    this.parentElement.classList.toggle('active');
+  });
+});
+</script>
+
+</body>
+</html>

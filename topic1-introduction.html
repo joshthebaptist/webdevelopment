@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 1: Introduction to TP2543 &amp; Web Development Tech Stack</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .diagram-stack { display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 20px auto; max-width: 500px; }
+    .diagram-stack .layer { padding: 14px 20px; border-radius: 8px; width: 100%; text-align: center; font-weight: 600; }
+    .layer-client { background: #3b82f6; color: #fff; }
+    .layer-server { background: #22c55e; color: #fff; }
+    .layer-db { background: #eab308; color: #1a1a1a; }
+    .arrow-down { font-size: 24px; color: #64748b; }
+    .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; width: 100%; }
+      .nav-links.show { display: flex; }
+      .topnav { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html" class="active">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML Basics</a>
+    <a href="topic4-html-forms.html">HTML Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP Basics</a>
+    <a href="topic7-php-mysql.html">PHP &amp; MySQL</a>
+    <a href="topic8-advanced-php.html">Advanced PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">Responsive</a>
+    <a href="topic12-javascript-dom.html">JS &amp; DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX/REST</a>
+  </div>
+</nav>
+
+<!-- ==================== PROGRESS ==================== -->
+<div class="container">
+  <div class="progress-bar">
+    <div class="progress-text">Section 1 of 1 &mdash; Topic 1 Complete</div>
+    <div style="background:#e2e8f0;border-radius:8px;height:18px;overflow:hidden;">
+      <div id="progressFill" style="background:#3b82f6;height:100%;width:0%;transition:width 0.4s;border-radius:8px;"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN HEADING ==================== -->
+  <h1>Topic 1: Introduction to TP2543 &amp; Web Development Technology Stack</h1>
+  <p>Welcome to your first topic! In this lesson we will understand what the course is about, explore the concept of a <strong>technology stack</strong>, and learn the roles of <strong>frontend</strong> and <strong>backend</strong> in web development.</p>
+
+  <!-- ==================== SECTION 1: COURSE OVERVIEW ==================== -->
+  <div class="card">
+    <h2>1. What is TP2543?</h2>
+    <p>TP2543 is a course focused on <strong>Web Application Development</strong>. You will learn how to build complete web applications from scratch, covering both the <em>visual side</em> that users see and interact with, and the <em>server side</em> that processes data behind the scenes.</p>
+
+    <div class="info-box analogy">
+      <strong>&#x1F3EA; Analogy &mdash; Building a House:</strong> Think of TP2543 as learning to build an entire house. You will learn about the <em>exterior</em> (the paint, windows, door &mdash; what visitors see) and the <em>interior infrastructure</em> (plumbing, electricity, foundation &mdash; what makes the house functional). Both parts are essential for a livable house, just as both frontend and backend are essential for a web application.
+    </div>
+
+    <div class="info-box note">
+      <strong>&#x1F4CB; Note:</strong> Check the <strong>Course Proforma</strong> on <strong>UKMfolio</strong> for the full syllabus, assessment breakdown, and learning outcomes.
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 2: WHAT IS A TECH STACK? ==================== -->
+  <div class="card">
+    <h2>2. What is a Technology Stack?</h2>
+    <p>A <strong>technology stack</strong> (also called a <strong>solution stack</strong> or <strong>software stack</strong>) is a combination of software technologies, programming languages, frameworks, and third-party tools that work together to build and run a web application. Selecting the right combination of technologies is a critical and challenging decision in any web development project.</p>
+
+    <div class="info-box analogy">
+      <strong>&#x1F3EA; Analogy &mdash; A Restaurant:</strong>
+      <ul>
+        <li><strong>Frontend = The Dining Room</strong> &mdash; This is what customers see: the tables, chairs, menus, decor, lighting, and the waiters who take their orders. It&rsquo;s the entire experience the customer interacts with.</li>
+        <li><strong>Backend = The Kitchen</strong> &mdash; This is where the actual work happens. Chefs (server logic) prepare the food (process data), using ingredients from the pantry (database). Customers never see the kitchen, but without it, there is no meal.</li>
+        <li><strong>Technology Stack = The Entire Restaurant Setup</strong> &mdash; The ovens, fridges, utensils, menu design, table layout, ordering system &mdash; everything that works together to deliver a meal to the customer.</li>
+      </ul>
+    </div>
+
+    <div class="info-box tip">
+      <strong>&#x1F4A1; Key Insight:</strong> Popular technology stacks exist because certain combinations of tools have proven to work well together. Examples include LAMP (Linux, Apache, MySQL, PHP), MERN (MongoDB, Express, React, Node.js), and MEAN (MongoDB, Express, Angular, Node.js).
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 3: FRONTEND ==================== -->
+  <div class="card">
+    <h2>3. Frontend (Client-Side)</h2>
+    <p>The <strong>frontend</strong> is the <em>visual side</em> of a web application &mdash; everything that a user sees and interacts with in their web browser. It is sometimes called the <strong>client-side</strong> because it runs on the client&rsquo;s device (your computer, phone, or tablet).</p>
+    <p>The frontend is built using three core technologies:</p>
+    <ul>
+      <li><strong>HTML (HyperText Markup Language)</strong> &mdash; Provides the structure and content of web pages (headings, paragraphs, images, links).</li>
+      <li><strong>CSS (Cascading Style Sheets)</strong> &mdash; Controls the visual presentation and styling (colors, fonts, layout, spacing).</li>
+      <li><strong>JavaScript</strong> &mdash; Adds interactivity and dynamic behavior (button clicks, animations, form validation, updates without page reload).</li>
+    </ul>
+    <p>When you type a URL into your browser and see a webpage, the <strong>browser</strong> is executing frontend code to render the page on your screen.</p>
+
+    <div class="info-box analogy">
+      <strong>&#x1F3EA; Analogy &mdash; The Dining Room:</strong> The frontend is like the dining room of a restaurant. The layout of tables, the design of the menu, the color of the walls, and the way the waiter presents the food &mdash; all of this creates the <em>dining experience</em>. If the dining room is messy, poorly lit, or confusing, customers will have a bad experience even if the food (backend) is excellent.
+    </div>
+
+    <!-- Collapsible: deeper detail on HTML, CSS, JS -->
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Deeper Dive: The Three Pillars of Frontend
+      </div>
+      <div class="collapsible-body">
+        <h3>HTML &mdash; The Structure</h3>
+        <p>HTML is not a programming language; it is a <strong>markup language</strong>. It uses <em>tags</em> (like <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>) to define the structure of content. Think of HTML as the <strong>骨架 (skeleton)</strong> of a webpage &mdash; it defines what elements exist but not how they look.</p>
+        <h3>CSS &mdash; The Style</h3>
+        <p>CSS is a <strong>Style Sheet Language</strong>. It tells the browser how to visually present HTML elements. Using selectors and properties, CSS controls colors, fonts, sizes, positioning, animations, and responsive layouts.</p>
+        <h3>JavaScript &mdash; The Behavior</h3>
+        <p>JavaScript is a true <strong>programming/scripting language</strong>. It adds logic, interactivity, and dynamic content. JavaScript can respond to user events (clicks, typing), modify HTML and CSS on the fly, make network requests, and much more.</p>
+        <div class="info-box tip">
+          <strong>&#x1F4A1; Tip:</strong> In this course, you will study all three extensively. We start with HTML, move to CSS, and then add JavaScript.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 4: BACKEND ==================== -->
+  <div class="card">
+    <h2>4. Backend (Server-Side)</h2>
+    <p>The <strong>backend</strong> is the <em>server-side</em> of a web application. It handles data processing, business logic, database interactions, user authentication, and more. The backend is not visible to the user &mdash; it works behind the scenes.</p>
+    <p>The backend typically consists of several software components:</p>
+    <ul>
+      <li><strong>HTTP Server (Web Server)</strong> &mdash; Software that receives requests from the browser and sends back responses (e.g., Apache, Nginx). It serves static files (HTML, CSS, images) and forwards dynamic requests to the application server.</li>
+      <li><strong>Application Server</strong> &mdash; Software that executes the business logic of your application. This is where server-side programming languages like <strong>PHP</strong>, Python, Java, or Node.js run.</li>
+      <li><strong>Database Server</strong> &mdash; Software that stores, retrieves, and manages data (e.g., MySQL, PostgreSQL, MongoDB). When your application needs to read, add, edit, or delete data, it communicates with the database server.</li>
+    </ul>
+    <p>All these components together form the <strong>business logic</strong> of the product.</p>
+
+    <div class="info-box analogy">
+      <strong>&#x1F3EA; Analogy &mdash; The Kitchen:</strong>
+      <ul>
+        <li><strong>Web Server</strong> = The Order Window &mdash; The place where orders (requests) come in from the dining room and prepared dishes (responses) go back out.</li>
+        <li><strong>Application Server</strong> = The Chefs &mdash; They read the order, decide what to cook, follow recipes (business logic), and prepare the dish.</li>
+        <li><strong>Database Server</strong> = The Pantry &mdash; Where all the ingredients (data) are stored. The chefs reach in to get what they need.</li>
+      </ul>
+    </div>
+
+    <!-- Collapsible: deeper detail on backend -->
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Deeper Dive: Backend Components Explained
+      </div>
+      <div class="collapsible-body">
+        <h3>HTTP Server (Web Server)</h3>
+        <p>An HTTP server understands URLs and HTTP protocol. When you type <code>http://example.com/page.php</code>, the HTTP server receives this request. If the file is static (like an image), it sends it directly. If it is dynamic (like a PHP script), it passes the request to the application server.</p>
+        <h3>Application Server</h3>
+        <p>The application server runs your server-side code. In this course, we use <strong>PHP</strong>. When a PHP script is requested, the application server (e.g., Apache with PHP module in XAMPP) executes the PHP code, which may connect to the database, process data, and generate HTML output to send back to the browser.</p>
+        <h3>Database Server</h3>
+        <p>A database server manages structured data using <strong>SQL</strong> (Structured Query Language) in the case of relational databases like <strong>MySQL</strong>. Your PHP code will use SQL to perform <strong>CRUD</strong> operations: <em>Create, Read, Update, Delete</em> data.</p>
+        <div class="info-box warning">
+          <strong>&#x26A0;&#xFE0F; Warning:</strong> Understanding the backend is crucial because in this course you will build the server-side logic using PHP and MySQL. Do not skip backend topics!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 5: TECH STACK INTERACTION ==================== -->
+  <div class="card">
+    <h2>5. How the Technology Stack Parts Interact</h2>
+    <p>The frontend and backend do not exist in isolation. They communicate through <strong>HTTP requests and responses</strong>. Here is the flow:</p>
+
+    <!-- Visual Diagram -->
+    <div class="diagram">
+      <div class="diagram-stack">
+        <div class="layer layer-client">
+          &#x1F4BB; CLIENT (Browser)<br>
+          <small>HTML + CSS + JavaScript</small>
+        </div>
+        <div class="arrow-down">&#x2193; &#x1F4E8; HTTP Request &#x2193;</div>
+        <div class="layer layer-server">
+          &#x2601;&#xFE0F; WEB SERVER (Apache / HTTP Server)<br>
+          <small>Serves files &amp; forwards dynamic requests</small>
+        </div>
+        <div class="arrow-down">&#x2193; &#x1F504; Process &amp; Execute &#x2193;</div>
+        <div class="layer layer-server" style="background:#16a34a;">
+          &#x2699;&#xFE0F; APPLICATION SERVER (PHP / Server-Side Logic)<br>
+          <small>Business logic, data processing</small>
+        </div>
+        <div class="arrow-down">&#x2193; &#x1F50D; SQL Query &#x2193;</div>
+        <div class="layer layer-db">
+          &#x1F5C4;&#xFE0F; DATABASE SERVER (MySQL)<br>
+          <small>Stores &amp; retrieves data</small>
+        </div>
+      </div>
+    </div>
+
+    <p>The interaction happens in three color-coded scenarios:</p>
+    <ol>
+      <li><strong style="color:#3b82f6;">Blue &mdash; Simple Request:</strong> The browser requests a simple open HTML file or graphic file (image, CSS, JS). The web server serves the file directly &mdash; no processing needed.</li>
+      <li><strong style="color:#22c55e;">Green &mdash; Complex Request:</strong> The browser requests something that requires processing, like running a <strong>PHP server-side script</strong>. The web server passes the request to the application server, which executes the script and returns the result.</li>
+      <li><strong style="color:#eab308;">Yellow &mdash; Data Request:</strong> The browser requests to <strong>read, add, edit, or remove data</strong> (CRUD operations). The server-side script makes a <strong>SQL request</strong> to the database server, receives the data, processes it, and sends the result back to the client.</li>
+    </ol>
+
+    <div class="info-box analogy">
+      <strong>&#x1F3EA; Analogy &mdash; Ordering Food:</strong>
+      <ul>
+        <li><strong>Blue (Simple):</strong> Customer asks for a glass of water. The waiter brings it straight from the tap. No cooking needed.</li>
+        <li><strong>Green (Complex):</strong> Customer orders a dish that requires preparation. The waiter takes the order to the kitchen, a chef cooks it, and it comes back ready.</li>
+        <li><strong>Yellow (Data):</strong> Customer asks &ldquo;Do you have today&rsquo;s specials?&rdquo; The waiter checks with the kitchen, who checks the pantry inventory, and reports back what&rsquo;s available.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== FLASHCARDS ==================== -->
+  <div class="card">
+    <h2>6. Key Terms &mdash; Flashcards</h2>
+    <p>Click on a flashcard to flip it and reveal the definition.</p>
+
+    <div class="flashcard-container">
+      <!-- Flashcard 1 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Technology Stack</strong></div>
+          <div class="flashcard-back">A combination of software technologies, programming languages, frameworks, and third-party tools that work together to build and run a web application.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 2 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Frontend (Client-Side)</strong></div>
+          <div class="flashcard-back">The visual side of a web application that users see and interact with, executed by the browser. Built with HTML, CSS, and JavaScript.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 3 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Backend (Server-Side)</strong></div>
+          <div class="flashcard-back">The server-side part of a web application that handles business logic, data processing, and database interactions. It is not visible to the user.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 4 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>HTTP Server (Web Server)</strong></div>
+          <div class="flashcard-back">Software (e.g., Apache, Nginx) that receives HTTP requests from browsers and sends back HTTP responses, serving static files or forwarding dynamic requests.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 5 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Application Server</strong></div>
+          <div class="flashcard-back">Software that executes the business logic of a web application. In this course, Apache runs PHP scripts as the application server.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 6 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Database Server</strong></div>
+          <div class="flashcard-back">Software (e.g., MySQL) that stores, retrieves, and manages structured data using SQL. It supports CRUD operations: Create, Read, Update, Delete.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 7 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>HTML</strong></div>
+          <div class="flashcard-back">HyperText Markup Language &mdash; A markup language used to define the structure and content of web pages using tags.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 8 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>CSS</strong></div>
+          <div class="flashcard-back">Cascading Style Sheets &mdash; A style sheet language that controls the visual presentation and styling of HTML elements (colors, fonts, layout).</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 9 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>JavaScript</strong></div>
+          <div class="flashcard-back">A scripting/programming language that adds interactivity, dynamic behavior, and logic to web pages. It runs in the browser on the client side.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 10 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>CRUD</strong></div>
+          <div class="flashcard-back">An acronym for Create, Read, Update, Delete &mdash; the four basic operations performed on data in a database.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== QUIZ 1 ==================== -->
+  <div class="card">
+    <h2>7. Quiz &mdash; Test Your Understanding</h2>
+
+    <!-- Quiz Question 1 -->
+    <div class="quiz" id="quiz1">
+      <p><strong>Q1:</strong> Which three technologies make up the frontend of a web application?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">A) PHP, MySQL, Apache</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">B) HTML, CSS, JavaScript</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">C) Python, Java, C++</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">D) XAMPP, Sublime, Linux</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 2 -->
+    <div class="quiz" id="quiz2">
+      <p><strong>Q2:</strong> What is the role of the HTTP server (web server)?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">A) It stores data in tables</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">B) It executes PHP business logic</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">C) It receives HTTP requests and sends back responses, serving static files or forwarding dynamic requests</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">D) It renders HTML in the browser</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 3 -->
+    <div class="quiz" id="quiz3">
+      <p><strong>Q3:</strong> When a browser requests to add a new record to a database, which scenario is this?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">A) Blue &mdash; Simple request</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">B) Green &mdash; Complex request</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">C) Yellow &mdash; Data request (CRUD)</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">D) None of the above</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 4 -->
+    <div class="quiz" id="quiz4">
+      <p><strong>Q4:</strong> Where is the frontend code executed?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">A) On the server</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">B) In the browser (on the client&rsquo;s device)</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">C) In the database</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">D) In the application server</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 5 -->
+    <div class="quiz" id="quiz5">
+      <p><strong>Q5:</strong> What does CSS stand for?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A) Computer Style Sheets</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">B) Creative Style System</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">C) Cascading Style Sheets</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">D) Centralized Styling Syntax</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 6 -->
+    <div class="quiz" id="quiz6">
+      <p><strong>Q6:</strong> Which component of the backend executes server-side scripts like PHP?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">A) The database server</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">B) The application server</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">C) The web browser</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">D) The operating system</div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <!-- ==================== FILL IN THE BLANKS ==================== -->
+  <div class="card">
+    <h2>8. Fill in the Blanks</h2>
+    <p>Type the correct word into each blank, then click <strong>Check</strong> to verify your answers.</p>
+
+    <div class="fill-blank" id="fb1">
+      <p>Q1: The __________ side of a web application is what users see and interact with in their browser.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="frontend">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb2">
+      <p>Q2: The __________ is a combination of software technologies, languages, and tools used to build a web application.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="technology stack">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb3">
+      <p>Q3: PHP is a __________-side scripting language that runs on the server.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="server">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb4">
+      <p>Q4: The four basic database operations are Create, Read, Update, and __________.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="delete">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb5">
+      <p>Q5: HTML stands for HyperText __________ Language.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="markup">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+  </div>
+
+  <!-- ==================== COLLAPSIBLE: PRACTICAL TIPS ==================== -->
+  <div class="card">
+    <h2>9. Practical Tips for Success</h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Tutorial 1: Setup XAMPP and Sublime Editor
+      </div>
+      <div class="collapsible-body">
+        <p>Before your first lab, you need to set up your development environment:</p>
+        <ol>
+          <li><strong>Download and install XAMPP</strong> &mdash; XAMPP includes Apache (web server + application server) and MySQL (database server). It&rsquo;s a free, easy-to-use package that gives you a complete backend environment on your local machine (localhost).</li>
+          <li><strong>Download and install Sublime Text</strong> &mdash; Sublime Text is a code editor where you will write your HTML, CSS, PHP, and other code files.</li>
+          <li><strong>Start Apache and MySQL</strong> in the XAMPP Control Panel. Your web server and database server will now be running locally.</li>
+          <li><strong>Test:</strong> Open your browser and go to <code>http://localhost</code>. If you see the XAMPP welcome page, your setup is working.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Tutorial 2: Set Up Your Server Account
+      </div>
+      <div class="collapsible-body">
+        <p>In addition to localhost, you will set up a server account for deploying your projects. Follow the instructions given by your lecturer to create and configure your server account. This account will be used to host your web application so it can be accessed over the network.</p>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; General Tips for This Course
+      </div>
+      <div class="collapsible-body">
+        <ul>
+          <li><strong>All labs are related to each other</strong> &mdash; Each lab builds on the previous one. Missing one lab can create a chain of confusion.</li>
+          <li><strong>Do not procrastinate</strong> &mdash; Start early, work consistently. Web development requires hands-on practice.</li>
+          <li><strong>Practice, practice, practice</strong> &mdash; Reading is not enough. Write code, experiment, make mistakes, and learn from them.</li>
+          <li><strong>Learn from real examples</strong> at <a href="https://www.w3schools.com" target="_blank">w3schools.com</a> &mdash; A fantastic resource with interactive examples for HTML, CSS, JavaScript, PHP, SQL, and more.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUMMARY ==================== -->
+  <div class="card">
+    <h2>10. Summary</h2>
+    <div class="summary">
+      <h3>What You Learned in This Topic:</h3>
+      <ol>
+        <li><strong>TP2543</strong> is a web application development course where you will build both the frontend and backend of web applications.</li>
+        <li>A <strong>Technology Stack</strong> is the combination of software technologies, languages, and tools that work together to create a web application.</li>
+        <li>The <strong>Frontend (Client-Side)</strong> is the visual side of a web application, built with <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>, and executed by the <strong>browser</strong>.</li>
+        <li>The <strong>Backend (Server-Side)</strong> handles business logic and consists of a <strong>Web Server</strong>, <strong>Application Server</strong>, and <strong>Database Server</strong>.</li>
+        <li>Frontend and backend communicate through <strong>HTTP requests and responses</strong>, ranging from simple file requests to complex data operations (CRUD).</li>
+        <li>Before starting labs, complete <strong>Tutorial 1</strong> (setup XAMPP and Sublime) and <strong>Tutorial 2</strong> (set up server account).</li>
+        <li>Consistent practice and completing all labs on time is essential for success in this course.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ==================== END PROGRESS ==================== -->
+  <div class="card" style="text-align:center;">
+    <h2>&#x2705; Topic 1 Complete!</h2>
+    <p>You have finished the first topic. Move on to <a href="topic2-project.html"><strong>Topic 2: Course Project Overview</strong></a> to learn about your course project.</p>
+    <div class="progress-text" style="margin-top:10px;">You have completed Topic 1 &mdash; Introduction to TP2543 &amp; Web Development Technology Stack.</div>
+  </div>
+
+</div><!-- end container -->
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+  // ---- Progress Bar ----
+  window.addEventListener('DOMContentLoaded', function () {
+    var fill = document.getElementById('progressFill');
+    if (fill) {
+      setTimeout(function () { fill.style.width = '100%'; }, 200);
+    }
+  });
+
+  // ---- Quiz Logic ----
+  function checkAnswer(quizId, element, isCorrect) {
+    var quiz = document.getElementById(quizId);
+    var feedback = quiz.querySelector('.quiz-feedback');
+    // Prevent re-answering
+    if (quiz.getAttribute('data-answered') === 'true') return;
+    quiz.setAttribute('data-answered', 'true');
+
+    // Disable all options
+    var options = quiz.querySelectorAll('.quiz-option');
+    options.forEach(function (opt) {
+      opt.style.pointerEvents = 'none';
+      opt.style.opacity = '0.6';
+    });
+
+    if (isCorrect) {
+      element.style.background = '#22c55e';
+      element.style.color = '#fff';
+      element.style.opacity = '1';
+      feedback.textContent = 'Correct! Well done.';
+      feedback.style.color = '#22c55e';
+    } else {
+      element.style.background = '#ef4444';
+      element.style.color = '#fff';
+      element.style.opacity = '1';
+      feedback.textContent = 'Incorrect. Review the material above and try to understand why.';
+      feedback.style.color = '#ef4444';
+    }
+  }
+
+  // ---- Fill in the Blank Logic ----
+  function checkFillBlank(button) {
+    var container = button.parentElement;
+    var input = container.querySelector('input');
+    var feedback = container.querySelector('.quiz-feedback');
+    var correct = input.getAttribute('data-answer').toLowerCase().trim();
+    var userAnswer = input.value.toLowerCase().trim();
+
+    if (userAnswer === correct) {
+      feedback.textContent = 'Correct!';
+      feedback.style.color = '#22c55e';
+      input.style.borderColor = '#22c55e';
+    } else {
+      feedback.textContent = 'Incorrect. The correct answer is: ' + input.getAttribute('data-answer');
+      feedback.style.color = '#ef4444';
+      input.style.borderColor = '#ef4444';
+    }
+  }
+
+  // ---- Flashcard flip (handled by CSS toggle) ----
+  // The onclick on .flashcard toggles the 'flipped' class which triggers CSS transform
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn HTML Forms - all 22 input types, form attributes, and user input collection">
+    <meta name="keywords" content="HTML, forms, input types, web development, beginner">
+    <meta name="author" content="TP2543">
+    <title>Topic 4: HTML Forms (Part 2)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+    <a href="index.html" class="nav-brand">TP2543</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">&#9776;</button>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="topic1-introduction.html">Intro</a>
+        <a href="topic2-project.html">Project</a>
+        <a href="topic3-html-basics.html">HTML</a>
+        <a href="topic4-html-forms.html">Forms</a>
+        <a href="topic5-regex.html">Regex</a>
+        <a href="topic6-php-basics.html">PHP</a>
+        <a href="topic7-php-mysql.html">PHP+MySQL</a>
+        <a href="topic8-advanced-php.html">Adv PHP</a>
+        <a href="topic9-mvc-framework.html">MVC</a>
+        <a href="topic10-css.html">CSS</a>
+        <a href="topic11-responsive-bootstrap.html">RWD</a>
+        <a href="topic12-javascript-dom.html">JS+DOM</a>
+        <a href="topic13-jquery.html">jQuery</a>
+        <a href="topic14-ajax-json-rest.html">AJAX</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="progress-bar">
+        <div class="progress-text">Topic 4 of 14 &mdash; HTML Forms (Part 2)</div>
+        <div style="background:#495057; border-radius:8px; height:12px; width:100%;">
+            <div style="background:#0d6efd; height:12px; border-radius:8px; width:28.6%;"></div>
+        </div>
+    </div>
+
+    <h1>HTML Forms (Part 2)</h1>
+
+    <!-- SECTION 1: What Are Forms? -->
+    <div class="card">
+        <h2>1. What Are HTML Forms?</h2>
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> An HTML form is like a <strong>restaurant order form</strong>. When you sit down, you receive a menu with fields: your name (text input), drink choice (dropdown), toppings (checkboxes), table size (radio buttons), special instructions (textarea), and a "Submit Order" button. The waiter (browser) sends your form to the kitchen (server) for processing. The kitchen prepares your order and sends back a response.
+        </div>
+        <p>HTML5 provides forms for <strong>collecting information from users</strong>. Forms are the primary way web applications receive input &mdash; from login pages and search bars to contact forms and checkout pages. Without forms, web pages would be read-only.</p>
+
+        <h3>How Forms Work</h3>
+        <div class="steps">
+            <div class="step-item">User opens a web page containing a form</div>
+            <div class="step-item">User fills in the form fields (text, checkboxes, dropdowns, etc.)</div>
+            <div class="step-item">User clicks the Submit button</div>
+            <div class="step-item">The browser packages form data and sends it to a <strong>server</strong></div>
+            <div class="step-item">A server-side script (PHP, Python, etc.) processes the data</div>
+            <div class="step-item">The server sends back a response (new page, confirmation, etc.)</div>
+        </div>
+        <div class="info-box note">
+            <strong>Note:</strong> HTML alone cannot process form data. It only provides the structure. You need a server-side language like PHP, Python, or Node.js to receive and process submitted data. We will cover PHP in later topics.
+        </div>
+    </div>
+
+    <!-- SECTION 2: The Form Element -->
+    <div class="card">
+        <h2>2. The &lt;form&gt; Element</h2>
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> The <code>&lt;form&gt;</code> tag is the <strong>envelope</strong> holding all your order slips. The <code>action</code> attribute is the <em>delivery address</em> on the envelope. The <code>method</code> attribute determines <em>how</em> to send it &mdash; either inside the envelope (POST) or written on the outside for everyone to see (GET).
+        </div>
+        <pre><code>&lt;form action="process.php" method="post"&gt;
+    &lt;!-- All form fields go inside here --&gt;
+&lt;/form&gt;</code></pre>
+
+        <h3>The action Attribute</h3>
+        <p>Specifies <strong>where</strong> form data is sent &mdash; a server-side script:</p>
+        <pre><code>&lt;form action="login_process.php"&gt; ... &lt;/form&gt;
+&lt;form action="https://api.example.com/register"&gt; ... &lt;/form&gt;
+&lt;form action="submit_order.py"&gt; ... &lt;/form&gt;</code></pre>
+
+        <table>
+            <tr><th>Script Type</th><th>Extension</th><th>Language</th></tr>
+            <tr><td>PHP</td><td>.php</td><td>PHP</td></tr>
+            <tr><td>ASP.NET</td><td>.aspx</td><td>C# / VB.NET</td></tr>
+            <tr><td>Java Server Pages</td><td>.jsp</td><td>Java</td></tr>
+            <tr><td>Python</td><td>.py</td><td>Python (Flask, Django)</td></tr>
+        </table>
+
+        <h3>The method Attribute</h3>
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Imagine sending a secret letter. <strong>GET</strong> is like writing the message on a postcard &mdash; anyone handling it can read it. <strong>POST</strong> is like putting the message inside a sealed envelope &mdash; hidden from plain view.
+        </div>
+        <table>
+            <tr><th>Method</th><th>Behavior</th><th>Use When</th></tr>
+            <tr>
+                <td><code>POST</code></td>
+                <td>Appends form data to the <strong>browser request body</strong> (hidden from URL). No size limit.</td>
+                <td>Passwords, file uploads, sensitive data, large amounts of data.</td>
+            </tr>
+            <tr>
+                <td><code>GET</code></td>
+                <td>Appends form data to the <strong>URL</strong> as query parameters. Example: <code>search.php?q=html&amp;page=1</code></td>
+                <td>Search forms, filtering, bookmarkable pages &mdash; non-sensitive data.</td>
+            </tr>
+        </table>
+        <div class="info-box warning">
+            <strong>Security Warning:</strong> Never use GET for passwords or sensitive information! Data appears in the URL, browser history, and server logs.
+        </div>
+    </div>
+
+    <!-- SECTION 3: URL Encoding -->
+    <div class="card">
+        <h2>3. URL Encoding</h2>
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> URL encoding is like <strong>translating foreign characters</strong> into a universal shipping code. If you want to mail a package but the address has characters the postal system does not understand, you convert them into standard codes so the package still arrives.
+        </div>
+        <p><strong>URL Encoding</strong> converts characters into ASCII format for safe Internet transmission. Unsafe or special characters are replaced with <code>%</code> followed by their hex code.</p>
+        <table>
+            <tr><th>Character</th><th>Encoded</th><th>Why</th></tr>
+            <tr><td>Space</td><td><code>%20</code> or <code>+</code></td><td>Spaces not allowed in URLs</td></tr>
+            <tr><td>&lt;</td><td><code>%3C</code></td><td>Special HTML character</td></tr>
+            <tr><td>&gt;</td><td><code>%3E</code></td><td>Special HTML character</td></tr>
+            <tr><td>#</td><td><code>%23</code></td><td>Reserved for fragment identifiers</td></tr>
+            <tr><td>&amp;</td><td><code>%26</code></td><td>Reserved for query separators</td></tr>
+            <tr><td>/</td><td><code>%2F</code></td><td>Reserved for path separators</td></tr>
+        </table>
+        <div class="info-box note">
+            <strong>Example:</strong> A search for "hello world" with GET produces: <code>search.php?q=hello+world</code> or <code>search.php?q=hello%20world</code>. The browser handles encoding automatically.
+        </div>
+    </div>
+
+    <!-- SECTION 4: Submit Button -->
+    <div class="card">
+        <h2>4. The Submit Button</h2>
+        <p>The <code>&lt;input type="submit"&gt;</code> sends form data to the <code>action</code> URL:</p>
+        <pre><code>&lt;form action="process.php" method="post"&gt;
+    &lt;p&gt;Name: &lt;input type="text" name="username"&gt;&lt;/p&gt;
+    &lt;input type="submit" value="Send Form"&gt;
+&lt;/form&gt;</code></pre>
+        <p>The <code>value</code> attribute sets the button text. Default is "Submit".</p>
+        <div class="info-box tip">
+            <strong>Tip:</strong> You can also use <code>&lt;button type="submit"&gt;</code> which is more flexible &mdash; it allows HTML content inside (images, icons, formatted text):
+            <pre><code>&lt;button type="submit"&gt;Send &lt;strong&gt;Now&lt;/strong&gt;&lt;/button&gt;</code></pre>
+        </div>
+    </div>
+
+    <!-- SECTION 5: Text Input & Labels -->
+    <div class="card">
+        <h2>5. Text Input &amp; Labels</h2>
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> A text input is a blank line on a form. The <code>&lt;label&gt;</code> is the question printed above or beside it (like "Full Name: ___"). Labels are crucial &mdash; without them, users would not know what to type!
+        </div>
+        <pre><code>&lt;form action="process.php" method="post"&gt;
+    &lt;label for="username"&gt;Full Name:&lt;/label&gt;
+    &lt;input type="text" id="username" name="username"
+           size="40" maxlength="100"
+           placeholder="Enter your full name"&gt;
+
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="text" id="email" name="email"
+           placeholder="you@example.com"&gt;
+
+    &lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;</code></pre>
+        <h3>Key Attributes</h3>
+        <table>
+            <tr><th>Attribute</th><th>Purpose</th></tr>
+            <tr><td><code>name</code></td><td><strong>Required.</strong> The key used to identify data sent to the server. Example: <code>username=John</code></td></tr>
+            <tr><td><code>size</code></td><td>Visible width of the text field (in characters). Does not limit text length.</td></tr>
+            <tr><td><code>maxlength</code></td><td>Maximum number of characters the user can type.</td></tr>
+            <tr><td><code>placeholder</code></td><td>Gray hint text shown when empty. Disappears when typing starts.</td></tr>
+            <tr><td><code>id</code></td><td>Unique identifier. Used by <code>&lt;label&gt;</code>'s <code>for</code> attribute to link them.</td></tr>
+            <tr><td><code>value</code></td><td>Default text pre-filled in the field.</td></tr>
+        </table>
+        <h3>The &lt;label&gt; Element</h3>
+        <p>The <code>&lt;label&gt;</code> provides a text description for an input field. It is essential for <strong>accessibility</strong> &mdash; screen readers announce the label when the user focuses on the input.</p>
+        <div class="info-box tip">
+            <strong>Best Practice:</strong> Always link labels to inputs using <code>for</code> and <code>id</code>. Clicking the label will then automatically focus the input field!
+        </div>
+    </div>
+
+    <!-- SECTION 6: All 22 Input Types -->
+    <div class="card">
+        <h2>6. All 22 HTML Input Types</h2>
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> The <code>&lt;input&gt;</code> element is a <strong>Swiss Army knife</strong> with 22 different tools, each designed for a specific job. You would not use a screwdriver to cut bread, and you would not use a text input to pick a color. Choosing the right type gives users the right tool.
+        </div>
+        <p>The <code>type</code> attribute determines the kind of input field. HTML5 introduced many new types for better UX and built-in validation.</p>
+    </div>
+
+    <!-- type: text -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">1. type="text" &mdash; Standard Text Input</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> A single blank line on a form for writing your name or any short text. The most basic and common input type.</div>
+                <p>The default input type. Accepts any text, numbers, or characters. You get this if you omit the <code>type</code> attribute.</p>
+                <pre><code>&lt;input type="text" name="fullname" placeholder="John Doe" size="30" maxlength="50"&gt;</code></pre>
+                <p><strong>Use for:</strong> Names, titles, short answers, search queries.</p>
+                <div class="fill-blank" id="fb-text1">
+                    <strong>Fill in the blank:</strong>
+                    <pre><code>&lt;input type="______" name="city" placeholder="Enter city"&gt;</code></pre>
+                    <input type="text" placeholder="What type goes here?" data-answer="text">
+                    <button class="quiz-btn" onclick="checkFillBlanks('fb-text1')">Check</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: password -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">2. type="password" &mdash; Password Field</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a text input with a curtain drawn over it. Each character becomes a dot or asterisk &mdash; typing behind a privacy screen.</div>
+                <p>Hides characters as the user types. Essential for login and registration forms.</p>
+                <pre><code>&lt;input type="password" name="user_password" maxlength="30"&gt;</code></pre>
+                <p><strong>Use for:</strong> Passwords, PINs, any sensitive text.</p>
+                <div class="info-box warning"><strong>Warning:</strong> The password is only hidden visually. It is sent as plain text unless you use HTTPS. Always use HTTPS.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: email -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">3. type="email" &mdash; Email Address</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a text input with a built-in spell checker that only accepts valid email formats (something@domain.com).</div>
+                <p>Automatically validates email format. On mobile, the keyboard shows @ and .com keys.</p>
+                <pre><code>&lt;input type="email" name="user_email" placeholder="you@example.com" required&gt;</code></pre>
+                <p><strong>Use for:</strong> Email addresses, newsletter signups, account registration.</p>
+                <div class="info-box tip"><strong>Tip:</strong> <code>required</code> + <code>type="email"</code> = built-in browser validation for free &mdash; no JavaScript needed!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: number -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">4. type="number" &mdash; Numeric Input</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a text input that only accepts numbers, plus up/down spinner arrows &mdash; like the number selector on a ticket booking page.</div>
+                <p>Only accepts numeric values. Supports <code>min</code>, <code>max</code>, and <code>step</code> attributes.</p>
+                <pre><code>&lt;input type="number" name="age" min="1" max="120" step="1" value="18"&gt;</code></pre>
+                <table>
+                    <tr><th>Attribute</th><th>Purpose</th></tr>
+                    <tr><td><code>min</code></td><td>Minimum allowed value</td></tr>
+                    <tr><td><code>max</code></td><td>Maximum allowed value</td></tr>
+                    <tr><td><code>step</code></td><td>Increment step (e.g., step="0.5" for half-values)</td></tr>
+                </table>
+                <p><strong>Use for:</strong> Ages, quantities, prices, scores.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: tel -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">5. type="tel" &mdash; Telephone Number</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a text input, but on mobile it shows the numeric phone keypad instead of the regular keyboard.</div>
+                <p>Designed for telephone numbers. Does NOT auto-validate format, but use <code>pattern</code> for validation.</p>
+                <pre><code>&lt;input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{4}" placeholder="123-4567"&gt;</code></pre>
+                <p><strong>Use for:</strong> Phone numbers, fax numbers.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: url -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">6. type="url" &mdash; Website URL</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like an email input but for web addresses. It checks that the text looks like a valid URL.</div>
+                <p>Auto-validates properly formatted URL. On mobile, may show ".com" on the keyboard.</p>
+                <pre><code>&lt;input type="url" name="website" placeholder="https://www.example.com"&gt;</code></pre>
+                <p><strong>Use for:</strong> Website addresses, social media profile links.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: search -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">7. type="search" &mdash; Search Field</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a text input with a little "X" button to clear text quickly &mdash; like the Google search bar.</div>
+                <p>Semantically identifies the field as a search box. Browsers may add a clear button and remember history.</p>
+                <pre><code>&lt;input type="search" name="query" placeholder="Search..."&gt;</code></pre>
+                <p><strong>Use for:</strong> Site search bars.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: checkbox -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">8. type="checkbox" &mdash; Checkbox</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like "select all that apply" on a survey. You can tick any number of boxes &mdash; one, several, or none. Each checkbox is independent.</div>
+                <p>A square box that can be checked/unchecked. Users select <strong>zero or more</strong> options.</p>
+                <pre><code>&lt;p&gt;Choose your hobbies:&lt;/p&gt;
+&lt;input type="checkbox" name="hobby" value="reading" id="r"&gt;&lt;label for="r"&gt;Reading&lt;/label&gt;
+&lt;input type="checkbox" name="hobby" value="gaming" id="g"&gt;&lt;label for="g"&gt;Gaming&lt;/label&gt;
+&lt;input type="checkbox" name="hobby" value="coding" id="c"&gt;&lt;label for="c"&gt;Coding&lt;/label&gt;</code></pre>
+                <p><strong>Use for:</strong> Terms agreement, multiple option selection, toggling settings.</p>
+                <div class="info-box note"><strong>Note:</strong> Checkboxes with the same <code>name</code> are grouped. Each checked checkbox sends its <code>value</code>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: radio -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">9. type="radio" &mdash; Radio Button</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a multiple-choice exam &mdash; you can ONLY pick one answer. Selecting "B" deselects "A". Radio buttons are mutually exclusive.</div>
+                <p>Circular buttons. Only <strong>one</strong> option per group. All radio buttons in a group must share the same <code>name</code>.</p>
+                <pre><code>&lt;p&gt;Choose your gender:&lt;/p&gt;
+&lt;input type="radio" name="gender" value="male" id="m"&gt;&lt;label for="m"&gt;Male&lt;/label&gt;
+&lt;input type="radio" name="gender" value="female" id="f"&gt;&lt;label for="f"&gt;Female&lt;/label&gt;
+&lt;input type="radio" name="gender" value="other" id="o"&gt;&lt;label for="o"&gt;Other&lt;/label&gt;</code></pre>
+                <p><strong>Use for:</strong> Single choice &mdash; gender, yes/no, choosing one plan.</p>
+                <div class="info-box tip"><strong>Key Difference:</strong> Checkboxes = select many. Radio buttons = select one.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: file -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">10. type="file" &mdash; File Upload</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like an attachment button in email. Click "Choose File," a file browser opens, you select your file, and its name appears next to the button.</div>
+                <p>Opens a file picker. The form must use <code>method="post"</code> and <code>enctype="multipart/form-data"</code>.</p>
+                <pre><code>&lt;form action="upload.php" method="post" enctype="multipart/form-data"&gt;
+    &lt;label for="avatar"&gt;Upload photo:&lt;/label&gt;
+    &lt;input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg"&gt;
+    &lt;input type="submit" value="Upload"&gt;
+&lt;/form&gt;</code></pre>
+                <table>
+                    <tr><th>Attribute</th><th>Purpose</th></tr>
+                    <tr><td><code>accept</code></td><td>Restricts file types (e.g., <code>image/png, image/jpeg</code>)</td></tr>
+                    <tr><td><code>multiple</code></td><td>Allows selecting multiple files</td></tr>
+                </table>
+                <p><strong>Use for:</strong> Profile photos, document uploads, resume submissions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: hidden -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">11. type="hidden" &mdash; Hidden Field</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like writing a secret note on the back of a form that the user cannot see but the server receives.</div>
+                <p>Not visible on the page. Used to pass data the server needs but the user should not see or modify.</p>
+                <pre><code>&lt;input type="hidden" name="user_id" value="4523"&gt;
+&lt;input type="hidden" name="form_token" value="abc123xyz"&gt;</code></pre>
+                <p><strong>Use for:</strong> User IDs, session tokens, tracking data, default values.</p>
+                <div class="info-box warning"><strong>Warning:</strong> Hidden fields can be viewed/modified using browser Developer Tools. Never put sensitive data in hidden fields!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: date -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">12. type="date" &mdash; Date Picker</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a mini calendar that pops up when you click &mdash; pick year, month, and day, like booking a flight.</div>
+                <p>Provides a calendar widget. Value stored in <code>YYYY-MM-DD</code> format.</p>
+                <pre><code>&lt;input type="date" name="birthday" min="1900-01-01" max="2026-12-31"&gt;</code></pre>
+                <p><strong>Use for:</strong> Birthdays, appointment dates, events, deadlines.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: datetime-local -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">13. type="datetime-local" &mdash; Date and Time</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like the date picker, but also lets you set the exact time &mdash; scheduling a meeting in Google Calendar.</div>
+                <p>Combines date and time picker. Format: <code>YYYY-MM-DDTHH:MM</code>.</p>
+                <pre><code>&lt;input type="datetime-local" name="appointment" min="2024-01-01T00:00"&gt;</code></pre>
+                <p><strong>Use for:</strong> Appointment scheduling, event creation, reservations.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: time -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">14. type="time" &mdash; Time Picker</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a digital clock where you set hours and minutes &mdash; perfect for meeting times or alarms.</div>
+                <p>Time picker without the date. Format: <code>HH:MM</code> (24-hour) or AM/PM.</p>
+                <pre><code>&lt;input type="time" name="alarm_time" min="06:00" max="22:00"&gt;</code></pre>
+                <p><strong>Use for:</strong> Alarm times, meeting start/end, shift schedules.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: month -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">15. type="month" &mdash; Month Picker</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like picking a month from a wall calendar &mdash; year and month, but no specific day. Useful for billing cycles.</div>
+                <p>Month and year selection. Format: <code>YYYY-MM</code>.</p>
+                <pre><code>&lt;input type="month" name="billing_month"&gt;</code></pre>
+                <p><strong>Use for:</strong> Credit card expiry months, billing periods.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: week -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">16. type="week" &mdash; Week Picker</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a planner where you highlight an entire week &mdash; weeks are numbered (Week 1, Week 2, etc.).</div>
+                <p>Select a specific week of a specific year. Format: <code>YYYY-W##</code>.</p>
+                <pre><code>&lt;input type="week" name="project_week"&gt;</code></pre>
+                <p><strong>Use for:</strong> Weekly scheduling, project planning.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: color -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">17. type="color" &mdash; Color Picker</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like an artist's color palette &mdash; click the field and a color picker appears. Choose any color by clicking the spectrum or typing a hex code.</div>
+                <p>Color picker widget. Value is a hex code (e.g., <code>#ff0000</code> for red).</p>
+                <pre><code>&lt;input type="color" name="favorite_color" value="#0000ff"&gt;</code></pre>
+                <p><strong>Use for:</strong> Theme customizers, design tools, color selection.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: range -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">18. type="range" &mdash; Slider</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a volume slider on your phone or brightness slider on a monitor. Drag a handle along a track.</div>
+                <p>Slider control. User drags to select a value between <code>min</code> and <code>max</code>.</p>
+                <pre><code>&lt;input type="range" name="volume" min="0" max="100" step="5" value="50"&gt;</code></pre>
+                <p><strong>Use for:</strong> Volume controls, brightness sliders, price range filters, ratings.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: reset -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">19. type="reset" &mdash; Reset Button</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like an "Undo All" button &mdash; clears all fields back to their original defaults, like starting with a fresh form.</div>
+                <p>Resets all form fields to initial values when clicked. Does NOT submit the form.</p>
+                <pre><code>&lt;input type="reset" value="Clear All Fields"&gt;</code></pre>
+                <p><strong>Use for:</strong> "Clear form" or "Start over" buttons.</p>
+                <div class="info-box note"><strong>Note:</strong> Users may accidentally click it and lose input. Consider a JavaScript confirmation dialog instead.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: button -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">20. type="button" &mdash; Generic Button</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> A blank button you can label however you want and wire up to do anything with JavaScript. It does nothing by itself &mdash; a blank canvas.</div>
+                <p>A clickable button that does nothing by default. Behavior defined by JavaScript.</p>
+                <pre><code>&lt;input type="button" value="Click Me" onclick="alert('Hello!')"&gt;</code></pre>
+                <p><strong>Use for:</strong> Custom JS-triggered actions ("Show Password", "Add More Fields").</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: image -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">21. type="image" &mdash; Image as Submit Button</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like a submit button that shows a picture instead of text. Clicking anywhere on the image submits the form.</div>
+                <p>An image acting as a submit button. Also sends the x/y coordinates of the click.</p>
+                <pre><code>&lt;input type="image" src="submit-btn.png" alt="Submit" width="100" height="40"&gt;</code></pre>
+                <p><strong>Use for:</strong> Custom-styled submit buttons using images.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- type: datetime (deprecated) -->
+    <div class="card">
+        <div class="collapsible">
+            <div class="collapsible-header">22. type="datetime" &mdash; Date and Time (UTC) [Deprecated]</div>
+            <div class="collapsible-body">
+                <div class="info-box analogy"><strong>Analogy:</strong> Like <code>datetime-local</code> but stored in universal (UTC) time &mdash; a world clock adjusting to a universal standard.</div>
+                <p>Similar to <code>datetime-local</code> but stores in UTC. This type is <strong>deprecated</strong> &mdash; most browsers no longer support it. Use <code>datetime-local</code> instead.</p>
+                <pre><code>&lt;!-- Deprecated. Use datetime-local instead. --&gt;
+&lt;input type="datetime" name="event_utc"&gt;</code></pre>
+                <div class="info-box warning"><strong>Note:</strong> Do not use this in new projects. Always use <code>datetime-local</code>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 7: Input Type Quizzes -->
+    <div class="card">
+        <h2>7. Input Type Quizzes</h2>
+        <div class="quiz" id="quiz-input1">
+            <p><strong>Question 1:</strong> Which input type hides characters as dots?</p>
+            <div class="quiz-option" data-correct="false">type="hidden"</div>
+            <div class="quiz-option" data-correct="true">type="password"</div>
+            <div class="quiz-option" data-correct="false">type="text"</div>
+            <div class="quiz-option" data-correct="false">type="search"</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="quiz" id="quiz-input2">
+            <p><strong>Question 2:</strong> Which allows only ONE selection from a group?</p>
+            <div class="quiz-option" data-correct="false">type="checkbox"</div>
+            <div class="quiz-option" data-correct="true">type="radio"</div>
+            <div class="quiz-option" data-correct="false">type="select"</div>
+            <div class="quiz-option" data-correct="false">type="number"</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="quiz" id="quiz-input3">
+            <p><strong>Question 3:</strong> Which method appends form data to the URL?</p>
+            <div class="quiz-option" data-correct="true">GET</div>
+            <div class="quiz-option" data-correct="false">POST</div>
+            <div class="quiz-option" data-correct="false">PUT</div>
+            <div class="quiz-option" data-correct="false">DELETE</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="quiz" id="quiz-input4">
+            <p><strong>Question 4:</strong> Which input type is NOT visible but sends data?</p>
+            <div class="quiz-option" data-correct="false">type="password"</div>
+            <div class="quiz-option" data-correct="false">type="button"</div>
+            <div class="quiz-option" data-correct="true">type="hidden"</div>
+            <div class="quiz-option" data-correct="false">type="range"</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="quiz" id="quiz-input5">
+            <p><strong>Question 5:</strong> What enctype is required for file uploads?</p>
+            <div class="quiz-option" data-correct="false">application/x-www-form-urlencoded</div>
+            <div class="quiz-option" data-correct="true">multipart/form-data</div>
+            <div class="quiz-option" data-correct="false">text/plain</div>
+            <div class="quiz-option" data-correct="false">application/json</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 8: Textarea -->
+    <div class="card">
+        <h2>8. Textarea (Multi-Line Input)</h2>
+        <div class="info-box analogy"><strong>Analogy:</strong> If a text input is a single blank line, then <code>&lt;textarea&gt;</code> is a <strong>full blank page</strong> &mdash; like the "Comments" or "Additional Notes" box on an application form.</div>
+        <p>Creates a <strong>multi-line text input</strong>. Unlike <code>&lt;input&gt;</code>, it has both opening and closing tags.</p>
+        <pre><code>&lt;label for="comments"&gt;Your Comments:&lt;/label&gt;
+&lt;textarea id="comments" name="comments"
+          rows="6" cols="50"
+          maxlength="500"
+          placeholder="Type your comments here..."&gt;
+&lt;/textarea&gt;</code></pre>
+        <h3>Key Attributes</h3>
+        <table>
+            <tr><th>Attribute</th><th>Purpose</th></tr>
+            <tr><td><code>rows</code></td><td>Visible height (in lines of text)</td></tr>
+            <tr><td><code>cols</code></td><td>Visible width (in characters)</td></tr>
+            <tr><td><code>maxlength</code></td><td>Maximum characters allowed</td></tr>
+            <tr><td><code>placeholder</code></td><td>Hint text shown when empty</td></tr>
+        </table>
+        <div class="info-box tip"><strong>Tip:</strong> The textarea can be resized by the user (dragged) by default. Text inside <code>&lt;textarea&gt;...&lt;/textarea&gt;</code> appears as default content.</div>
+    </div>
+
+    <!-- SECTION 9: Select / Dropdown -->
+    <div class="card">
+        <h2>9. Select / Dropdown Menu</h2>
+        <div class="info-box analogy"><strong>Analogy:</strong> A <code>&lt;select&gt;</code> dropdown is like a <strong>vending machine</strong>. You see a list of options and pick one. The <code>&lt;option&gt;</code> tags are the individual items. The <code>value</code> attribute is the code for each item.</div>
+        <p>The <code>&lt;select&gt;</code> element creates a dropdown. Each choice is an <code>&lt;option&gt;</code> inside it.</p>
+        <pre><code>&lt;label for="country"&gt;Select your country:&lt;/label&gt;
+&lt;select id="country" name="country"&gt;
+    &lt;option value="" disabled selected&gt;-- Choose a country --&lt;/option&gt;
+    &lt;option value="my"&gt;Malaysia&lt;/option&gt;
+    &lt;option value="sg"&gt;Singapore&lt;/option&gt;
+    &lt;option value="us"&gt;United States&lt;/option&gt;
+    &lt;option value="uk"&gt;United Kingdom&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+        <h3>Key Attributes</h3>
+        <table>
+            <tr><th>Attribute</th><th>Where</th><th>Purpose</th></tr>
+            <tr><td><code>value</code></td><td><code>&lt;option&gt;</code></td><td>Data sent to the server. If omitted, text content is sent.</td></tr>
+            <tr><td><code>selected</code></td><td><code>&lt;option&gt;</code></td><td>Makes the option pre-selected on page load.</td></tr>
+            <tr><td><code>disabled</code></td><td><code>&lt;option&gt;</code></td><td>Makes an option unselectable (grayed out).</td></tr>
+            <tr><td><code>multiple</code></td><td><code>&lt;select&gt;</code></td><td>Allows selecting multiple options (hold Ctrl/Cmd).</td></tr>
+            <tr><td><code>size</code></td><td><code>&lt;select&gt;</code></td><td>Shows this many options at once (turns dropdown into scrollable list).</td></tr>
+        </table>
+        <h3>Option Groups</h3>
+        <p>Group related options with <code>&lt;optgroup&gt;</code>:</p>
+        <pre><code>&lt;select name="car"&gt;
+    &lt;optgroup label="Japanese"&gt;
+        &lt;option value="toyota"&gt;Toyota&lt;/option&gt;
+        &lt;option value="honda"&gt;Honda&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="German"&gt;
+        &lt;option value="bmw"&gt;BMW&lt;/option&gt;
+        &lt;option value="mercedes"&gt;Mercedes&lt;/option&gt;
+    &lt;/optgroup&gt;
+&lt;/select&gt;</code></pre>
+    </div>
+
+    <!-- Quiz: Textarea & Select -->
+    <div class="card">
+        <h3>Quiz: Textarea &amp; Select</h3>
+        <div class="quiz" id="quiz-ts">
+            <p><strong>Question:</strong> What attribute on &lt;option&gt; makes it pre-selected?</p>
+            <div class="quiz-option" data-correct="false">value</div>
+            <div class="quiz-option" data-correct="false">checked</div>
+            <div class="quiz-option" data-correct="true">selected</div>
+            <div class="quiz-option" data-correct="false">default</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+
+    <!-- SECTION 10: Useful Attributes -->
+    <div class="card">
+        <h2>10. Useful Form Attributes</h2>
+        <div class="info-box analogy"><strong>Analogy:</strong> These are "convenience features" on a self-service kiosk. <code>autofocus</code> = kiosk highlights the first field. <code>required</code> = "you must fill this" warning. <code>autocomplete</code> = kiosk remembers your previous orders.</div>
+        <table>
+            <tr><th>Attribute</th><th>Purpose</th><th>Example</th></tr>
+            <tr><td><code>autofocus</code></td><td>Auto-focuses the input on page load.</td><td><code>&lt;input type="text" autofocus&gt;</code></td></tr>
+            <tr><td><code>required</code></td><td>Makes field mandatory. Browser won't submit without it.</td><td><code>&lt;input type="email" required&gt;</code></td></tr>
+            <tr><td><code>formnovalidate</code></td><td>On submit button: skips browser validation.</td><td><code>&lt;input type="submit" formnovalidate&gt;</code></td></tr>
+            <tr><td><code>autocomplete</code></td><td>Controls browser auto-fill. Values: <code>on</code> or <code>off</code>.</td><td><code>&lt;input autocomplete="on"&gt;</code></td></tr>
+            <tr><td><code>disabled</code></td><td>Makes input unclickable and unsubmitable.</td><td><code>&lt;input type="text" disabled&gt;</code></td></tr>
+            <tr><td><code>readonly</code></td><td>Read-only but value IS still submitted.</td><td><code>&lt;input value="Fixed" readonly&gt;</code></td></tr>
+        </table>
+
+        <h3>The Datalist Element</h3>
+        <p><code>&lt;datalalist&gt;</code> provides suggested options for an input. Users can type their own value OR pick from suggestions &mdash; like autocomplete:</p>
+        <pre><code>&lt;label for="browser"&gt;Choose a browser:&lt;/label&gt;
+&lt;input type="text" id="browser" name="browser" list="browsers"&gt;
+&lt;datalist id="browsers"&gt;
+    &lt;option value="Chrome"&gt;
+    &lt;option value="Firefox"&gt;
+    &lt;option value="Safari"&gt;
+    &lt;option value="Edge"&gt;
+    &lt;option value="Opera"&gt;
+&lt;/datalist&gt;</code></pre>
+        <div class="info-box tip"><strong>Datalist vs Select:</strong> <code>&lt;select&gt;</code> forces the user to pick a listed option. <code>&lt;datalist&gt;</code> suggests options but also allows custom values. Select = strict menu, datalist = flexible suggestions.</div>
+    </div>
+
+    <!-- SECTION 11: Complete Form Example -->
+    <div class="card">
+        <h2>11. Complete Form Example</h2>
+        <div class="info-box analogy"><strong>Analogy:</strong> This is a complete restaurant order form using every tool we learned &mdash; name, email, phone, date, preferences, requests, and file attachment &mdash; all in one <code>&lt;form&gt;</code> envelope.</div>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Registration Form&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;Student Registration Form&lt;/h1&gt;
+
+&lt;form action="register.php" method="post" enctype="multipart/form-data"&gt;
+
+    &lt;label for="name"&gt;Full Name: *&lt;/label&gt;
+    &lt;input type="text" id="name" name="fullname"
+           size="40" maxlength="100"
+           placeholder="Enter your full name" required autofocus&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="email"&gt;Email Address: *&lt;/label&gt;
+    &lt;input type="email" id="email" name="email"
+           placeholder="you@example.com" required&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="pass"&gt;Password: *&lt;/label&gt;
+    &lt;input type="password" id="pass" name="password"
+           maxlength="30" required&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="phone"&gt;Phone Number:&lt;/label&gt;
+    &lt;input type="tel" id="phone" name="phone"
+           placeholder="123-456-7890"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="dob"&gt;Date of Birth: *&lt;/label&gt;
+    &lt;input type="date" id="dob" name="dob" required&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="age"&gt;Age:&lt;/label&gt;
+    &lt;input type="number" id="age" name="age"
+           min="16" max="100" value="18"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;p&gt;Gender: *&lt;/p&gt;
+    &lt;input type="radio" name="gender" value="male" id="gm" required&gt;
+    &lt;label for="gm"&gt;Male&lt;/label&gt;
+    &lt;input type="radio" name="gender" value="female" id="gf"&gt;
+    &lt;label for="gf"&gt;Female&lt;/label&gt;
+    &lt;input type="radio" name="gender" value="other" id="go"&gt;
+    &lt;label for="go"&gt;Other&lt;/label&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;p&gt;Interests:&lt;/p&gt;
+    &lt;input type="checkbox" name="interest[]" value="web" id="i1"&gt;
+    &lt;label for="i1"&gt;Web Development&lt;/label&gt;
+    &lt;input type="checkbox" name="interest[]" value="mobile" id="i2"&gt;
+    &lt;label for="i2"&gt;Mobile Development&lt;/label&gt;
+    &lt;input type="checkbox" name="interest[]" value="ai" id="i3"&gt;
+    &lt;label for="i3"&gt;Artificial Intelligence&lt;/label&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="course"&gt;Select Course: *&lt;/label&gt;
+    &lt;select id="course" name="course" required&gt;
+        &lt;option value="" disabled selected&gt;-- Choose --&lt;/option&gt;
+        &lt;option value="cs"&gt;Computer Science&lt;/option&gt;
+        &lt;option value="it"&gt;Information Technology&lt;/option&gt;
+        &lt;option value="se"&gt;Software Engineering&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="website"&gt;Personal Website:&lt;/label&gt;
+    &lt;input type="url" id="website" name="website"
+           placeholder="https://yoursite.com"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="favcolor"&gt;Favorite Color:&lt;/label&gt;
+    &lt;input type="color" id="favcolor" name="favcolor" value="#3498db"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="exp"&gt;Experience (0-10):&lt;/label&gt;
+    &lt;input type="range" id="exp" name="experience"
+           min="0" max="10" step="1" value="5"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="bio"&gt;Short Bio:&lt;/label&gt;
+    &lt;textarea id="bio" name="bio"
+              rows="4" cols="50"
+              maxlength="300"
+              placeholder="Tell us about yourself..."&gt;&lt;/textarea&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;label for="photo"&gt;Upload Photo:&lt;/label&gt;
+    &lt;input type="file" id="photo" name="photo"
+           accept="image/png, image/jpeg"&gt;
+    &lt;br&gt;&lt;br&gt;
+
+    &lt;input type="hidden" name="form_version" value="2.0"&gt;
+
+    &lt;input type="submit" value="Register"&gt;
+    &lt;input type="reset" value="Clear Form"&gt;
+
+&lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+
+    <!-- SECTION 12: Flashcards -->
+    <div class="card">
+        <h2>12. Flashcards Review</h2>
+        <p>Click a card to flip it and reveal the answer.</p>
+        <div class="flashcard-container">
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What does the action attribute in a form do?</div>
+                    <div class="flashcard-back">It specifies the URL of the server-side script that will process the form data.</div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What is the difference between GET and POST?</div>
+                    <div class="flashcard-back">GET appends data to the URL (visible, bookmarkable, limited). POST sends data in the request body (hidden, no limit, better for sensitive data).</div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What is URL encoding?</div>
+                    <div class="flashcard-back">Converting special characters into ASCII format for safe transmission. Spaces become %20 or +, other characters get %xx codes.</div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">checkbox vs radio?</div>
+                    <div class="flashcard-back">Checkboxes: zero or more selections. Radio buttons: exactly ONE per group (shared name).</div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What does type="hidden" do?</div>
+                    <div class="flashcard-back">Invisible input that sends data to the server. Used for IDs, tokens, tracking data.</div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">&lt;select&gt; vs &lt;datalist&gt;?</div>
+                    <div class="flashcard-back">&lt;select&gt; forces picking a listed option. &lt;datalist&gt; suggests options but allows custom values.</div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">Why is &lt;label&gt; important?</div>
+                    <div class="flashcard-back">Accessibility: screen readers announce it. Usability: clicking the label focuses the input.</div>
+                </div>
+            </div>
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What enctype is needed for file uploads?</div>
+                    <div class="flashcard-back">enctype="multipart/form-data" - encodes binary file content properly.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 13: Collapsible Quick Reference -->
+    <div class="card">
+        <h2>13. Quick Reference Guide</h2>
+
+        <div class="collapsible">
+            <div class="collapsible-header">Form Element Attributes</div>
+            <div class="collapsible-body">
+                <table>
+                    <tr><th>Attribute</th><th>Purpose</th></tr>
+                    <tr><td><code>action</code></td><td>URL of the script that processes form data</td></tr>
+                    <tr><td><code>method</code></td><td>GET (URL) or POST (request body)</td></tr>
+                    <tr><td><code>enctype</code></td><td>Encoding type. Use <code>multipart/form-data</code> for file uploads</td></tr>
+                    <tr><td><code>target</code></td><td>Where to display the response (_blank, _self, etc.)</td></tr>
+                    <tr><td><code>novalidate</code></td><td>Disables browser validation for the entire form</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="collapsible-header">All 22 Input Types Summary</div>
+            <div class="collapsible-body">
+                <table>
+                    <tr><th>Type</th><th>Use Case</th></tr>
+                    <tr><td><code>text</code></td><td>General text input</td></tr>
+                    <tr><td><code>password</code></td><td>Hidden characters (passwords)</td></tr>
+                    <tr><td><code>email</code></td><td>Email with format validation</td></tr>
+                    <tr><td><code>number</code></td><td>Numeric with spinner controls</td></tr>
+                    <tr><td><code>tel</code></td><td>Telephone numbers</td></tr>
+                    <tr><td><code>url</code></td><td>Web address with validation</td></tr>
+                    <tr><td><code>search</code></td><td>Search fields</td></tr>
+                    <tr><td><code>checkbox</code></td><td>Multiple selections</td></tr>
+                    <tr><td><code>radio</code></td><td>Single selection from group</td></tr>
+                    <tr><td><code>file</code></td><td>File uploads</td></tr>
+                    <tr><td><code>hidden</code></td><td>Invisible data for server</td></tr>
+                    <tr><td><code>date</code></td><td>Calendar date picker</td></tr>
+                    <tr><td><code>datetime-local</code></td><td>Date + time picker</td></tr>
+                    <tr><td><code>time</code></td><td>Time picker only</td></tr>
+                    <tr><td><code>month</code></td><td>Month + year picker</td></tr>
+                    <tr><td><code>week</code></td><td>Week picker</td></tr>
+                    <tr><td><code>color</code></td><td>Color picker widget</td></tr>
+                    <tr><td><code>range</code></td><td>Slider control</td></tr>
+                    <tr><td><code>reset</code></td><td>Clears all form fields</td></tr>
+                    <tr><td><code>button</code></td><td>Generic clickable button (JS)</td></tr>
+                    <tr><td><code>image</code></td><td>Image as submit button</td></tr>
+                    <tr><td><code>datetime</code></td><td>UTC date/time (deprecated)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="collapsible-header">Textarea vs Input vs Select</div>
+            <div class="collapsible-body">
+                <table>
+                    <tr><th>Element</th><th>When to Use</th></tr>
+                    <tr><td><code>&lt;input type="text"&gt;</code></td><td>Single line of text (name, email, search)</td></tr>
+                    <tr><td><code>&lt;textarea&gt;</code></td><td>Multiple lines of text (comments, messages, bio)</td></tr>
+                    <tr><td><code>&lt;select&gt;</code></td><td>Pick one (or many) from a predefined list (dropdown)</td></tr>
+                    <tr><td><code>&lt;datalist&gt;</code></td><td>Suggested options with ability to type custom values</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="collapsible-header">Key Input Attributes</div>
+            <div class="collapsible-body">
+                <table>
+                    <tr><th>Attribute</th><th>Applies To</th><th>Purpose</th></tr>
+                    <tr><td><code>name</code></td><td>All inputs</td><td>Key for server-side data identification</td></tr>
+                    <tr><td><code>value</code></td><td>All inputs</td><td>Default/pre-filled value</td></tr>
+                    <tr><td><code>placeholder</code></td><td>text, email, etc.</td><td>Hint text shown when empty</td></tr>
+                    <tr><td><code>required</code></td><td>All inputs</td><td>Makes field mandatory</td></tr>
+                    <tr><td><code>autofocus</code></td><td>All inputs</td><td>Auto-focus on page load</td></tr>
+                    <tr><td><code>maxlength</code></td><td>text, password, textarea</td><td>Max characters allowed</td></tr>
+                    <tr><td><code>min / max</code></td><td>number, date, time, range</td><td>Min/max allowed values</td></tr>
+                    <tr><td><code>step</code></td><td>number, range</td><td>Increment/decrement step</td></tr>
+                    <tr><td><code>pattern</code></td><td>text, tel, url, email</td><td>Regex pattern for validation</td></tr>
+                    <tr><td><code>disabled</code></td><td>All inputs</td><td>Grays out, prevents submission</td></tr>
+                    <tr><td><code>readonly</code></td><td>text, password, textarea</td><td>Read-only but value still submitted</td></tr>
+                    <tr><td><code>accept</code></td><td>file</td><td>Allowed file types</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 14: Summary -->
+    <div class="card">
+        <h2>Summary</h2>
+        <div class="summary">
+            <ul>
+                <li><strong>HTML forms</strong> collect user input and send it to a server for processing.</li>
+                <li>The <code>&lt;form&gt;</code> tag has two key attributes: <code>action</code> (where to send) and <code>method</code> (how to send).</li>
+                <li><strong>GET</strong> appends data to the URL (visible). <strong>POST</strong> sends data in the request body (hidden).</li>
+                <li><strong>URL encoding</strong> converts special characters to ASCII for safe transmission.</li>
+                <li>The <code>&lt;input&gt;</code> element has <strong>22 types</strong>: text, password, email, number, tel, url, search, checkbox, radio, file, hidden, date, datetime-local, time, month, week, color, range, reset, button, image, and datetime (deprecated).</li>
+                <li><strong>Checkboxes</strong> = select many. <strong>Radio buttons</strong> = select one per group.</li>
+                <li><strong>Textarea</strong> provides multi-line text input with rows and cols.</li>
+                <li><strong>Select/option</strong> creates dropdown menus. <strong>Optgroup</strong> groups related options.</li>
+                <li><strong>Datalist</strong> provides suggestions while allowing custom input.</li>
+                <li>Always use <code>&lt;label&gt;</code> for accessibility. Link with <code>for</code>/<code>id</code>.</li>
+                <li>Use <code>required</code> for mandatory fields, <code>placeholder</code> for hints, <code>autofocus</code> for auto-focus.</li>
+                <li>For file uploads, use <code>enctype="multipart/form-data"</code> with POST method.</li>
+                <li><code>type="hidden"</code> passes invisible data to the server (IDs, tokens).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Navigation between topics -->
+    <div class="steps">
+        <a href="topic3-html-basics.html" class="step-item" style="text-decoration:none; color:inherit;">
+            &larr; Previous: HTML Fundamentals (Topic 3)
+        </a>
+        <a href="topic5-regex.html" class="step-item" style="text-decoration:none; color:inherit;">
+            Next: Regular Expressions (Topic 5) &rarr;
+        </a>
+    </div>
+
+</div>
+
+<script>
+// Quiz functionality
+document.querySelectorAll('.quiz').forEach(function(quiz) {
+    var options = quiz.querySelectorAll('.quiz-option');
+    var feedback = quiz.querySelector('.quiz-feedback');
+
+    options.forEach(function(option) {
+        option.addEventListener('click', function() {
+            var previouslySelected = quiz.querySelector('.quiz-option.selected');
+            if (previouslySelected) {
+                previouslySelected.classList.remove('selected');
+            }
+            this.classList.add('selected');
+
+            if (this.getAttribute('data-correct') === 'true') {
+                feedback.textContent = 'Correct! Well done.';
+                feedback.style.color = '#198754';
+                feedback.style.fontWeight = 'bold';
+            } else {
+                feedback.textContent = 'Incorrect. Try again!';
+                feedback.style.color = '#dc3545';
+                feedback.style.fontWeight = 'bold';
+            }
+        });
+    });
+});
+
+// Fill-in-the-blank functionality
+function checkFillBlanks(id) {
+    var container = document.getElementById(id);
+    var inputs = container.querySelectorAll('input[type="text"]');
+    var feedback = container.querySelector('.quiz-feedback');
+    var allCorrect = true;
+
+    inputs.forEach(function(input) {
+        var answer = input.getAttribute('data-answer').toLowerCase().trim();
+        var userAnswer = input.value.toLowerCase().trim();
+
+        if (userAnswer === answer) {
+            input.style.borderColor = '#198754';
+            input.style.backgroundColor = '#d4edda';
+        } else {
+            input.style.borderColor = '#dc3545';
+            input.style.backgroundColor = '#f8d7da';
+            allCorrect = false;
+        }
+    });
+
+    if (allCorrect) {
+        feedback.textContent = 'All answers correct! Great job.';
+        feedback.style.color = '#198754';
+    } else {
+        feedback.textContent = 'Some answers are incorrect. Check highlighted fields.';
+        feedback.style.color = '#dc3545';
+    }
+}
+
+// Collapsible sections
+document.querySelectorAll('.collapsible-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+        this.parentElement.classList.toggle('active');
+    });
+});
+
+// Flashcard flip
+document.querySelectorAll('.flashcard').forEach(function(card) {
+    card.addEventListener('click', function() {
+        this.classList.toggle('flipped');
+    });
+});
+</script>
+
+</body>
+</html>

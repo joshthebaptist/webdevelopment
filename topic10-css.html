@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 10: CSS (Cascading Style Sheets)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ============================== -->
+  <!-- TOPIC TITLE &amp; PROGRESS        -->
+  <!-- ============================== -->
+  <h1>CSS &mdash; Cascading Style Sheets</h1>
+  <p>CSS describes how HTML elements look on screen. It controls layout, colours, fonts, spacing, and responsive design across your entire website.</p>
+
+  <div class="progress-bar"><div class="progress-text">Topic 10 of 14 &mdash; 71%</div></div>
+
+  <!-- ============================== -->
+  <!-- LEARNING OUTCOMES              -->
+  <!-- ============================== -->
+  <div class="card">
+    <h2>Learning Outcomes</h2>
+    <p>After this topic you will be able to:</p>
+    <ul>
+      <li>Explain what CSS is and why it was created</li>
+      <li>Write CSS rules using selectors, properties, and values</li>
+      <li>Apply CSS using external, internal, and inline methods</li>
+      <li>Calculate CSS specificity to resolve conflicting rules</li>
+      <li>Understand the Box Model: content, padding, border, margin</li>
+      <li>Style text, fonts, links, backgrounds, borders, and tables</li>
+      <li>Use CSS display and position properties to control layout</li>
+      <li>Apply colours and measurements in CSS</li>
+    </ul>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 1: WHAT IS CSS?                       -->
+  <!-- ============================================= -->
+  <h2>1. What is CSS?</h2>
+
+  <div class="card">
+    <h3>CSS = Cascading Style Sheets</h3>
+    <p>CSS describes how HTML elements should be rendered on screen, paper, or other media. It lets you control the layout and appearance of <strong>multiple pages from a single file</strong>.</p>
+    <p>External stylesheets are stored in <code>.css</code> files and linked to HTML documents.</p>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Clothes on a Mannequin:</strong>
+    HTML is the <strong>mannequin</strong> (the structure &mdash; arms, legs, head). CSS is the <strong>clothing</strong> (the style &mdash; colour, size, position). Without CSS, every mannequin looks the same (plain, unstyled). With CSS, you can dress each mannequin differently &mdash; or style them all consistently with one wardrobe.
+  </div>
+
+  <div class="card">
+    <h3>Why Was CSS Created?</h3>
+    <p>HTML was <strong>never meant for formatting</strong>. In the early days, developers used tags like <code>&lt;font&gt;</code>, <code>&lt;center&gt;</code>, and <code>&lt;b&gt;</code> directly in HTML. This caused nightmares:</p>
+    <ul>
+      <li>Every page had to be styled individually (massive repetition)</li>
+      <li>Changing a site's look meant editing every single HTML file</li>
+      <li>HTML became cluttered with presentation code mixed with content</li>
+    </ul>
+    <p>The <strong>W3C</strong> (World Wide Web Consortium) created CSS to <strong>separate style from structure</strong>, solving all of these problems.</p>
+  </div>
+
+  <div class="info-box tip">
+    <strong>Tip:</strong> Modern best practice: use HTML for structure/meaning and CSS for all visual presentation. Never use <code>&lt;font&gt;</code> or inline <code>style</code> attributes for real projects.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 2: CSS SYNTAX                         -->
+  <!-- ============================================= -->
+  <h2>2. CSS Syntax</h2>
+
+  <div class="card">
+    <h3>Anatomy of a CSS Rule</h3>
+    <pre><code>selector {
+    property: value;
+    property: value;
+}</code></pre>
+    <p>A CSS rule consists of:</p>
+    <ul>
+      <li><strong>Selector</strong> &mdash; points to the HTML element(s) to style</li>
+      <li><strong>Declaration Block</strong> &mdash; curly braces <code>{ }</code> containing declarations</li>
+      <li><strong>Declaration</strong> &mdash; a <code>property: value;</code> pair</li>
+    </ul>
+
+    <pre><code>h1 {
+    color: blue;
+    font-size: 24px;
+    text-align: center;
+}</code></pre>
+    <p>Here <code>h1</code> is the selector, and there are three declarations. Every declaration ends with a <strong>semicolon</strong>.</p>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Recipe:</strong>
+    The <strong>selector</strong> is the ingredient you're cooking (e.g., "pasta"). The <strong>property</strong> is what aspect you're changing (e.g., "cook time"). The <strong>value</strong> is the setting (e.g., "8 minutes"). One ingredient (selector) can have multiple cooking instructions (declarations).
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 3: SELECTORS                           -->
+  <!-- ============================================= -->
+  <h2>3. CSS Selectors</h2>
+
+  <div class="card">
+    <h3>Types of Selectors</h3>
+    <table>
+      <thead>
+        <tr><th>Selector</th><th>Syntax</th><th>What It Selects</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Element</strong></td>
+          <td><code>element</code></td>
+          <td>All instances of an HTML element</td>
+          <td><code>p { color: red; }</code> &mdash; all paragraphs</td>
+        </tr>
+        <tr>
+          <td><strong>ID</strong></td>
+          <td><code>#id</code></td>
+          <td>A single unique element with that ID</td>
+          <td><code>#sidebar { width: 250px; }</code></td>
+        </tr>
+        <tr>
+          <td><strong>Class</strong></td>
+          <td><code>.class</code></td>
+          <td>All elements with that class name</td>
+          <td><code>.wrapper { max-width: 1200px; }</code></td>
+        </tr>
+        <tr>
+          <td><strong>Descendant</strong></td>
+          <td><code>A B</code></td>
+          <td>All B elements inside A (any depth)</td>
+          <td><code>div p { margin: 10px; }</code></td>
+        </tr>
+        <tr>
+          <td><strong>Grouped</strong></td>
+          <td><code>A, B</code></td>
+          <td>Elements matching A OR B</td>
+          <td><code>h1, p.wrapper { font-family: Arial; }</code></td>
+        </tr>
+        <tr>
+          <td><strong>Attribute</strong></td>
+          <td><code>[attr]</code></td>
+          <td>Elements with that attribute</td>
+          <td><code>a[target="_blank"] { color: red; }</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>More Selector Examples</h3>
+    <pre><code>/* Element selector */
+p {
+    line-height: 1.6;
+}
+
+/* ID selector - use for unique elements */
+#header {
+    background-color: #333;
+    color: white;
+}
+
+/* Class selector - use for reusable styles */
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+}
+
+/* Descendant selector - p inside div */
+div p {
+    padding-left: 20px;
+}
+
+/* Grouped selector - apply same style to multiple */
+h1, h2, h3 {
+    font-family: 'Georgia', serif;
+}
+
+/* Attribute selector */
+input[type="text"] {
+    border: 1px solid #ccc;
+}
+
+a[target="_blank"]::after {
+    content: " (opens in new tab)";
+}</code></pre>
+  </div>
+
+  <div class="info-box warning">
+    <strong>Important:</strong> IDs must be unique on a page (use once). Classes can be reused (use many times). Choose class over ID for styling when possible &mdash; classes are more flexible and have lower specificity.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 4: THREE WAYS TO INSERT CSS           -->
+  <!-- ============================================= -->
+  <h2>4. Three Ways to Insert CSS</h2>
+
+  <div class="card">
+    <h3>Method 1: External Stylesheet (Recommended)</h3>
+    <p>A separate <code>.css</code> file linked in the <code>&lt;head&gt;</code>. This is the <strong>best practice</strong> for all real projects.</p>
+    <pre><code>&lt;head&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;</code></pre>
+    <p><strong>Pros:</strong> Single file styles all pages, easy to maintain, cached by browser for faster loading.</p>
+  </div>
+
+  <div class="card">
+    <h3>Method 2: Internal Stylesheet</h3>
+    <p>CSS written inside a <code>&lt;style&gt;</code> tag in the <code>&lt;head&gt;</code>. Useful for page-specific styles.</p>
+    <pre><code>&lt;head&gt;
+    &lt;style&gt;
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+    <p><strong>Pros:</strong> No extra file needed. <strong>Cons:</strong> Only affects one page, can't be cached.</p>
+  </div>
+
+  <div class="card">
+    <h3>Method 3: Inline Styles</h3>
+    <p>CSS applied directly on an element using the <code>style</code> attribute. Avoid in real projects.</p>
+    <pre><code>&lt;p style="color: red; font-size: 18px;"&gt;This text is red and 18px.&lt;/p&gt;</code></pre>
+    <p><strong>Pros:</strong> Quick for testing. <strong>Cons:</strong> Mixes style with structure, hard to maintain, overrides everything (too specific).</p>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Dress Code:</strong>
+    <strong>External</strong> = a company-wide dress code policy (everyone follows one document). <strong>Internal</strong> = a department-specific addendum (only that department). <strong>Inline</strong> = a sticky note on your desk saying "wear a hat today" (only affects you, overrides everything).
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 5: CSS SPECIFICITY                     -->
+  <!-- ============================================= -->
+  <h2>5. CSS Specificity</h2>
+
+  <div class="card">
+    <h3>What is Specificity?</h3>
+    <p>When multiple CSS rules target the same element, <strong>specificity</strong> determines which rule wins. Think of it as a ranking system.</p>
+
+    <h3>Specificity Hierarchy (highest to lowest)</h3>
+    <table>
+      <thead>
+        <tr><th>Rank</th><th>Selector Type</th><th>Example</th><th>Specificity Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1 (Highest)</td><td>Inline style</td><td><code>style="..."</code></td><td>1,0,0,0</td></tr>
+        <tr><td>2</td><td>ID selector</td><td><code>#header</code></td><td>0,1,0,0</td></tr>
+        <tr><td>3</td><td>Class / Attribute / Pseudo-class</td><td><code>.nav</code>, <code>[type]</code>, <code>:hover</code></td><td>0,0,1,0</td></tr>
+        <tr><td>4 (Lowest)</td><td>Element / Pseudo-element</td><td><code>p</code>, <code>::before</code></td><td>0,0,0,1</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Rules for Resolving Conflicts</h3>
+    <ol>
+      <li>A <strong>more specific</strong> selector always wins (ID beats class beats element)</li>
+      <li>If specificity is <strong>equal</strong>, the <strong>last rule</strong> wins (cascade order)</li>
+      <li><code>!important</code> overrides everything (avoid using it &mdash; it's a maintenance nightmare)</li>
+    </ol>
+
+    <pre><code>/* This targets ALL paragraphs */
+p {
+    color: black;        /* specificity: 0,0,0,1 */
+}
+
+/* This targets paragraphs with class "intro" */
+p.intro {
+    color: blue;         /* specificity: 0,0,1,1 */
+}
+
+/* This targets the element with ID "main" */
+#main p {
+    color: green;        /* specificity: 0,1,0,1 */
+}
+
+/* Result: paragraphs inside #main are green (highest specificity) */</code></pre>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Chain of Command:</strong>
+    Specificity is like a chain of command in the military. A <strong>general's order</strong> (ID selector) always overrides a <strong>sergeant's order</strong> (class selector), which overrides a <strong>private's request</strong> (element selector). If two generals give conflicting orders, the one who speaks <strong>last</strong> wins.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 6: THE BOX MODEL                       -->
+  <!-- ============================================= -->
+  <h2>6. The Box Model</h2>
+
+  <div class="card">
+    <h3>Every Element is a Box</h3>
+    <p>In CSS, every HTML element is treated as a rectangular box with four layers, from inside to outside:</p>
+
+    <div class="diagram">
+      <div class="step-item" style="border: 2px dashed #e74c3c; padding: 15px; text-align: center;">
+        <strong style="color: #e74c3c;">Margin</strong> &mdash; transparent space outside the border
+        <div style="border: 2px solid #3498db; padding: 15px; margin: 10px; text-align: center;">
+          <strong style="color: #3498db;">Border</strong> &mdash; the visible edge around the element
+          <div style="background-color: #eaf2e3; padding: 15px; margin: 10px; text-align: center;">
+            <strong style="color: #27ae60;">Padding</strong> &mdash; space between content and border
+            <div style="background-color: #3498db; color: white; padding: 20px; margin: 10px; text-align: center;">
+              <strong>Content</strong> &mdash; the actual text, image, or media
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Key Facts</h3>
+    <ul>
+      <li><code>width</code> and <code>height</code> only set the <strong>content area</strong> size</li>
+      <li><strong>Actual visible width</strong> = width + padding-left + padding-right + border-left + border-right</li>
+      <li><strong>Total space used</strong> = content + padding + border + margin</li>
+    </ul>
+
+    <pre><code>.box {
+    width: 300px;
+    padding: 20px;
+    border: 5px solid black;
+    margin: 10px;
+}
+
+/* Actual rendered width = 300 + 20 + 20 + 5 + 5 = 350px */
+/* Total space occupied  = 350 + 10 + 10 = 370px */</code></pre>
+
+    <h3>Box-Sizing: The Fix</h3>
+    <pre><code>/* Use border-box so width INCLUDES padding and border */
+* {
+    box-sizing: border-box;
+}
+
+/* Now width: 300px means the total box is 300px,
+   including padding and border */</code></pre>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Gift Wrapped Package:</strong>
+    The <strong>content</strong> is the actual gift. The <strong>padding</strong> is the bubble wrap around it. The <strong>border</strong> is the wrapping paper. The <strong>margin</strong> is the empty space between this gift and other gifts on the table. <code>box-sizing: border-box</code> is like measuring the whole package, wrapping paper and all.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 7: COLOURS                            -->
+  <!-- ============================================= -->
+  <h2>7. CSS Colours</h2>
+
+  <div class="card">
+    <h3>Three Ways to Specify Colours</h3>
+    <table>
+      <thead>
+        <tr><th>Method</th><th>Syntax</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Named Colours</strong></td>
+          <td>colour name</td>
+          <td><code>color: red;</code></td>
+        </tr>
+        <tr>
+          <td><strong>HEX (Hexadecimal)</strong></td>
+          <td>#RRGGBB</td>
+          <td><code>color: #ff0000;</code></td>
+        </tr>
+        <tr>
+          <td><strong>RGBA</strong></td>
+          <td>rgba(R, G, B, A)</td>
+          <td><code>color: rgba(255, 0, 0, 0.5);</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Details</h3>
+    <ul>
+      <li><strong>Named:</strong> 140 standard colour names (<code>red</code>, <code>tomato</code>, <code>cornflowerblue</code>, etc.)</li>
+      <li><strong>HEX:</strong> 6-digit hexadecimal where each pair represents Red, Green, Blue (00&ndash;FF). <code>#ff0000</code> = full red, <code>#00ff00</code> = full green, <code>#0000ff</code> = full blue. <code>#000000</code> = black, <code>#ffffff</code> = white.</li>
+      <li><strong>RGBA:</strong> Same as RGB but with an alpha (opacity) value from 0 (transparent) to 1 (opaque). <code>rgba(0, 0, 0, 0.5)</code> = semi-transparent black.</li>
+    </ul>
+
+    <pre><code>h1 { color: tomato; }            /* Named */
+p  { color: #333333; }           /* HEX */
+a  { color: rgba(0, 0, 0, 0.7); }/* RGBA with 70% opacity */</code></pre>
+  </div>
+
+  <div class="info-box note">
+    <strong>Note:</strong> HEX is the most commonly used format in professional web development. Short-hand hex is also valid: <code>#f00</code> is the same as <code>#ff0000</code>.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 8: MEASUREMENTS                       -->
+  <!-- ============================================= -->
+  <h2>8. CSS Measurements</h2>
+
+  <div class="card">
+    <h3>Relative vs Absolute Units</h3>
+    <table>
+      <thead>
+        <tr><th>Type</th><th>Unit</th><th>Description</th><th>Use Case</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="4"><strong>Relative</strong></td>
+          <td><code>px</code></td>
+          <td>Pixels &mdash; fixed screen units</td>
+          <td>Borders, precise sizing</td>
+        </tr>
+        <tr>
+          <td><code>em</code></td>
+          <td>Relative to parent element's font size</td>
+          <td>Spacing, padding, font sizes</td>
+        </tr>
+        <tr>
+          <td><code>rem</code></td>
+          <td>Relative to root (<code>&lt;html&gt;</code>) font size</td>
+          <td>Consistent font sizing</td>
+        </tr>
+        <tr>
+          <td><code>%</code></td>
+          <td>Relative to parent element</td>
+          <td>Widths, responsive layouts</td>
+        </tr>
+        <tr>
+          <td rowspan="4"><strong>Absolute</strong></td>
+          <td><code>in</code></td>
+          <td>Inches</td>
+          <td>Print stylesheets</td>
+        </tr>
+        <tr>
+          <td><code>cm</code></td>
+          <td>Centimetres</td>
+          <td>Print stylesheets</td>
+        </tr>
+        <tr>
+          <td><code>mm</code></td>
+          <td>Millimetres</td>
+          <td>Print stylesheets</td>
+        </tr>
+        <tr>
+          <td><code>pt</code></td>
+          <td>Points (1pt = 1/72 inch)</td>
+          <td>Print, typography</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box tip">
+      <strong>Tip:</strong> For web screens, use <code>px</code> for borders and precise values, <code>em</code>/<code>rem</code> for font sizes and spacing, and <code>%</code> for widths. Avoid <code>cm</code>, <code>mm</code>, <code>in</code>, and <code>pt</code> for screen layout &mdash; they're meant for print.
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 9: BACKGROUNDS &amp; BORDERS             -->
+  <!-- ============================================= -->
+  <h2>9. Backgrounds &amp; Borders</h2>
+
+  <div class="card">
+    <h3>Backgrounds</h3>
+    <pre><code>.hero {
+    background-color: #3498db;              /* Solid colour */
+    background-image: url('image.jpg');      /* Background image */
+    background-size: cover;                  /* Fill the element */
+    background-repeat: no-repeat;            /* Don't tile the image */
+    background-position: center;             /* Centre the image */
+}
+
+/* Shorthand */
+.hero {
+    background: #3498db url('image.jpg') no-repeat center / cover;
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Borders</h3>
+    <p>A border requires at minimum a <strong>style</strong> (the other properties have defaults).</p>
+    <pre><code>.card {
+    border-width: 2px;
+    border-style: solid;      /* Required! Options: solid, dashed, dotted, double, none */
+    border-color: #333;
+}
+
+/* Shorthand */
+.card {
+    border: 2px solid #333;
+}
+
+/* Individual sides */
+.card {
+    border-top: 1px dashed red;
+    border-bottom: 3px double blue;
+    border-radius: 8px;    /* Rounded corners */
+}</code></pre>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 10: MARGINS &amp; PADDINGS              -->
+  <!-- ============================================= -->
+  <h2>10. Margins &amp; Padding</h2>
+
+  <div class="card">
+    <h3>Margins</h3>
+    <p>Space <strong>outside</strong> the border. Margins are always transparent.</p>
+    <pre><code>.box {
+    margin-top: 20px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+
+    /* Shorthand (clockwise: top, right, bottom, left) */
+    margin: 20px 10px 20px 10px;
+
+    /* Two values: vertical | horizontal */
+    margin: 20px 10px;
+
+    /* One value: all sides */
+    margin: 15px;
+
+    /* Centre horizontally */
+    margin: 0 auto;
+}</code></pre>
+    <p>Margins accept: <code>auto</code> (centres block elements), <code>length</code> (px, em, etc.), <code>%</code>, and <code>inherit</code>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Padding</h3>
+    <p>Space <strong>between content and border</strong>. Padding is affected by the element's background colour.</p>
+    <pre><code>.card {
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+
+    /* Shorthand (same pattern as margin) */
+    padding: 10px 20px;
+}</code></pre>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Picture Frame:</strong>
+    The <strong>content</strong> is the photograph. The <strong>padding</strong> is the mat board between the photo and the frame. The <strong>border</strong> is the wooden frame itself. The <strong>margin</strong> is the wall space between this frame and the next picture hanging beside it.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 11: TEXT STYLING                       -->
+  <!-- ============================================= -->
+  <h2>11. Text Styling</h2>
+
+  <div class="card">
+    <h3>Text Properties</h3>
+    <pre><code>p {
+    color: #333;                          /* Text colour */
+    text-align: center;                   /* left, right, center, justify */
+    text-decoration: underline;           /* none, underline, overline, line-through */
+    text-transform: uppercase;            /* capitalize, uppercase, lowercase */
+    text-indent: 50px;                    /* First line indent */
+    letter-spacing: 2px;                  /* Space between characters */
+    line-height: 1.6;                     /* Space between lines (unitless = relative) */
+    word-spacing: 5px;                    /* Space between words */
+    direction: ltr;                       /* ltr or rtl (right-to-left languages) */
+}</code></pre>
+
+    <h3>Font Properties</h3>
+    <pre><code>body {
+    font-style: italic;       /* normal, italic, oblique */
+    font-variant: small-caps; /* normal, small-caps */
+    font-weight: bold;        /* normal, bold, 100-900 */
+    font-size: 16px;          /* Size of the text */
+    line-height: 1.5;         /* Spacing between lines */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Shorthand (order matters!) */
+body {
+    font: italic small-caps bold 16px/1.5 Arial, Helvetica, sans-serif;
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Generic Font Families</h3>
+    <table>
+      <thead>
+        <tr><th>Family</th><th>Description</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>serif</code></td><td>Small decorative strokes at the end of characters</td><td>Times New Roman, Georgia</td></tr>
+        <tr><td><code>sans-serif</code></td><td>Clean, no decorative strokes</td><td>Arial, Helvetica, Verdana</td></tr>
+        <tr><td><code>cursive</code></td><td>Handwriting-style</td><td>Comic Sans MS, Brush Script</td></tr>
+        <tr><td><code>fantasy</code></td><td>Decorative, playful</td><td>Impact, Papyrus</td></tr>
+        <tr><td><code>monospace</code></td><td>Fixed-width, typewriter-style</td><td>Courier New, Consolas</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box tip">
+      <strong>Tip:</strong> Always end your <code>font-family</code> list with a generic family (e.g., <code>sans-serif</code>). If the user doesn't have your specific fonts installed, the browser falls back to the generic family.
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 12: LINKS                             -->
+  <!-- ============================================= -->
+  <h2>12. Styling Links</h2>
+
+  <div class="card">
+    <h3>The Four Link States (Order Matters!)</h3>
+    <pre><code>/* Unvisited link */
+a:link {
+    color: #3498db;
+}
+
+/* Visited link */
+a:visited {
+    color: #8e44ad;
+}
+
+/* Mouse hover */
+a:hover {
+    color: #e74c3c;
+    text-decoration: none;
+}
+
+/* Active link (being clicked) */
+a:active {
+    color: #f39c12;
+    transform: scale(1.05);
+}</code></pre>
+
+    <h3>The L V HA Rule</h3>
+    <p>To remember the order, think: <strong>L</strong>o<strong>V</strong>e <strong>HA</strong>cks (Link, Visited, Hover, Active). The hover rule must come <strong>after</strong> link and visited, and active must come <strong>after</strong> hover.</p>
+
+    <table>
+      <thead>
+        <tr><th>State</th><th>Description</th><th>Pseudo-class</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Link</td><td>Normal, unvisited link</td><td><code>a:link</code></td></tr>
+        <tr><td>Visited</td><td>User has visited this URL</td><td><code>a:visited</code></td></tr>
+        <tr><td>Hover</td><td>Mouse is over the link</td><td><code>a:hover</code></td></tr>
+        <tr><td>Active</td><td>Link is being clicked (mouse down)</td><td><code>a:active</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 13: TABLES                            -->
+  <!-- ============================================= -->
+  <h2>13. Styling Tables</h2>
+
+  <div class="card">
+    <pre><code>table {
+    width: 100%;
+    border-collapse: collapse;    /* Merges adjacent borders */
+    font-family: Arial, sans-serif;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;   /* Zebra striping */
+}
+
+tr:hover {
+    background-color: #e0e0e0;
+}
+
+td {
+    vertical-align: middle;      /* top, middle, bottom */
+}</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Outline vs Border</h3>
+    <p>An <strong>outline</strong> is drawn <strong>outside</strong> the element's border. Unlike border, outline <strong>does not affect element dimensions</strong> &mdash; it doesn't take up space and doesn't affect layout.</p>
+    <pre><code>input:focus {
+    outline: 3px solid #3498db;
+    outline-offset: 2px;    /* Space between border and outline */
+}
+
+input {
+    outline: none;           /* Remove outline (use with caution for accessibility) */
+}</code></pre>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 14: DISPLAY                           -->
+  <!-- ============================================= -->
+  <h2>14. CSS Display</h2>
+
+  <div class="card">
+    <h3>Three Main Display Values</h3>
+    <table>
+      <thead>
+        <tr><th>Value</th><th>Behaviour</th><th>Common Elements</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>block</code></td>
+          <td>Takes <strong>full width</strong>, starts on a <strong>new line</strong></td>
+          <td><code>div</code>, <code>h1</code>-<code>h6</code>, <code>p</code>, <code>form</code>, <code>header</code>, <code>footer</code>, <code>section</code></td>
+        </tr>
+        <tr>
+          <td><code>inline</code></td>
+          <td>Takes <strong>as much width as needed</strong>, stays in the <strong>same line</strong></td>
+          <td><code>span</code>, <code>a</code>, <code>img</code>, <code>strong</code>, <code>em</code></td>
+        </tr>
+        <tr>
+          <td><code>none</code></td>
+          <td>Element is <strong>hidden</strong> and removed from document flow</td>
+          <td>Any element (used for hiding/showing with JS)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>.hidden {
+    display: none;           /* Completely removed from layout */
+}
+
+.invisible {
+    visibility: hidden;      /* Hidden but still takes up space */
+}
+
+/* inline elements can't have width/height */
+span {
+    display: inline-block;   /* Inline behaviour but accepts width/height */
+}
+
+nav a {
+    display: inline-block;
+    padding: 10px 20px;
+}</code></pre>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Concert Seating:</strong>
+    <strong>Block</strong> = a sofa that takes up the entire row and pushes everyone else to the next line. <strong>Inline</strong> = a chair that sits next to other chairs in the same row. <strong>Inline-block</strong> = a chair that sits in the row but also has adjustable width. <strong>None</strong> = an invisible seat &mdash; nobody can see it and no space is reserved.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 15: POSITION                          -->
+  <!-- ============================================= -->
+  <h2>15. CSS Position</h2>
+
+  <div class="card">
+    <h3>Position Values</h3>
+    <table>
+      <thead>
+        <tr><th>Value</th><th>Behaviour</th><th>Use Case</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>static</code></td>
+          <td><strong>Default.</strong> Element follows normal document flow. Top/right/bottom/left have no effect.</td>
+          <td>Normal page elements</td>
+        </tr>
+        <tr>
+          <td><code>relative</code></td>
+          <td>Element stays in normal flow but is <strong>nudged</strong> from its original position using top/right/bottom/left.</td>
+          <td>Positioning child elements, small adjustments</td>
+        </tr>
+        <tr>
+          <td><code>fixed</code></td>
+          <td>Removed from document flow. Positioned relative to the <strong>viewport</strong>. Does <strong>not scroll</strong> with the page.</td>
+          <td>Sticky headers, floating buttons, pop-ups</td>
+        </tr>
+        <tr>
+          <td><code>absolute</code></td>
+          <td>Removed from document flow. Positioned relative to the <strong>nearest positioned ancestor</strong> (one with position set to relative, absolute, or fixed). If none exists, uses the viewport.</td>
+          <td>Overlays, dropdowns, complex layouts</td>
+        </tr>
+        <tr>
+          <td><code>sticky</code></td>
+          <td>Behaves like <code>relative</code> until a scroll threshold is met, then behaves like <code>fixed</code>.</td>
+          <td>Sticky table headers, navigation that pins on scroll</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>/* Static - default, no special behaviour */
+.static-box {
+    position: static;
+}
+
+/* Relative - shifted from its original position */
+.relative-box {
+    position: relative;
+    top: 20px;       /* Moved 20px DOWN from where it would be */
+    left: 10px;      /* Moved 10px RIGHT from where it would be */
+}
+
+/* Fixed - stays in place when scrolling */
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Absolute - positioned relative to nearest positioned parent */
+.tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Sticky - relative until scroll threshold, then fixed */
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
+}</code></pre>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; People in a Room:</strong>
+    <strong>Static</strong> = standing in line like everyone else. <strong>Relative</strong> = stepping a bit to the left or right but still in line. <strong>Fixed</strong> = standing on a balcony overlooking the room &mdash; doesn't move even when people shift around. <strong>Absolute</strong> = standing next to a specific person (nearest positioned ancestor) &mdash; moves with that person. <strong>Sticky</strong> = starts in line but floats up to the ceiling when you walk past them.
+  </div>
+
+  <div class="info-box warning">
+    <strong>Warning:</strong> <code>position: fixed</code> elements are removed from document flow and can overlap other content. Always test your layout after applying fixed positioning, and use <code>z-index</code> to control stacking order.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- QUIZ SECTION                                  -->
+  <!-- ============================================= -->
+  <h2>Knowledge Check</h2>
+
+  <div class="quiz" id="quiz1">
+    <p><strong>1. What does CSS stand for?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">Computer Style Sheets</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">Cascading Style Sheets</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">Creative Styling System</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">Colorful Style Syntax</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz2">
+    <p><strong>2. Which selector has the HIGHEST specificity?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">p</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">.intro</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">#main</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">div p</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz3">
+    <p><strong>3. In the box model, what comes between content and border?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">Margin</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">Padding</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">Outline</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">Display</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz4">
+    <p><strong>4. What is the correct order for the CSS pseudo-classes for links (mnemonic: LoVe HA)?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">active, hover, link, visited</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">link, visited, hover, active</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">hover, active, link, visited</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">visited, link, active, hover</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz5">
+    <p><strong>5. Which CSS property removes an element from the document flow and positions it relative to the viewport?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">position: absolute</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">position: relative</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">position: fixed</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">position: sticky</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz6">
+    <p><strong>6. What does <code>display: none</code> do?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Hides the element but keeps its space</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">Hides the element and removes it from layout entirely</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Makes the element semi-transparent</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Moves the element behind other elements</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz7">
+    <p><strong>7. What does <code>box-sizing: border-box</code> do?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">Adds a border to the element</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">Makes width/height include padding and border</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">Removes the box model entirely</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">Centres the element on the page</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz8">
+    <p><strong>8. Which is the BEST way to include CSS for a multi-page website?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)">External stylesheet linked with &lt;link&gt;</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">Inline styles on every element</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">Internal &lt;style&gt; tag on each page</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">JavaScript to set styles dynamically</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- FILL IN THE BLANK                             -->
+  <!-- ============================================= -->
+  <h2>Fill in the Blank</h2>
+
+  <div class="fill-blank" id="fb1">
+    <p>1. The CSS box model, from inside to outside, is: Content, <input type="text" data-answer="Padding" placeholder="_______">, Border, Margin.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb1')">Check Answer</button>
+  </div>
+
+  <div class="fill-blank" id="fb2">
+    <p>2. The CSS selector that targets elements by their unique ID uses the <input type="text" data-answer="#" placeholder="#"> symbol.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb2')">Check Answer</button>
+  </div>
+
+  <div class="fill-blank" id="fb3">
+    <p>3. The position value that stays in place even when the user scrolls is <input type="text" data-answer="fixed" placeholder="_____">.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb3')">Check Answer</button>
+  </div>
+
+  <div class="fill-blank" id="fb4">
+    <p>4. The shorthand order for margin is: top, right, <input type="text" data-answer="bottom" placeholder="______">, left.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb4')">Check Answer</button>
+  </div>
+
+  <div class="fill-blank" id="fb5">
+    <p>5. The <code>border-<input type="text" data-answer="collapse" placeholder="_______">;</code> property merges adjacent table borders into a single border.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb5')">Check Answer</button>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SUMMARY                                       -->
+  <!-- ============================================= -->
+  <h2>Summary</h2>
+
+  <div class="summary">
+    <ul>
+      <li><strong>CSS</strong> (Cascading Style Sheets) separates presentation from structure. HTML provides content; CSS provides styling.</li>
+      <li><strong>CSS Syntax:</strong> <code>selector { property: value; }</code> &mdash; declarations end with semicolons.</li>
+      <li><strong>Selectors:</strong> Element (<code>p</code>), ID (<code>#id</code>), Class (<code>.class</code>), Descendant (<code>A B</code>), Grouped (<code>A, B</code>), Attribute (<code>[attr]</code>).</li>
+      <li><strong>Three insertion methods:</strong> External (recommended), Internal, Inline (avoid).</li>
+      <li><strong>Specificity:</strong> Inline &gt; ID &gt; Class/Attribute &gt; Element. Equal specificity = last rule wins.</li>
+      <li><strong>Box Model:</strong> Content &rarr; Padding &rarr; Border &rarr; Margin. Use <code>box-sizing: border-box</code> for intuitive sizing.</li>
+      <li><strong>Colours:</strong> Named, HEX (<code>#ff0000</code>), RGBA (<code>rgba(255,0,0,0.5)</code>).</li>
+      <li><strong>Text &amp; Fonts:</strong> Use <code>font</code> shorthand, always include a generic family fallback.</li>
+      <li><strong>Links:</strong> Style in order: <code>:link</code>, <code>:visited</code>, <code>:hover</code>, <code>:active</code> (LoVe HA).</li>
+      <li><strong>Display:</strong> <code>block</code> (full width, new line), <code>inline</code> (in-line, no width/height), <code>none</code> (hidden, removed).</li>
+      <li><strong>Position:</strong> <code>static</code> (default), <code>relative</code> (nudge from original), <code>fixed</code> (viewport, doesn't scroll), <code>absolute</code> (nearest positioned ancestor), <code>sticky</code> (relative then fixed on scroll).</li>
+    </ul>
+  </div>
+
+</div><!-- /.container -->
+
+<script>
+// Quiz logic
+function checkAnswer(quizId, element, isCorrect) {
+  var quiz = document.getElementById(quizId);
+  var feedback = quiz.querySelector('.quiz-feedback');
+  var options = quiz.querySelectorAll('.quiz-option');
+
+  // Disable further clicks
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+  });
+
+  if (isCorrect) {
+    element.style.background = '#2ecc71';
+    element.style.color = '#fff';
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#2ecc71';
+  } else {
+    element.style.background = '#e74c3c';
+    element.style.color = '#fff';
+    feedback.textContent = 'Incorrect. Try reviewing the section above.';
+    feedback.style.color = '#e74c3c';
+    // Highlight the correct answer
+    options.forEach(function(opt) {
+      if (opt.getAttribute('onclick').indexOf('true') !== -1) {
+        opt.style.background = '#2ecc71';
+        opt.style.color = '#fff';
+      }
+    });
+  }
+}
+
+// Fill in the blank logic
+function checkFillBlank(fbId) {
+  var container = document.getElementById(fbId);
+  var input = container.querySelector('input');
+  var feedback = container.querySelector('.quiz-feedback');
+  var userAnswer = input.value.trim().toLowerCase();
+  var correctAnswer = input.getAttribute('data-answer').toLowerCase();
+
+  if (userAnswer === correctAnswer) {
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#2ecc71';
+    input.style.borderColor = '#2ecc71';
+  } else {
+    feedback.textContent = 'Incorrect. The correct answer is: ' + input.getAttribute('data-answer');
+    feedback.style.color = '#e74c3c';
+    input.style.borderColor = '#e74c3c';
+  }
+}
+
+// Flashcard flip (for any flashcards present on the page)
+document.querySelectorAll('.flashcard').forEach(function(card) {
+  card.addEventListener('click', function() {
+    this.classList.toggle('flipped');
+  });
+});
+</script>
+
+</body>
+</html>

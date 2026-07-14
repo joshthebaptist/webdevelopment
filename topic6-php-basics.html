@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 6 - PHP Fundamentals | TP2543</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .php-demo { background: #1e1e2e; color: #a6e3a1; padding: 12px 16px; border-radius: 6px; font-family: 'Courier New', monospace; margin: 8px 0; overflow-x: auto; line-height: 1.6; }
+    .php-demo .comment { color: #6c7086; font-style: italic; }
+    .php-demo .keyword { color: #cba6f7; }
+    .php-demo .string { color: #f9e2af; }
+    .php-demo .variable { color: #89b4fa; }
+    .php-demo .function { color: #89dceb; }
+    .php-demo .output { color: #f38ba8; }
+    .php-demo .number { color: #fab387; }
+    .info-box.analogy-chef { background: linear-gradient(135deg, #fab38722, #f9e2af22); border-color: #fab387; }
+    .step-flow { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; align-items: center; }
+    .step-flow .step-box { background: #313244; border: 1px solid #45475a; border-radius: 6px; padding: 8px 12px; text-align: center; flex: 1; min-width: 100px; }
+    .step-flow .step-box .step-num { color: #f5c2e7; font-weight: bold; font-size: 0.85em; }
+    .step-flow .step-box .step-label { color: #cdd6f4; font-size: 0.8em; margin-top: 4px; }
+    .step-flow .arrow { color: #6c7086; font-size: 1.2em; flex: 0; }
+    .output-demo { display: flex; gap: 12px; flex-wrap: wrap; margin: 10px 0; }
+    .output-demo .code-side { flex: 1; min-width: 250px; }
+    .output-demo .result-side { flex: 1; min-width: 200px; background: #313244; border-radius: 6px; padding: 12px; border: 1px solid #45475a; }
+    .output-demo .result-side h4 { color: #a6e3a1; margin: 0 0 8px 0; font-size: 0.9em; }
+    .scope-visual { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 12px 0; }
+    .scope-visual .scope-card { background: #313244; border-radius: 8px; padding: 14px; border: 2px solid #45475a; }
+    .scope-visual .scope-card h4 { margin: 0 0 8px 0; }
+    .scope-visual .scope-card.global { border-color: #89b4fa; }
+    .scope-visual .scope-card.local { border-color: #a6e3a1; }
+    .scope-visual .scope-card.static { border-color: #f9e2af; }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-text">Topic 6 of 14</div><div class="progress-text">43% Complete</div></div>
+
+<div class="container">
+  <h1>Topic 6: PHP Fundamentals</h1>
+
+  <div class="info-box analogy-chef">
+    <strong>The Restaurant Analogy — PHP as a Chef:</strong> Think of building a website like running a restaurant. HTML is the menu — it shows what's available. CSS is the plating — it makes the food look beautiful. But PHP? <strong>PHP is the chef in the kitchen.</strong> When a customer (the user) sends an order (a request), the chef (PHP) reads the order, gathers ingredients from the pantry (variables, database), prepares the dish (processes logic), and sends it back to the customer (response). The customer never sees the kitchen — they just get their freshly prepared meal. That's how PHP works: it runs on the server, processes everything behind the scenes, and sends back the final HTML to the user's browser.
+  </div>
+
+  <!-- ===================== SECTION 1: WHAT IS PHP ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>1. What is PHP?</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <h3>The Name</h3>
+      <p>PHP originally stood for <strong>"Personal Home Page"</strong>. It was created by <strong>Rasmus Lerdorf</strong> in <strong>1994</strong>. The name was later officially changed to <strong>"PHP: Hypertext Preprocessor"</strong> — a recursive acronym (PHP stands for PHP Hypertext Preprocessor, which stands for PHP Hypertext Preprocessor... and so on!).</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — The Name:</strong> "Hypertext Preprocessor" literally tells you what PHP does: it <em>preprocesses</em> hypertext. Just like a chef prepares food <em>before</em> it reaches the customer, PHP processes code <em>before</em> the HTML reaches the browser.
+      </div>
+
+      <h3>Key Facts</h3>
+      <table>
+        <tr><th>Aspect</th><th>Detail</th></tr>
+        <tr><td>Created by</td><td>Rasmus Lerdorf (1994)</td></tr>
+        <tr><td>File extension</td><td><code>.php</code></td></tr>
+        <tr><td>Engine</td><td>Zend Engine (core parser)</td></tr>
+        <tr><td>Market share</td><td>78.1% of all websites use PHP</td></tr>
+        <tr><td>License</td><td>Free and open source</td></tr>
+        <tr><td>Used with</td><td>HTML, CSS, JavaScript, MySQL</td></tr>
+        <tr><td>Runs on</td><td>Windows, Linux, macOS (cross-platform)</td></tr>
+      </table>
+
+      <h3>How to Get PHP</h3>
+      <p>You don't download PHP in isolation. You install an <strong>all-in-one package</strong> that includes PHP, a web server (Apache), and a database (MySQL):</p>
+      <ul>
+        <li><strong>XAMPP</strong> — Most popular, works on Windows/Mac/Linux. Recommended for beginners.</li>
+        <li><strong>WAMP</strong> — Windows only (Apache + MySQL + PHP).</li>
+        <li><strong>LAMP</strong> — Linux only (Apache + MySQL + PHP).</li>
+      </ul>
+      <div class="info-box tip">
+        <strong>Tip:</strong> After installing XAMPP, start the Apache service. Place your <code>.php</code> files in the <code>C:\xampp\htdocs\</code> folder and access them via <code>http://localhost/yourfile.php</code> in your browser.
+      </div>
+
+      <h3>PHP File Processing</h3>
+      <p>PHP files go through the <strong>Zend Engine</strong>, which processes them as either:</p>
+      <ul>
+        <li><strong>Module</strong> — PHP runs as a module inside the web server (Apache). This is the most common and fastest method.</li>
+        <li><strong>Daemon/Service</strong> — PHP runs as a background service that the web server communicates with.</li>
+        <li><strong>CGI</strong> — PHP runs as a separate program for each request. Slower, but more isolated.</li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 2: HOW PHP WORKS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>2. How PHP Works with a Web Server</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Understanding how PHP interacts with the web server is crucial. Here's the step-by-step flow:</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — The Order Process:</strong> Imagine a restaurant. The customer places an order (browser sends request). The waiter (web server) takes the order to the kitchen (PHP). The chef reads the order, cooks the dish (executes PHP code), plates it (generates HTML), and the waiter brings it back (server sends response). The customer gets the finished dish and never sees the kitchen.
+      </div>
+
+      <h3>The Complete Flow</h3>
+      <div class="step-flow">
+        <div class="step-box"><div class="step-num">Step 1</div><div class="step-label">Browser sends HTTP request to server</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 2</div><div class="step-label">Web server (Apache) receives request</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 3</div><div class="step-label">Apache finds .php file, hands it to PHP module</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 4</div><div class="step-label">PHP starts in HTML mode</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 5</div><div class="step-label">Encounters &lt;?php — switches to PHP mode</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 6</div><div class="step-label">Executes PHP statements</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 7</div><div class="step-label">Encounters ?&gt; — returns to HTML mode</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 8</div><div class="step-label">Continues HTML until next &lt;?php or end of file</div></div>
+        <div class="arrow">→</div>
+        <div class="step-box"><div class="step-num">Step 9</div><div class="step-label">Final HTML output sent to browser</div></div>
+      </div>
+
+      <h3>Example: PHP Mixing with HTML</h3>
+      <div class="php-demo">
+<span class="comment">&lt;!-- This is a .php file --&gt;</span>
+&lt;html&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome!&lt;/h1&gt;
+
+    <span class="keyword">&lt;?php</span>
+        <span class="function">echo</span> <span class="string">"&lt;p&gt;Today is a great day!&lt;/p&gt;"</span>;
+    <span class="keyword">?&gt;</span>
+
+    &lt;p&gt;This is normal HTML between PHP blocks.&lt;/p&gt;
+
+    <span class="keyword">&lt;?php</span>
+        <span class="function">echo</span> <span class="string">"&lt;p&gt;The server time is: "</span> . <span class="function">date</span>(<span class="string">"H:i:s"</span>) . <span class="string">"&lt;/p&gt;"</span>;
+    <span class="keyword">?&gt;</span>
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+
+      <div class="info-box note">
+        <strong>Key Insight:</strong> The browser never sees PHP code. It only receives the final HTML output. PHP code is <em>executed on the server</em> and replaced with its output. This is why PHP is called a <strong>server-side language</strong> — the processing happens on the server, not in the browser.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 3: PHP SYNTAX ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>3. PHP Syntax Basics</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <h3>PHP Tags</h3>
+      <p>PHP code is enclosed within special tags:</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="comment">// Your PHP code goes here</span>
+<span class="keyword">?&gt;</span>
+      </div>
+      <p>The <code>&lt;?php</code> tag tells the server "start processing PHP here." The <code>?&gt;</code> tag says "go back to HTML mode."</p>
+
+      <div class="info-box warning">
+        <strong>Important:</strong> In well-formed PHP files that contain <em>only</em> PHP code (no HTML), the closing <code>?&gt;</code> tag is often omitted. This is considered a best practice as it prevents accidental whitespace output. For files mixing PHP and HTML, use both tags.
+      </div>
+
+      <h3>Statements</h3>
+      <p>Every PHP statement ends with a <strong>semicolon (;)</strong>. This is similar to C and Java.</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="function">echo</span> <span class="string">"Hello World"</span>;    <span class="comment">// This is a statement</span>
+    <span class="variable">$x</span> = <span class="number">5</span>;                 <span class="comment">// This is also a statement</span>
+    <span class="function">echo</span> <span class="string">"x = "</span> . <span class="variable">$x</span>;      <span class="comment">// Another statement</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Comments</h3>
+      <p>Comments are ignored by the PHP engine. They're for human readers:</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="comment">// This is a single-line comment</span>
+
+    <span class="comment"># This is also a single-line comment</span>
+
+    <span class="comment">/*
+      This is a
+      multi-line comment
+    */</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Syntax Like a Recipe:</strong> PHP syntax is similar to C. The semicolon is like a period at the end of a sentence — it tells PHP "this instruction is done." Comments are like sticky notes on a recipe: "don't forget to preheat the oven." The chef (PHP) ignores the sticky notes and just follows the instructions.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 4: VARIABLES ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>4. Variables</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Variables are <strong>named containers</strong> that store data. In PHP, every variable starts with a <code>$</code> sign.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Variables as Containers:</strong> Imagine the chef's kitchen has labeled containers on the shelf. Each container has a name tag and holds something: a container labeled "flour" holds flour, one labeled "sugar" holds sugar. In PHP, <code>$name</code> is like a container that can hold a value. You put a value in with <code>=</code>: <code>$name = "Alice";</code> puts "Alice" into the container called "name."
+      </div>
+
+      <h3>Variable Rules</h3>
+      <table>
+        <tr><th>Rule</th><th>Correct</th><th>Wrong</th></tr>
+        <tr><td>Must start with <code>$</code></td><td><code>$name</code></td><td><code>name</code>, <code>1name</code></td></tr>
+        <tr><td>Must start with a letter or underscore</td><td><code>$name</code>, <code>_count</code></td><td><code>$1name</code>, <code>$-name</code></td></tr>
+        <tr><td>Can only contain letters, numbers, underscores</td><td><code>$user_name</code>, <code>$age2</code></td><td><code>$user-name</code>, <code>$user name</code></td></tr>
+        <tr><td>Case-sensitive</td><td><code>$age</code> ≠ <code>$AGE</code> ≠ <code>$Age</code></td><td>—</td></tr>
+      </table>
+
+      <h3>Loosely Typed — No Declaration Needed</h3>
+      <p>PHP is <strong>loosely typed</strong>, meaning you don't need to declare a variable's type. You just assign a value and PHP figures out the type automatically.</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$name</span> = <span class="string">"Alice"</span>;       <span class="comment">// String</span>
+    <span class="variable">$age</span> = <span class="number">25</span>;              <span class="comment">// Integer</span>
+    <span class="variable">$price</span> = <span class="number">19.99</span>;        <span class="comment">// Float</span>
+    <span class="variable">$isActive</span> = <span class="keyword">true</span>;      <span class="comment">// Boolean</span>
+
+    <span class="comment">// PHP determined the type from the value assigned!</span>
+    <span class="comment">// No need to write: int $age = 25; (like in C or Java)</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <div class="info-box note">
+        <strong>Note:</strong> The <code>$</code> is part of the variable name in PHP, not a type indicator. In some other languages (like JavaScript), <code>$</code> is just a prefix convention, but in PHP it's required syntax.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 5: OUTPUT ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>5. Output — echo and print</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>To display output in PHP, you use <code>echo</code> or <code>print</code>. These send text back to the browser.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — echo as Plating:</strong> After the chef finishes cooking (processing PHP), they need to plate the dish and send it out. <code>echo</code> is like plating food — it takes what you've prepared and sends it out to the customer (the browser). <code>echo</code> is fast and can serve multiple items at once.
+      </div>
+
+      <h3>echo</h3>
+      <p><code>echo</code> is the most commonly used output statement. It can output multiple values separated by commas (or dots for concatenation).</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="comment">// Simple output</span>
+    <span class="function">echo</span> <span class="string">"Hello World!"</span>;
+
+    <span class="comment">// Output with variable</span>
+    <span class="variable">$name</span> = <span class="string">"Alice"</span>;
+    <span class="function">echo</span> <span class="string">"Hello, "</span> . <span class="variable">$name</span> . <span class="string">"!"</span>;
+
+    <span class="comment">// Multiple outputs</span>
+    <span class="function">echo</span> <span class="string">"First"</span>, <span class="string">"Second"</span>, <span class="string">"Third"</span>;
+
+    <span class="comment">// HTML inside echo</span>
+    <span class="function">echo</span> <span class="string">"&lt;h1&gt;This is a heading&lt;/h1&gt;"</span>;
+    <span class="function">echo</span> <span class="string">"&lt;p style='color:red;'&gt;Red text&lt;/p&gt;"</span>;
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>print</h3>
+      <p><code>print</code> works similarly to <code>echo</code> but outputs only <strong>one value</strong> and returns <code>1</code> (true).</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="function">print</span> <span class="string">"Hello World!"</span>;
+    <span class="function">print</span> <span class="string">"This also works"</span>;
+    <span class="comment">// print cannot do: print "a", "b"; — this causes an error</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>String Concatenation (The Dot Operator)</h3>
+      <p>In PHP, the <code>.</code> (dot) is used to <strong>join strings together</strong>. This is different from many other languages that use <code>+</code>.</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$first</span> = <span class="string">"Hello"</span>;
+    <span class="variable">$second</span> = <span class="string">"World"</span>;
+    <span class="function">echo</span> <span class="variable">$first</span> . <span class="string">" "</span> . <span class="variable">$second</span>;  <span class="comment">// Output: Hello World</span>
+
+    <span class="comment">// Mixing strings and numbers</span>
+    <span class="variable">$age</span> = <span class="number">25</span>;
+    <span class="function">echo</span> <span class="string">"I am "</span> . <span class="variable">$age</span> . <span class="string">" years old."</span>;
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <div class="output-demo">
+        <div class="code-side">
+          <div class="php-demo">
+<span class="comment">// echo vs print</span>
+
+<span class="function">echo</span> <span class="string">"Speed: "</span>;    <span class="comment">// Faster</span>
+<span class="function">print</span> <span class="string">"Speed: "</span>;   <span class="comment">// Slightly slower</span>
+
+<span class="function">echo</span> <span class="string">"A"</span>, <span class="string">"B"</span>;    <span class="comment">// ✓ OK</span>
+<span class="function">print</span> <span class="string">"A"</span>, <span class="string">"B"</span>;   <span class="comment">// ✗ Error</span>
+
+<span class="function">echo</span> <span class="function">strlen</span>(<span class="string">"Hi"</span>);  <span class="comment">// Returns 2</span>
+<span class="function">print</span> <span class="function">strlen</span>(<span class="string">"Hi"</span>);  <span class="comment">// Returns 1 (print returns 1)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip:</strong> In practice, <code>echo</code> is preferred over <code>print</code> because it's slightly faster and can output multiple values. Most PHP developers use <code>echo</code> exclusively.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 6: VARIABLE SCOPE ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>6. Variable Scope</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p><strong>Variable scope</strong> determines where a variable can be accessed. PHP has three types of scope:</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Kitchen Zones:</strong> Think of the kitchen as having zones. <strong>Global scope</strong> is like the main kitchen counter — everything on it is accessible to everyone. <strong>Local scope</strong> is like a personal cutting board inside a specific station — only the chef at that station can see it. <strong>Static</strong> is like a special container that remembers its contents even after the chef leaves the station.
+      </div>
+
+      <div class="scope-visual">
+        <div class="scope-card global">
+          <h4 style="color: #89b4fa;">Global Scope</h4>
+          <p>Variables declared <strong>outside</strong> a function. Accessible everywhere <em>except</em> inside functions (unless you use the <code>GLOBAL</code> keyword).</p>
+        </div>
+        <div class="scope-card local">
+          <h4 style="color: #a6e3a1;">Local Scope</h4>
+          <p>Variables declared <strong>inside</strong> a function. Accessible only within that function.</p>
+        </div>
+        <div class="scope-card static">
+          <h4 style="color: #f9e2af;">Static Scope</h4>
+          <p>Variables declared with the <code>static</code> keyword inside a function. They <strong>retain their value</strong> between function calls.</p>
+        </div>
+      </div>
+
+      <h3>Global Variables</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$x</span> = <span class="number">10</span>;  <span class="comment">// Global scope</span>
+
+    <span class="keyword">function</span> <span class="function">myTest</span>() {
+        <span class="comment">// $x is NOT accessible here (local scope)</span>
+        <span class="function">echo</span> <span class="string">"x = "</span> . <span class="variable">$x</span>;  <span class="comment">// ERROR: Undefined variable</span>
+    }
+
+    <span class="function">myTest</span>();
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Accessing Global Variables Inside Functions</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$x</span> = <span class="number">10</span>;
+
+    <span class="keyword">function</span> <span class="function">myTest</span>() {
+        <span class="keyword">global</span> <span class="variable">$x</span>;  <span class="comment">// Bring global variable into function scope</span>
+        <span class="function">echo</span> <span class="string">"x = "</span> . <span class="variable">$x</span>;  <span class="comment">// Output: x = 10</span>
+    }
+
+    <span class="function">myTest</span>();
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Local Variables</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="keyword">function</span> <span class="function">greet</span>() {
+        <span class="variable">$message</span> = <span class="string">"Hello!"</span>;  <span class="comment">// Local scope</span>
+        <span class="function">echo</span> <span class="variable">$message</span>;  <span class="comment">// Works here</span>
+    }
+
+    <span class="function">greet</span>();
+    <span class="function">echo</span> <span class="variable">$message</span>;  <span class="comment">// ERROR: $message is not defined here</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Static Variables</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="keyword">function</span> <span class="function">counter</span>() {
+        <span class="keyword">static</span> <span class="variable">$count</span> = <span class="number">0</span>;  <span class="comment">// Retains value between calls</span>
+        <span class="variable">$count</span>++;
+        <span class="function">echo</span> <span class="string">"Count: "</span> . <span class="variable">$count</span> . <span class="string">"&lt;br&gt;"</span>;
+    }
+
+    <span class="function">counter</span>();  <span class="comment">// Count: 1</span>
+    <span class="function">counter</span>();  <span class="comment">// Count: 2</span>
+    <span class="function">counter</span>();  <span class="comment">// Count: 3</span>
+
+    <span class="comment">// Without static, each call would reset to 1</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Common Pitfall:</strong> Forgetting to use the <code>global</code> keyword when accessing a global variable inside a function is one of the most common PHP mistakes. Always check your scope!
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 7: DATA TYPES ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>7. Data Types</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>PHP supports several <strong>data types</strong>. Since PHP is loosely typed, you don't declare types — PHP determines them automatically.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Data Types as Ingredients:</strong> Just like a chef handles different ingredients differently — flour (powder) is scooped, eggs (liquid) are cracked, vegetables (solid) are chopped — PHP handles different data types differently. You don't tell PHP "this is an integer." You just pour an integer in, and PHP knows how to handle it.
+      </div>
+
+      <table>
+        <tr>
+          <th>Data Type</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td><strong>String</strong></td>
+          <td>Sequence of characters (text)</td>
+          <td><code>$name = "Alice";</code></td>
+        </tr>
+        <tr>
+          <td><strong>Integer</strong></td>
+          <td>Whole number (no decimals)</td>
+          <td><code>$age = 25;</code></td>
+        </tr>
+        <tr>
+          <td><strong>Float</strong></td>
+          <td>Number with decimals</td>
+          <td><code>$price = 19.99;</code></td>
+        </tr>
+        <tr>
+          <td><strong>Boolean</strong></td>
+          <td>True or false</td>
+          <td><code>$active = true;</code></td>
+        </tr>
+        <tr>
+          <td><strong>Array</strong></td>
+          <td>Collection of values</td>
+          <td><code>$colors = ["red", "blue"];</code></td>
+        </tr>
+        <tr>
+          <td><strong>Object</strong></td>
+          <td>Instance of a class</td>
+          <td><code>$car = new Car();</code></td>
+        </tr>
+        <tr>
+          <td><strong>NULL</strong></td>
+          <td>Empty / no value</td>
+          <td><code>$x = null;</code></td>
+        </tr>
+      </table>
+
+      <h3>Checking Types with var_dump()</h3>
+      <p><code>var_dump()</code> shows you the <strong>value and type</strong> of a variable — very useful for debugging.</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$name</span> = <span class="string">"Alice"</span>;
+    <span class="variable">$age</span> = <span class="number">25</span>;
+    <span class="variable">$price</span> = <span class="number">19.99</span>;
+    <span class="variable">$active</span> = <span class="keyword">true</span>;
+    <span class="variable">$nothing</span> = <span class="keyword">null</span>;
+
+    <span class="function">var_dump</span>(<span class="variable">$name</span>);     <span class="comment">// string(5) "Alice"</span>
+    <span class="function">var_dump</span>(<span class="variable">$age</span>);       <span class="comment">// int(25)</span>
+    <span class="function">var_dump</span>(<span class="variable">$price</span>);    <span class="comment">// float(19.99)</span>
+    <span class="function">var_dump</span>(<span class="variable">$active</span>);   <span class="comment">// bool(true)</span>
+    <span class="function">var_dump</span>(<span class="variable">$nothing</span>);  <span class="comment">// NULL</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Type Casting and Changing Types</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="comment">// Type casting (like in C)</span>
+    <span class="variable">$x</span> = (<span class="keyword">int</span>) <span class="string">"123"</span>;      <span class="comment">// $x is now integer 123</span>
+    <span class="variable">$y</span> = (<span class="keyword">string</span>) <span class="number">456</span>;    <span class="comment">// $y is now string "456"</span>
+
+    <span class="comment">// Using settype()</span>
+    <span class="variable">$z</span> = <span class="string">"789"</span>;
+    <span class="function">settype</span>(<span class="variable">$z</span>, <span class="string">"integer"</span>);  <span class="comment">// $z is now integer 789</span>
+
+    <span class="function">var_dump</span>(<span class="variable">$x</span>);  <span class="comment">// int(123)</span>
+    <span class="function">var_dump</span>(<span class="variable">$y</span>);  <span class="comment">// string(3) "456"</span>
+    <span class="function">var_dump</span>(<span class="variable">$z</span>);  <span class="comment">// int(789)</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 8: STRING FUNCTIONS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>8. Built-in String Functions</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>PHP provides hundreds of <strong>built-in functions</strong>. Here are the most commonly used string functions:</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Built-in Functions are Like Kitchen Tools:</strong> A chef doesn't chop every vegetable by hand — they have a knife, a blender, a grater. Each tool does a specific job quickly. PHP's built-in functions are your kitchen tools: <code>strlen()</code> is a ruler (measures length), <code>strrev()</code> is a mirror (reverses text), <code>strpos()</code> is a magnifying glass (finds things).
+      </div>
+
+      <h3>Common String Functions</h3>
+      <table>
+        <tr>
+          <th>Function</th>
+          <th>What It Does</th>
+          <th>Example</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td><code>strlen()</code></td>
+          <td>Returns the <strong>length</strong> of a string</td>
+          <td><code>strlen("Hello")</code></td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td><code>str_word_count()</code></td>
+          <td>Counts the number of <strong>words</strong></td>
+          <td><code>str_word_count("Hello World")</code></td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td><code>strrev()</code></td>
+          <td><strong>Reverses</strong> a string</td>
+          <td><code>strrev("Hello")</code></td>
+          <td>"olleH"</td>
+        </tr>
+        <tr>
+          <td><code>strpos()</code></td>
+          <td>Finds the <strong>position</strong> of first occurrence</td>
+          <td><code>strpos("Hello", "e")</code></td>
+          <td>1 (0-based)</td>
+        </tr>
+        <tr>
+          <td><code>str_replace()</code></td>
+          <td><strong>Replaces</strong> all occurrences</td>
+          <td><code>str_replace("o", "0", "Hello")</code></td>
+          <td>"Hell0"</td>
+        </tr>
+      </table>
+
+      <h3>Examples in Action</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$text</span> = <span class="string">"Hello World"</span>;
+
+    <span class="comment">// strlen() - String Length</span>
+    <span class="function">echo</span> <span class="function">strlen</span>(<span class="variable">$text</span>);          <span class="comment">// 11</span>
+
+    <span class="comment">// str_word_count() - Word Count</span>
+    <span class="function">echo</span> <span class="function">str_word_count</span>(<span class="variable">$text</span>);    <span class="comment">// 2</span>
+
+    <span class="comment">// strrev() - Reverse String</span>
+    <span class="function">echo</span> <span class="function">strrev</span>(<span class="variable">$text</span>);           <span class="comment">// dlroW olleH</span>
+
+    <span class="comment">// strpos() - Find Position (0-based index)</span>
+    <span class="function">echo</span> <span class="function">strpos</span>(<span class="variable">$text</span>, <span class="string">"World"</span>);  <span class="comment">// 6</span>
+    <span class="function">echo</span> <span class="function">strpos</span>(<span class="variable">$text</span>, <span class="string">"x"</span>);     <span class="comment">// false (not found)</span>
+
+    <span class="comment">// str_replace() - Replace Text</span>
+    <span class="function">echo</span> <span class="function">str_replace</span>(<span class="string">"World"</span>, <span class="string">"PHP"</span>, <span class="variable">$text</span>);  <span class="comment">// Hello PHP</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip:</strong> <code>strpos()</code> returns the position starting from <strong>0</strong> (not 1). So "H" is at position 0, "e" is at position 1, etc. If the substring is not found, it returns <code>false</code>. Always check with <code>!== false</code> to be safe.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 9: ARRAYS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>9. Arrays</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Arrays store <strong>multiple values</strong> in a single variable. Instead of creating <code>$color1</code>, <code>$color2</code>, <code>$color3</code>, you can store all colors in one <code>$colors</code> array.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Arrays as Spice Racks:</strong> A spice rack holds multiple spices in organized slots. Each slot has a number (or name). You can add new spices, remove old ones, and look up any spice by its slot. PHP arrays work the same way — they hold multiple values, each accessible by a key (index or name).
+      </div>
+
+      <h3>Three Types of Arrays</h3>
+
+      <h3>1. Numeric Arrays</h3>
+      <p>Each element has a <strong>numeric index</strong> (starting from 0).</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="comment">// Method 1: Using array() function</span>
+    <span class="variable">$colors</span> = <span class="function">array</span>(<span class="string">"Red"</span>, <span class="string">"Green"</span>, <span class="string">"Blue"</span>);
+
+    <span class="comment">// Method 2: Using square brackets (PHP 5.4+)</span>
+    <span class="variable">$fruits</span> = [<span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Cherry"</span>];
+
+    <span class="comment">// Access elements (0-based index)</span>
+    <span class="function">echo</span> <span class="variable">$colors</span>[<span class="number">0</span>];  <span class="comment">// Red</span>
+    <span class="function">echo</span> <span class="variable">$colors</span>[<span class="number">1</span>];  <span class="comment">// Green</span>
+    <span class="function">echo</span> <span class="variable">$colors</span>[<span class="number">2</span>];  <span class="comment">// Blue</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>2. Associative Arrays</h3>
+      <p>Each element has a <strong>named key</strong> (string index) instead of a number.</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$person</span> = <span class="function">array</span>(
+        <span class="string">"name"</span> => <span class="string">"Alice"</span>,
+        <span class="string">"age"</span> => <span class="number">25</span>,
+        <span class="string">"city"</span> => <span class="string">"KL"</span>
+    );
+
+    <span class="comment">// Access by key name</span>
+    <span class="function">echo</span> <span class="variable">$person</span>[<span class="string">"name"</span>];  <span class="comment">// Alice</span>
+    <span class="function">echo</span> <span class="variable">$person</span>[<span class="string">"age"</span>];   <span class="comment">// 25</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>3. Multidimensional Arrays</h3>
+      <p>Arrays can contain other arrays — like a filing cabinet with folders inside folders.</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$students</span> = <span class="function">array</span>(
+        <span class="function">array</span>(<span class="string">"name"</span> => <span class="string">"Alice"</span>, <span class="string">"grade"</span> => <span class="string">"A"</span>),
+        <span class="function">array</span>(<span class="string">"name"</span> => <span class="string">"Bob"</span>, <span class="string">"grade"</span> => <span class="string">"B+"</span>),
+        <span class="function">array</span>(<span class="string">"name"</span> => <span class="string">"Charlie"</span>, <span class="string">"grade"</span> => <span class="string">"A-"</span>)
+    );
+
+    <span class="function">echo</span> <span class="variable">$students</span>[<span class="number">0</span>][<span class="string">"name"</span>];  <span class="comment">// Alice</span>
+    <span class="function">echo</span> <span class="variable">$students</span>[<span class="number">1</span>][<span class="string">"grade"</span>];  <span class="comment">// B+</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>The foreach Loop</h3>
+      <p><code>foreach</code> is the easiest way to loop through all elements in an array.</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$colors</span> = [<span class="string">"Red"</span>, <span class="string">"Green"</span>, <span class="string">"Blue"</span>];
+
+    <span class="keyword">foreach</span> (<span class="variable">$colors</span> <span class="keyword">as</span> <span class="variable">$color</span>) {
+        <span class="function">echo</span> <span class="variable">$color</span> . <span class="string">"&lt;br&gt;"</span>;
+    }
+    <span class="comment">// Output: Red, Green, Blue (each on a new line)</span>
+
+    <span class="comment">// With associative arrays - use as $key => $value</span>
+    <span class="variable">$person</span> = [<span class="string">"name"</span> => <span class="string">"Alice"</span>, <span class="string">"age"</span> => <span class="number">25</span>];
+
+    <span class="keyword">foreach</span> (<span class="variable">$person</span> <span class="keyword">as</span> <span class="variable">$key</span> => <span class="variable">$value</span>) {
+        <span class="function">echo</span> <span class="variable">$key</span> . <span class="string">": "</span> . <span class="variable">$value</span> . <span class="string">"&lt;br&gt;"</span>;
+    }
+    <span class="comment">// Output: name: Alice, age: 25</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 10: OPERATORS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>10. Operators</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <h3>Arithmetic Operators</h3>
+      <table>
+        <tr><th>Operator</th><th>Name</th><th>Example</th><th>Result</th></tr>
+        <tr><td><code>+</code></td><td>Addition</td><td><code>5 + 3</code></td><td>8</td></tr>
+        <tr><td><code>-</code></td><td>Subtraction</td><td><code>5 - 3</code></td><td>2</td></tr>
+        <tr><td><code>*</code></td><td>Multiplication</td><td><code>5 * 3</code></td><td>15</td></tr>
+        <tr><td><code>/</code></td><td>Division</td><td><code>6 / 3</code></td><td>2</td></tr>
+        <tr><td><code>%</code></td><td>Modulus (remainder)</td><td><code>7 % 3</code></td><td>1</td></tr>
+      </table>
+
+      <h3>Comparison Operators</h3>
+      <table>
+        <tr><th>Operator</th><th>Name</th><th>Example</th><th>Result</th></tr>
+        <tr><td><code>==</code></td><td>Equal value</td><td><code>"5" == 5</code></td><td>true (type conversion!)</td></tr>
+        <tr><td><code>===</code></td><td><strong>Identical</strong> (value + type)</td><td><code>"5" === 5</code></td><td>false (different types)</td></tr>
+        <tr><td><code>!=</code></td><td>Not equal value</td><td><code>"5" != 5</code></td><td>false</td></tr>
+        <tr><td><code>!==</code></td><td><strong>Not identical</strong></td><td><code>"5" !== 5</code></td><td>true (different types)</td></tr>
+      </table>
+
+      <div class="info-box warning">
+        <strong>Important Difference!</strong> <code>==</code> (double equals) compares only <em>values</em> and does type juggling: <code>"5" == 5</code> is <strong>true</strong>. <code>===</code> (triple equals) compares both <em>value AND type</em>: <code>"5" === 5</code> is <strong>false</strong>. Always prefer <code>===</code> for strict comparisons to avoid bugs.
+      </div>
+
+      <h3>String Operator</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$a</span> = <span class="string">"Hello"</span>;
+    <span class="variable">$b</span> = <span class="string">"World"</span>;
+    <span class="function">echo</span> <span class="variable">$a</span> . <span class="string">" "</span> . <span class="variable">$b</span>;  <span class="comment">// Hello World (concatenation with dot)</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Increment / Decrement</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$x</span> = <span class="number">5</span>;
+    <span class="variable">$x</span>++;     <span class="comment">// $x is now 6 (increment by 1)</span>
+    <span class="variable">$x</span>--;     <span class="comment">// $x is now 5 (decrement by 1)</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Logical Operators</h3>
+      <table>
+        <tr><th>Operator</th><th>Name</th><th>Example</th><th>True When...</th></tr>
+        <tr><td><code>&&</code></td><td>And</td><td><code>true && false</code></td><td>Both sides are true</td></tr>
+        <tr><td><code>||</code></td><td>Or</td><td><code>true || false</code></td><td>At least one side is true</td></tr>
+        <tr><td><code>!</code></td><td>Not</td><td><code>!true</code></td><td>Inverts the value</td></tr>
+      </table>
+
+      <h3>Conditional (Ternary) Operator</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$age</span> = <span class="number">20</span>;
+    <span class="variable">$status</span> = (<span class="variable">$age</span> >= <span class="number">18</span>) ? <span class="string">"Adult"</span> : <span class="string">"Minor"</span>;
+    <span class="function">echo</span> <span class="variable">$status</span>;  <span class="comment">// Adult</span>
+    <span class="comment">// This is a shortcut for an if-else statement!</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 11: IF-ELSEIF-ELSE ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>11. Conditional Statements (if / elseif / else)</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Conditional statements let your PHP code <strong>make decisions</strong>. The syntax is similar to C and Java.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Conditionals as Recipe Steps:</strong> A recipe might say: "If the oven is preheated, put the cake in. Otherwise, wait. If you're making a chocolate cake, use cocoa powder; if vanilla, use vanilla extract." PHP conditionals work exactly the same way — they check conditions and execute different code paths.
+      </div>
+
+      <h3>Basic if-else Structure</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$temperature</span> = <span class="number">32</span>;
+
+    <span class="keyword">if</span> (<span class="variable">$temperature</span> > <span class="number">30</span>) {
+        <span class="function">echo</span> <span class="string">"It's hot outside!"</span>;
+    } <span class="keyword">elseif</span> (<span class="variable">$temperature</span> > <span class="number">20</span>) {
+        <span class="function">echo</span> <span class="string">"It's nice outside."</span>;
+    } <span class="keyword">else</span> {
+        <span class="function">echo</span> <span class="string">"It's cold outside."</span>;
+    }
+    <span class="comment">// Output: It's hot outside!</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Mixing PHP and HTML</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$hour</span> = <span class="function">date</span>(<span class="string">"H"</span>);  <span class="comment">// Current hour (0-23)</span>
+<span class="keyword">?&gt;</span>
+
+<span class="comment">&lt;!-- Now back to HTML --&gt;</span>
+&lt;h1&gt;Welcome!&lt;/h1&gt;
+
+<span class="keyword">&lt;?php</span>
+    <span class="keyword">if</span> (<span class="variable">$hour</span> < <span class="number">12</span>) {
+        <span class="function">echo</span> <span class="string">"&lt;p&gt;Good Morning!&lt;/p&gt;"</span>;
+    } <span class="keyword">elseif</span> (<span class="variable">$hour</span> < <span class="number">18</span>) {
+        <span class="function">echo</span> <span class="string">"&lt;p&gt;Good Afternoon!&lt;/p&gt;"</span>;
+    } <span class="keyword">else</span> {
+        <span class="function">echo</span> <span class="string">"&lt;p&gt;Good Evening!&lt;/p&gt;"</span>;
+    }
+<span class="keyword">?&gt;</span>
+
+<span class="comment">&lt;!-- More HTML below --&gt;</span>
+&lt;p&gt;This is always visible.&lt;/p&gt;
+      </div>
+
+      <div class="info-box note">
+        <strong>Note:</strong> You can switch between PHP and HTML as many times as you want in a single file. PHP starts at <code>&lt;?php</code> and ends at <code>?&gt;</code>, while everything else is treated as plain HTML.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 12: USER-DEFINED FUNCTIONS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>12. User-Defined Functions</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Functions are <strong>blocks of reusable code</strong>. Instead of writing the same code multiple times, you put it in a function and call it whenever needed.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Functions as Recipes:</strong> A function is like a recipe card. The chef writes down the recipe once (function definition), then whenever a customer orders that dish, the chef just follows the recipe card (function call). If the customer wants extra spice, they pass it as a request (parameters). The finished dish is what comes back (return value).
+      </div>
+
+      <h3>Basic Function</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="comment">// Define the function</span>
+    <span class="keyword">function</span> <span class="function">greet</span>() {
+        <span class="function">echo</span> <span class="string">"Hello World!"</span>;
+    }
+
+    <span class="comment">// Call the function</span>
+    <span class="function">greet</span>();  <span class="comment">// Output: Hello World!</span>
+    <span class="function">greet</span>();  <span class="comment">// Output: Hello World! (can call multiple times)</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Function with Parameters</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="keyword">function</span> <span class="function">greetUser</span>(<span class="variable">$name</span>) {
+        <span class="function">echo</span> <span class="string">"Hello, "</span> . <span class="variable">$name</span> . <span class="string">"!"</span>;
+    }
+
+    <span class="function">greetUser</span>(<span class="string">"Alice"</span>);  <span class="comment">// Hello, Alice!</span>
+    <span class="function">greetUser</span>(<span class="string">"Bob"</span>);    <span class="comment">// Hello, Bob!</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Function with Return Value</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="keyword">function</span> <span class="function">add</span>(<span class="variable">$a</span>, <span class="variable">$b</span>) {
+        <span class="keyword">return</span> <span class="variable">$a</span> + <span class="variable">$b</span>;
+    }
+
+    <span class="variable">$result</span> = <span class="function">add</span>(<span class="number">5</span>, <span class="number">3</span>);
+    <span class="function">echo</span> <span class="string">"5 + 3 = "</span> . <span class="variable">$result</span>;  <span class="comment">// 5 + 3 = 8</span>
+
+    <span class="comment">// You can use the function directly in echo</span>
+    <span class="function">echo</span> <span class="string">"10 + 7 = "</span> . <span class="function">add</span>(<span class="number">10</span>, <span class="number">7</span>);  <span class="comment">// 10 + 7 = 17</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Practical Example — Reusable Utility</h3>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="keyword">function</span> <span class="function">isEven</span>(<span class="variable">$number</span>) {
+        <span class="keyword">return</span> <span class="variable">$number</span> % <span class="number">2</span> === <span class="number">0</span>;
+    }
+
+    <span class="keyword">if</span> (<span class="function">isEven</span>(<span class="number">4</span>)) {
+        <span class="function">echo</span> <span class="string">"4 is even"</span>;
+    }
+
+    <span class="keyword">if</span> (<span class="function">isEven</span>(<span class="number">7</span>)) {
+        <span class="function">echo</span> <span class="string">"7 is even"</span>;
+    } <span class="keyword">else</span> {
+        <span class="function">echo</span> <span class="string">"7 is odd"</span>;  <span class="comment">// This prints</span>
+    }
+<span class="keyword">?&gt;</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 13: DATE FUNCTION ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>13. Built-in Functions: Date and Time</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <h3>The date() Function</h3>
+      <p><code>date()</code> formats a <strong>timestamp</strong> into a readable date/time string. It's one of PHP's most commonly used functions.</p>
+
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="function">echo</span> <span class="function">date</span>(<span class="string">"Y-m-d H:i:s"</span>);  <span class="comment">// 2024-12-25 14:30:00</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>Format Characters</h3>
+      <table>
+        <tr>
+          <th>Character</th>
+          <th>Description</th>
+          <th>Example Output</th>
+        </tr>
+        <tr><td><code>d</code></td><td>Day of the month (01-31)</td><td>25</td></tr>
+        <tr><td><code>m</code></td><td>Month (01-12)</td><td>12</td></tr>
+        <tr><td><code>Y</code></td><td>Full 4-digit year</td><td>2024</td></tr>
+        <tr><td><code>l</code> (lowercase L)</td><td>Full day name</td><td>Wednesday</td></tr>
+        <tr><td><code>h</code></td><td>12-hour format (01-12)</td><td>02</td></tr>
+        <tr><td><code>H</code></td><td>24-hour format (00-23)</td><td>14</td></tr>
+        <tr><td><code>i</code></td><td>Minutes (00-59)</td><td>30</td></tr>
+        <tr><td><code>s</code></td><td>Seconds (00-59)</td><td>00</td></tr>
+        <tr><td><code>a</code></td><td>am or pm</td><td>pm</td></tr>
+      </table>
+
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="comment">// Different date formats</span>
+    <span class="function">echo</span> <span class="function">date</span>(<span class="string">"d/m/Y"</span>);        <span class="comment">// 25/12/2024</span>
+    <span class="function">echo</span> <span class="function">date</span>(<span class="string">"l, d F Y"</span>);     <span class="comment">// Wednesday, 25 December 2024</span>
+    <span class="function">echo</span> <span class="function">date</span>(<span class="string">"h:i:s a"</span>);       <span class="comment">// 02:30:00 pm</span>
+    <span class="function">echo</span> <span class="function">date</span>(<span class="string">"Y-m-d"</span>);        <span class="comment">// 2024-12-25 (ISO format)</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <h3>The strtotime() Function</h3>
+      <p><code>strtotime()</code> converts a <strong>text string</strong> into a Unix timestamp (number of seconds since Jan 1, 1970).</p>
+      <div class="php-demo">
+<span class="keyword">&lt;?php</span>
+    <span class="function">echo</span> <span class="function">strtotime</span>(<span class="string">"now"</span>);              <span class="comment">// Current timestamp</span>
+    <span class="function">echo</span> <span class="function">strtotime</span>(<span class="string">"+1 day"</span>);           <span class="comment">// Tomorrow</span>
+    <span class="function">echo</span> <span class="function">strtotime</span>(<span class="string">"+1 week"</span>);          <span class="comment">// Next week</span>
+    <span class="function">echo</span> <span class="function">strtotime</span>(<span class="string">"next Monday"</span>);      <span class="comment">// Next Monday</span>
+    <span class="function">echo</span> <span class="function">strtotime</span>(<span class="string">"first day of next month"</span>);
+
+    <span class="comment">// Combine with date()</span>
+    <span class="function">echo</span> <span class="function">date</span>(<span class="string">"Y-m-d"</span>, <span class="function">strtotime</span>(<span class="string">"+7 days"</span>));  <span class="comment">// Date a week from now</span>
+    <span class="function">echo</span> <span class="function">date</span>(<span class="string">"d/m/Y"</span>, <span class="function">strtotime</span>(<span class="string">"yesterday"</span>)); <span class="comment">// Yesterday's date</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 14: INCLUDE ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>14. Including Files (include / require)</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>PHP lets you <strong>insert the content of one file into another</strong> using <code>include</code> or <code>require</code>. This is essential for organizing code — you can write common code once and reuse it everywhere.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — Include as Prep Work:</strong> A restaurant doesn't make everything from scratch for every order. They prep common ingredients in advance (chopped onions, sauces, bread). When an order comes, the chef grabs the prepped items (<code>include</code>) and assembles the dish. <code>include</code> is like reaching into the prep station and grabbing pre-made components to use in your current dish.
+      </div>
+
+      <h3>The Two Commands</h3>
+      <table>
+        <tr>
+          <th>Command</th>
+          <th>On Failure</th>
+          <th>Use When...</th>
+        </tr>
+        <tr>
+          <td><code>include</code></td>
+          <td>Shows a <strong>warning</strong>, script continues</td>
+          <td>The file is optional (e.g., footer, sidebar)</td>
+        </tr>
+        <tr>
+          <td><code>require</code></td>
+          <td>Shows a <strong>fatal error</strong>, script stops</td>
+          <td>The file is essential (e.g., database config)</td>
+        </tr>
+      </table>
+
+      <h3>Example</h3>
+      <p>Imagine you have a file called <code>header.php</code>:</p>
+      <div class="php-demo">
+<span class="comment">&lt;!-- header.php --&gt;</span>
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;nav&gt;...navigation menu...&lt;/nav&gt;
+      </div>
+
+      <p>And a file called <code>footer.php</code>:</p>
+      <div class="php-demo">
+<span class="comment">&lt;!-- footer.php --&gt;</span>
+&lt;footer&gt;
+    &lt;p&gt;Copyright 2024 My Website&lt;/p&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </div>
+
+      <p>Now your main page <code>index.php</code> can include both:</p>
+      <div class="php-demo">
+<span class="comment">&lt;!-- index.php --&gt;</span>
+<span class="keyword">&lt;?php</span> <span class="keyword">include</span> <span class="string">'header.php'</span>; <span class="keyword">?&gt;</span>
+
+&lt;h1&gt;Welcome to My Page!&lt;/h1&gt;
+&lt;p&gt;This is the main content.&lt;/p&gt;
+
+<span class="keyword">&lt;?php</span> <span class="keyword">include</span> <span class="string">'footer.php'</span>; <span class="keyword">?&gt;</span>
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip:</strong> Use <code>require_once</code> or <code>include_once</code> to ensure a file is included only once, even if you accidentally call it multiple times. This prevents "Cannot redeclare function" errors.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 15: GET vs POST ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>15. GET vs POST — Form Data Handling</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>When a user submits an HTML form, the data is sent to the server via either <strong>GET</strong> or <strong>POST</strong> methods. PHP provides superglobals <code>$_GET</code> and <code>$_POST</code> to access this data.</p>
+
+      <div class="info-box analogy-chef">
+        <strong>Analogy — GET vs POST as Ways to Place an Order:</strong> <strong>GET</strong> is like writing your order on a visible whiteboard that everyone in the restaurant can see — the order, your table number, everything is out in the open. <strong>POST</strong> is like putting your order in a sealed envelope — it's private, no one else sees it, and you can attach large documents (files).
+      </div>
+
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>GET</th>
+          <th>POST</th>
+        </tr>
+        <tr>
+          <td><strong>Data visibility</strong></td>
+          <td>Visible in URL (query string)</td>
+          <td>Not visible in URL (sent in body)</td>
+        </tr>
+        <tr>
+          <td><strong>URL example</strong></td>
+          <td><code>page.php?name=Alice&age=25</code></td>
+          <td><code>page.php</code> (clean URL)</td>
+        </tr>
+        <tr>
+          <td><strong>Size limit</strong></td>
+          <td>~2000 characters max</td>
+          <td>No practical limit</td>
+        </tr>
+        <tr>
+          <td><strong>Bookmarkable</strong></td>
+          <td>Yes (URL contains data)</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><strong>File upload</strong></td>
+          <td>Not supported</td>
+          <td>Supported</td>
+        </tr>
+        <tr>
+          <td><strong>Security</strong></td>
+          <td>Less secure (data in URL)</td>
+          <td>More secure (data hidden)</td>
+        </tr>
+        <tr>
+          <td><strong>Best for</strong></td>
+          <td>Search, filtering, pagination</td>
+          <td>Login forms, file uploads, sensitive data</td>
+        </tr>
+      </table>
+
+      <h3>GET Example</h3>
+      <p>HTML form:</p>
+      <div class="php-demo">
+<span class="comment">&lt;!-- search.html --&gt;</span>
+&lt;form action=<span class="string">"search.php"</span> method=<span class="string">"GET"</span>&gt;
+    &lt;input type=<span class="string">"text"</span> name=<span class="string">"query"</span>&gt;
+    &lt;button type=<span class="string">"submit"</span>&gt;Search&lt;/button&gt;
+&lt;/form&gt;
+      </div>
+      <p>PHP handling:</p>
+      <div class="php-demo">
+<span class="comment">&lt;!-- search.php --&gt;</span>
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$query</span> = <span class="variable">$_GET</span>[<span class="string">"query"</span>];
+    <span class="function">echo</span> <span class="string">"You searched for: "</span> . <span class="variable">$query</span>;
+<span class="keyword">?&gt;</span>
+      </div>
+      <p>If the user types "hello world", the URL becomes: <code>search.php?query=hello+world</code></p>
+
+      <h3>POST Example</h3>
+      <p>HTML form:</p>
+      <div class="php-demo">
+<span class="comment">&lt;!-- login.html --&gt;</span>
+&lt;form action=<span class="string">"login.php"</span> method=<span class="string">"POST"</span>&gt;
+    &lt;input type=<span class="string">"text"</span> name=<span class="string">"username"</span>&gt;
+    &lt;input type=<span class="string">"password"</span> name=<span class="string">"password"</span>&gt;
+    &lt;button type=<span class="string">"submit"</span>&gt;Login&lt;/button&gt;
+&lt;/form&gt;
+      </div>
+      <p>PHP handling:</p>
+      <div class="php-demo">
+<span class="comment">&lt;!-- login.php --&gt;</span>
+<span class="keyword">&lt;?php</span>
+    <span class="variable">$user</span> = <span class="variable">$_POST</span>[<span class="string">"username"</span>];
+    <span class="variable">$pass</span> = <span class="variable">$_POST</span>[<span class="string">"password"</span>];
+    <span class="function">echo</span> <span class="string">"Welcome, "</span> . <span class="variable">$user</span>;
+    <span class="comment">// Password is NOT visible in the URL!</span>
+<span class="keyword">?&gt;</span>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Security Warning:</strong> Never trust user input! Always validate and sanitize data from both <code>$_GET</code> and <code>$_POST</code> before using it. Use functions like <code>htmlspecialchars()</code> to prevent XSS attacks, and use prepared statements when working with databases.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== FLASHCARDS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>16. Flashcards — Key Concepts</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What does PHP stand for?</div>
+            <div class="flashcard-back">PHP: Hypertext Preprocessor (originally "Personal Home Page").</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What symbol do PHP variables start with?</div>
+            <div class="flashcard-back">The dollar sign <code>$</code>. Example: <code>$name = "Alice";</code></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What's the difference between <code>echo</code> and <code>print</code>?</div>
+            <div class="flashcard-back"><code>echo</code> can output multiple values and is faster. <code>print</code> outputs one value and returns 1.</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What are the three types of variable scope in PHP?</div>
+            <div class="flashcard-back">Global (outside functions), Local (inside functions), and Static (retains value between function calls).</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What does <code>var_dump()</code> do?</div>
+            <div class="flashcard-back">Displays the value and data type of a variable. Useful for debugging.</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What is the difference between <code>include</code> and <code>require</code>?</div>
+            <div class="flashcard-back"><code>include</code> gives a warning if file not found; script continues. <code>require</code> gives a fatal error; script stops.</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What's the difference between <code>==</code> and <code>===</code>?</div>
+            <div class="flashcard-back"><code>==</code> compares values only (with type conversion). <code>===</code> compares value AND type (strict).</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">When should you use GET vs POST?</div>
+            <div class="flashcard-back">GET: search, filtering, bookmarkable actions. POST: login, file upload, sensitive data, large data.</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">How do you access form data sent via POST?</div>
+            <div class="flashcard-back">Using the <code>$_POST</code> superglobal array. Example: <code>$_POST["username"]</code></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">How do you concatenate strings in PHP?</div>
+            <div class="flashcard-back">Using the dot <code>.</code> operator. Example: <code>"Hello" . " " . "World"</code></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box tip">
+        <strong>How to use flashcards:</strong> Click any card to flip it and reveal the answer. Click again to flip back. Try to answer before you flip!
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>17. Quiz — Test Your Knowledge</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <div class="quiz" id="quiz1">
+        <h3>Question 1: What is the correct way to start PHP code?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">A. &lt;php&gt;</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">B. &lt;?php</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">C. &lt;%</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">D. &lt;script&gt;</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz2">
+        <h3>Question 2: Which symbol do PHP variables start with?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">A. #</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">B. @</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">C. $</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">D. &amp;</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz3">
+        <h3>Question 3: How do you concatenate (join) two strings in PHP?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">A. + (plus sign)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">B. &amp; (ampersand)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">C. . (dot)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">D. , (comma)</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz4">
+        <h3>Question 4: What happens when <code>include</code> can't find a file?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">A. Fatal error — script stops</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">B. Warning — script continues</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">C. Nothing happens</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">D. The file is created automatically</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz5">
+        <h3>Question 5: What does <code>===</code> compare?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A. Only values</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">B. Only variable names</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">C. Value AND data type (strict comparison)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">D. Memory addresses</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz6">
+        <h3>Question 6: Which method should you use for a login form?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">A. GET (data visible in URL)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">B. POST (data hidden from URL)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">C. Either one is fine</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">D. Neither — use JavaScript only</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz7">
+        <h3>Question 7: What does <code>static</code> do inside a function?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">A. Makes the variable global</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">B. Makes the variable constant</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">C. Retains the variable's value between function calls</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">D. Prevents the variable from being modified</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz8">
+        <h3>Question 8: What percentage of websites use PHP?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">A. 25.3%</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">B. 50.0%</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">C. 65.8%</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)">D. 78.1%</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz9">
+        <h3>Question 9: Which function checks a variable's type and value?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz9', this, false)">A. gettype()</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz9', this, true)">B. var_dump()</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz9', this, false)">C. typecheck()</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz9', this, false)">D. echo type()</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="resetQuiz()" style="margin-top: 16px;">Reset Quiz</button>
+
+    </div>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <div class="summary">
+    <h2>Summary — PHP Fundamentals</h2>
+    <ul>
+      <li><strong>PHP</strong> (Hypertext Preprocessor) is a server-side language that processes code on the server and sends HTML output to the browser.</li>
+      <li><strong>PHP Tags:</strong> Code goes between <code>&lt;?php</code> and <code>?&gt;</code>. Statements end with <code>;</code>.</li>
+      <li><strong>Variables</strong> start with <code>$</code> and are loosely typed (no type declaration needed).</li>
+      <li><strong>Output:</strong> <code>echo</code> (most common, multiple values) and <code>print</code> (single value, returns 1).</li>
+      <li><strong>Scope:</strong> Global (outside functions), Local (inside functions), Static (retains value). Use <code>global</code> keyword to access globals inside functions.</li>
+      <li><strong>Data Types:</strong> String, Integer, Float, Boolean, Array, Object, NULL. Use <code>var_dump()</code> to check.</li>
+      <li><strong>String Functions:</strong> <code>strlen()</code>, <code>str_word_count()</code>, <code>strrev()</code>, <code>strpos()</code>, <code>str_replace()</code>.</li>
+      <li><strong>Arrays:</strong> Numeric (indexed), Associative (named keys), Multidimensional. Use <code>foreach</code> to loop.</li>
+      <li><strong>Operators:</strong> Arithmetic, Comparison (<code>===</code> for strict), String (<code>.</code> for concatenation), Logical, Ternary.</li>
+      <li><strong>Functions:</strong> Use <code>function</code> keyword. Support parameters and return values.</li>
+      <li><strong>Date Functions:</strong> <code>date()</code> for formatting, <code>strtotime()</code> for parsing text to timestamps.</li>
+      <li><strong>Include/Require:</strong> Insert file contents. <code>require</code> = fatal on failure, <code>include</code> = warning only.</li>
+      <li><strong>GET vs POST:</strong> GET visible in URL (~2000 char limit), POST hidden and supports file upload.</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+function toggleCollapsible(header) {
+  const body = header.nextElementSibling;
+  const icon = header.querySelector('.toggle-icon');
+  body.classList.toggle('active');
+  icon.textContent = body.classList.contains('active') ? '▲' : '▼';
+}
+
+function checkAnswer(quizId, option, isCorrect) {
+  const quiz = document.getElementById(quizId);
+  if (quiz.dataset.answered) return;
+  quiz.dataset.answered = 'true';
+
+  const feedback = quiz.querySelector('.quiz-feedback');
+  const options = quiz.querySelectorAll('.quiz-option');
+
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+    if (opt === option) {
+      if (isCorrect) {
+        opt.style.background = 'rgba(166,227,161,0.25)';
+        opt.style.border = '2px solid #a6e3a1';
+        feedback.textContent = '✓ Correct!';
+        feedback.style.color = '#a6e3a1';
+      } else {
+        opt.style.background = 'rgba(243,139,168,0.25)';
+        opt.style.border = '2px solid #f38ba8';
+        feedback.textContent = '✗ Incorrect. The correct answer is highlighted below.';
+        feedback.style.color = '#f38ba8';
+      }
+    }
+    if (!isCorrect && opt.onclick && opt.onclick.toString().includes('true')) {
+      opt.style.background = 'rgba(166,227,161,0.15)';
+      opt.style.border = '1px solid #a6e3a1';
+    }
+  });
+}
+
+function resetQuiz() {
+  document.querySelectorAll('.quiz').forEach(function(quiz) {
+    delete quiz.dataset.answered;
+    quiz.querySelectorAll('.quiz-option').forEach(function(opt) {
+      opt.style.background = '';
+      opt.style.border = '';
+      opt.style.pointerEvents = '';
+    });
+    const feedback = quiz.querySelector('.quiz-feedback');
+    feedback.textContent = '';
+    feedback.style.color = '';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.collapsible-body').forEach(function(body) {
+    body.classList.remove('active');
+  });
+});
+</script>
+
+</body>
+</html>

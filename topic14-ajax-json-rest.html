@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 14: AJAX, JSON &amp; RESTful APIs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Topic 14: AJAX, JSON &amp; RESTful APIs</h1>
+
+  <!-- ======================== SECTION 1: INTRODUCTION ======================== -->
+  <h2>1. The Problem: Why AJAX?</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Library vs. The Internet:</strong> In the old days, every time you had a question, you had to walk to the library, check out an entire book, bring it home, read one paragraph, and then return the whole book before checking out another. That's how traditional web pages worked — you loaded the <em>entire page</em> just to see one small change. AJAX is like having a personal assistant who runs to the library, finds the exact paragraph, and brings it back to you — without you ever leaving your chair.
+  </div>
+
+  <div class="card">
+    <p>Before AJAX, web applications had a usability problem: every interaction with the server required a <strong>full page reload</strong>. This made web apps feel sluggish compared to desktop applications.</p>
+
+    <h3>The Goal: Rich Internet Applications (RIAs)</h3>
+    <p>RIAs aim to deliver the same <strong>look, feel, and usability</strong> as desktop applications inside the browser. Two key attributes:</p>
+    <ol>
+      <li><strong>High performance</strong> — instant feedback, no unnecessary waiting</li>
+      <li><strong>Rich GUI</strong> — responsive, interactive user interfaces</li>
+    </ol>
+
+    <p>RIAs achieve performance through <strong>AJAX</strong>, which uses client-side scripting to create responsive applications by separating <em>user interaction</em> from <em>server communication</em>.</p>
+
+    <h3>Everyday AJAX Examples</h3>
+    <ul>
+      <li><strong>News feeds</strong> that auto-update without refreshing the page</li>
+      <li><strong>Like buttons</strong> that update the count instantly</li>
+      <li><strong>Google search suggestions</strong> that appear as you type</li>
+      <li><strong>Social media timelines</strong> that load more posts when you scroll down</li>
+    </ul>
+  </div>
+
+  <!-- ======================== SECTION 2: SYNC vs ASYNC ======================== -->
+  <h2>2. Synchronous vs. Asynchronous</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Single Cashier vs. The Self-Checkout:</strong>
+    <br><br><strong>Synchronous:</strong> A store with one cashier and a long line. Every customer must wait for the person in front to be fully served before their turn. The cashier cannot multitask.
+    <br><br><strong>Asynchronous:</strong> A self-checkout area with multiple machines. Each customer scans their items independently. While one customer is bagging, another is scanning. No one blocks anyone else.
+  </div>
+
+  <div class="card">
+    <h3>Synchronous Processing</h3>
+    <ul>
+      <li>One thing happens <strong>after another</strong> — strictly sequential</li>
+      <li>The server <strong>cannot multitask</strong> for the client</li>
+      <li>You <strong>cannot interact</strong> with the page while waiting for a response</li>
+      <li>The entire page <strong>freezes</strong> until the request completes</li>
+    </ul>
+
+    <h3>Asynchronous Processing</h3>
+    <ul>
+      <li>The page <strong>continues processing</strong> while waiting for a response</li>
+      <li>The reply is handled <strong>when it arrives</strong> (via a callback)</li>
+      <li><strong>No full page reload</strong> is needed — only the affected part updates</li>
+      <li>The user can <strong>keep interacting</strong> with the page</li>
+    </ul>
+
+    <div class="diagram">
+      <div style="text-align:center; padding:20px;">
+        <div style="display:inline-block; vertical-align:top; margin:0 30px;">
+          <div style="background:#e74c3c; color:white; padding:10px 20px; border-radius:8px; font-weight:bold; margin-bottom:10px;">Synchronous</div>
+          <div style="text-align:left; font-size:0.9em; line-height:1.8;">
+            1. User clicks button<br>
+            2. Browser sends request<br>
+            3. Page is <strong>frozen</strong> ⏳<br>
+            4. Server responds<br>
+            5. Entire page reloads<br>
+            6. User can interact
+          </div>
+        </div>
+        <div style="display:inline-block; vertical-align:top; margin:0 30px;">
+          <div style="background:#2ecc71; color:white; padding:10px 20px; border-radius:8px; font-weight:bold; margin-bottom:10px;">Asynchronous</div>
+          <div style="text-align:left; font-size:0.9em; line-height:1.8;">
+            1. User clicks button<br>
+            2. Browser sends request<br>
+            3. Page <strong>keeps working</strong> 🎉<br>
+            4. Server responds<br>
+            5. Only the changed part updates<br>
+            6. User never stopped interacting
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box note">
+      <strong>Loading indicators</strong> (spinners, progress bars) are commonly shown during asynchronous requests so users know something is happening in the background.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 3: WHAT IS AJAX ======================== -->
+  <h2>3. What is AJAX?</h2>
+
+  <div class="card">
+    <div class="info-box analogy">
+      <strong>Analogy — The Messenger:</strong> AJAX is like a messenger you send out to deliver a letter and bring back a reply. While the messenger is walking to the post office, you can keep doing other things — cooking, reading, talking. When the messenger returns, you read the reply and act on it. The key point: <em>you didn't have to stop everything and walk to the post office yourself.</em>
+    </div>
+
+    <p><strong>AJAX</strong> stands for <strong>Asynchronous JavaScript and XML</strong>. It is a set of web development techniques that use client-side technologies to create asynchronous web applications.</p>
+
+    <h3>What AJAX Does</h3>
+    <ul>
+      <li><strong>Sends data</strong> to a server in the background</li>
+      <li><strong>Receives data</strong> from a server</li>
+      <li><strong>Updates the page</strong> without a full reload</li>
+      <li>All done <strong>without interfering</strong> with the current display</li>
+    </ul>
+
+    <h3>Two Ways to Implement AJAX</h3>
+    <table>
+      <thead><tr><th>Method</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Raw JavaScript</td><td>Using the <code>XMLHttpRequest</code> object directly — verbose but fundamental</td></tr>
+        <tr><td>jQuery</td><td>Using jQuery's AJAX methods — simpler, cross-browser compatible</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================== SECTION 4: XMLHttpRequest ======================== -->
+  <h2>4. XMLHttpRequest — The Raw Approach</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Writing a Formal Letter:</strong> Using <code>XMLHttpRequest</code> directly is like writing a formal letter by hand: you address the envelope, write the content, seal it, and send it. It works, but it's a lot of steps. (jQuery's AJAX methods, covered next, are like sending an email — same result, much less effort.)
+  </div>
+
+  <div class="card">
+    <p><code>XMLHttpRequest</code> is a <strong>built-in browser object</strong> that allows you to send HTTP requests from JavaScript.</p>
+
+    <h3>Basic Usage</h3>
+    <pre><code>// 1. Create the request object
+var request = new XMLHttpRequest();
+
+// 2. Configure the request (method, URL)
+request.open("GET", "about_us.txt");
+
+// 3. Define what happens when the response arrives
+request.onreadystatechange = function() {
+    if (request.readyState === 4 && request.status === 200) {
+        document.getElementById("output").innerHTML = request.responseText;
+    }
+};
+
+// 4. Send the request
+request.send();</code></pre>
+
+    <h3>The <code>open()</code> Method</h3>
+    <table>
+      <thead><tr><th>Example</th><th>HTTP Method</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>request.open("GET", "about_us.txt")</code></td><td>GET</td><td>Retrieve data</td></tr>
+        <tr><td><code>request.open("POST", "process.php")</code></td><td>POST</td><td>Send data</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The <code>send()</code> Method</h3>
+    <table>
+      <thead><tr><th>Usage</th><th>When</th></tr></thead>
+      <tbody>
+        <tr><td><code>request.send()</code></td><td>For GET requests (no body needed)</td></tr>
+        <tr><td><code>request.send(body)</code></td><td>For POST requests (sends data to the server)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>readyState Values</h3>
+    <p>The <code>readyState</code> property tracks the progress of the request through these stages:</p>
+    <table>
+      <thead><tr><th>Value</th><th>Constant</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td><code>UNSENT</code></td><td>Request not yet opened</td></tr>
+        <tr><td>1</td><td><code>OPENED</code></td><td><code>open()</code> has been called</td></tr>
+        <tr><td>2</td><td><code>HEADERS_RECEIVED</code></td><td>Response headers received</td></tr>
+        <tr><td>3</td><td><code>LOADING</code></td><td>Receiving response data</td></tr>
+        <tr><td>4</td><td><code>DONE</code></td><td>Request complete, response ready</td></tr>
+      </tbody>
+    </table>
+
+    <h3>HTTP Status Codes</h3>
+    <table>
+      <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><strong>200</strong></td><td>OK — request succeeded</td></tr>
+        <tr><td><strong>404</strong></td><td>Not Found — resource doesn't exist</td></tr>
+        <tr><td><strong>503</strong></td><td>Service Unavailable — server can't handle the request</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box warning">
+      <strong>Key Check:</strong> Always check both <code>readyState === 4</code> (request finished) AND <code>status === 200</code> (successful) before processing the response.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 5: JQUERY AJAX ======================== -->
+  <h2>5. jQuery AJAX Methods</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Speaking the Language:</strong> If raw XMLHttpRequest is speaking to the server in its native protocol, jQuery AJAX methods are your translator who makes it easy and natural. Same message, but much more pleasant to use.
+  </div>
+
+  <div class="card">
+    <p>jQuery provides several convenient methods for AJAX requests. All of them request text, HTML, XML, or JSON from a remote server using HTTP GET or POST.</p>
+
+    <h3>Overview of jQuery AJAX Methods</h3>
+    <table>
+      <thead><tr><th>Method</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>.load()</code></td><td>Load data from a server into an HTML element</td></tr>
+        <tr><td><code>$.get()</code></td><td>Simple GET request</td></tr>
+        <tr><td><code>$.post()</code></td><td>Simple POST request</td></tr>
+        <tr><td><code>$.ajax()</code></td><td>Full-featured, configurable AJAX requests</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box warning">
+      <strong>Same-Origin Policy:</strong> By default, all AJAX requests can only communicate with the <strong>same domain/server</strong> the page was loaded from. This is a critical security restriction.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 6: .load() ======================== -->
+  <h2>6. The <code>.load()</code> Method</h2>
+
+  <div class="card">
+    <p><code>.load()</code> is the simplest jQuery AJAX method. It fetches HTML from a server and inserts it directly into a selected element.</p>
+
+    <h3>Syntax</h3>
+    <pre><code>$(selector).load(URL, data, callback);</code></pre>
+    <ul>
+      <li><strong>URL</strong> — The address to fetch data from</li>
+      <li><strong>data</strong> (optional) — Data to send with the request</li>
+      <li><strong>callback</strong> (optional) — Function that runs after loading</li>
+    </ul>
+
+    <h3>Basic Example</h3>
+    <pre><code>// Load content from "about.html" into #mainContent
+$("#mainContent").load("about.html");</code></pre>
+
+    <h3>With Callback</h3>
+    <pre><code>$("#result").load("data.html", function(responseTxt, statusTxt, xhr) {
+    if (statusTxt === "success") {
+        console.log("Content loaded successfully!");
+    }
+    if (statusTxt === "error") {
+        console.log("Error: " + xhr.status + ": " + xhr.statusText);
+    }
+});</code></pre>
+
+    <h3>Load a Specific Portion</h3>
+    <p>You can fetch only a part of a page by adding a CSS selector after a space:</p>
+    <pre><code>// Only load elements with class "summary" from news.html
+$("#newsArea").load("news.html .summary");</code></pre>
+
+    <h3>Callback Parameters</h3>
+    <table>
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>responseTxt</code></td><td>The content returned from the server</td></tr>
+        <tr><td><code>statusTxt</code></td><td>"success" or "error"</td></tr>
+        <tr><td><code>xhr</code></td><td>The XMLHttpRequest object (for detailed status info)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================== SECTION 7: $.get() and $.post() ======================== -->
+  <h2>7. <code>$.get()</code> and <code>$.post()</code></h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Asking vs. Telling:</strong> <code>$.get()</code> is like asking a question — "Hey server, give me this information." <code>$.post()</code> is like sending a package — "Hey server, here's some data, please process it." Both reach the same server, but the way they send information differs.
+  </div>
+
+  <div class="card">
+    <h3><code>$.get()</code> — Simple GET Request</h3>
+    <pre><code>$.get("api/users", function(data, status) {
+    alert("Data: " + data + "\nStatus: " + status);
+});</code></pre>
+
+    <h3><code>$.post()</code> — Simple POST Request</h3>
+    <pre><code>$.post("api/users", {
+    name: "John Doe",
+    email: "john@example.com"
+}, function(data, status) {
+    alert("Response: " + data + "\nStatus: " + status);
+});</code></pre>
+
+    <h3>Comparison</h3>
+    <table>
+      <thead><tr><th>Feature</th><th><code>$.get()</code></th><th><code>$.post()</code></th></tr></thead>
+      <tbody>
+        <tr><td>HTTP Method</td><td>GET</td><td>POST</td></tr>
+        <tr><td>Data sent via</td><td>URL query string</td><td>Request body</td></tr>
+        <tr><td>Use case</td><td>Retrieving data</td><td>Submitting data</td></tr>
+        <tr><td>Cacheable</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Data limit</td><td>Limited by URL length</td><td>No practical limit</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box note">
+      <strong>Important:</strong> Both <code>$.get()</code> and <code>$.post()</code> can only communicate with the <strong>same domain</strong> the page was loaded from.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 8: $.ajax() ======================== -->
+  <h2>8. <code>$.ajax()</code> — The Power Tool</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Swiss Army Knife:</strong> While <code>.load()</code>, <code>$.get()</code>, and <code>$.post()</code> are each one specific tool, <code>$.ajax()</code> is the full Swiss Army knife — it can do everything they do and much more. You configure it with an options object that specifies every detail of the request.
+  </div>
+
+  <div class="card">
+    <h3>Syntax</h3>
+    <pre><code>$.ajax({
+    type: "POST",              // HTTP method
+    url: "api/register",       // Destination URL
+    data: {                    // Data to send
+        name: "John",
+        age: 25
+    },
+    dataType: "json",          // Expected response type
+    beforeSend: function() {   // Runs before sending
+        $("#loading").show();
+    },
+    success: function(response) {  // Runs on success
+        console.log("Success:", response);
+        $("#result").html(response.message);
+    },
+    error: function(xhr, status, error) {  // Runs on failure
+        console.error("Error:", error);
+        $("#result").html("Something went wrong.");
+    },
+    complete: function() {     // Runs after success or error
+        $("#loading").hide();
+    }
+});</code></pre>
+
+    <h3>Key Configuration Options</h3>
+    <table>
+      <thead><tr><th>Option</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>type</code></td><td>HTTP method: "GET", "POST", "PUT", "DELETE"</td></tr>
+        <tr><td><code>url</code></td><td>The URL to send the request to</td></tr>
+        <tr><td><code>data</code></td><td>Data to send (object, query string, or FormData)</td></tr>
+        <tr><td><code>dataType</code></td><td>Expected response: "json", "html", "text", "xml"</td></tr>
+        <tr><td><code>beforeSend</code></td><td>Function to run before the request is sent</td></tr>
+        <tr><td><code>success</code></td><td>Function to run when the request succeeds</td></tr>
+        <tr><td><code>error</code></td><td>Function to run when the request fails</td></tr>
+        <tr><td><code>complete</code></td><td>Function to run after success or error</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box tip">
+      <strong>Why $.ajax() is preferred for complex scenarios:</strong> It gives you full control over every aspect of the request — headers, timeouts, error handling, data types, and lifecycle callbacks.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 9: JSON ======================== -->
+  <h2>9. JSON — JavaScript Object Notation</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Universal Language of Data:</strong> Imagine two people who speak different languages trying to exchange information. They agree on a shared notation system using simple symbols everyone understands. JSON is that system for computers. It's a lightweight, text-based format that every programming language can read and write — like a <em>lingua franca</em> for data.
+  </div>
+
+  <div class="card">
+    <p><strong>JSON</strong> (JavaScript Object Notation) is a lightweight, text-based, open standard for <strong>human-readable data interchange</strong>.</p>
+
+    <h3>Key Facts</h3>
+    <ul>
+      <li>Extended from JavaScript object literal syntax</li>
+      <li>Files use the <code>.json</code> extension</li>
+      <li>Media type: <code>application/json</code></li>
+      <li><strong>Language independent</strong> — while it originated from JavaScript, every major language can parse and generate JSON</li>
+    </ul>
+
+    <h3>JSON Syntax</h3>
+    <pre><code>{
+    "name": "value"
+}</code></pre>
+
+    <h3>Example: A Person Object</h3>
+    <pre><code>{
+    "first": "John",
+    "last": "Doe",
+    "age": 20,
+    "phone": null
+}</code></pre>
+
+    <h3>Arrays of Objects</h3>
+    <pre><code>[
+    {
+        "first": "John",
+        "last": "Doe",
+        "age": 20
+    },
+    {
+        "first": "Jane",
+        "last": "Smith",
+        "age": 22
+    }
+]</code></pre>
+
+    <h3>Valid JSON Value Types</h3>
+    <table>
+      <thead><tr><th>Type</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>String</td><td><code>"Hello"</code></td></tr>
+        <tr><td>Number</td><td><code>42</code>, <code>3.14</code></td></tr>
+        <tr><td>Object</td><td><code>{"key": "value"}</code></td></tr>
+        <tr><td>Array</td><td><code>[1, 2, 3]</code></td></tr>
+        <tr><td>Boolean</td><td><code>true</code>, <code>false</code></td></tr>
+        <tr><td>Null</td><td><code>null</code></td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box warning">
+      <strong>Invalid JSON types:</strong> JSON does <strong>NOT</strong> support functions, dates, or <code>undefined</code>. These must be converted to strings or numbers before sending.
+    </div>
+
+    <h3>Parsing and Encoding</h3>
+    <table>
+      <thead><tr><th>Operation</th><th>JavaScript</th><th>PHP</th></tr></thead>
+      <tbody>
+        <tr><td>Parse (string → object)</td><td><code>JSON.parse()</code></td><td><code>json_decode()</code></td></tr>
+        <tr><td>Encode (object → string)</td><td><code>JSON.stringify()</code></td><td><code>json_encode()</code></td></tr>
+      </tbody>
+    </table>
+
+    <h3>JavaScript Examples</h3>
+    <pre><code>// Parsing JSON string into a JavaScript object
+var jsonString = '{"first":"John","last":"Doe","age":20}';
+var obj = JSON.parse(jsonString);
+console.log(obj.first); // "John"
+
+// Encoding JavaScript object into a JSON string
+var person = { first: "Jane", last: "Smith", age: 22 };
+var jsonString = JSON.stringify(person);
+console.log(jsonString); // '{"first":"Jane","last":"Smith","age":22}'</code></pre>
+  </div>
+
+  <!-- ======================== SECTION 10: WEB SERVICES ======================== -->
+  <h2>10. Web Services</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The International Postal System:</strong> A web service is like the global postal system. You (the front-end) write a letter (request) in a standard format (HTTP). The post office (the Internet) delivers it to any address (server) in the world. The server writes back in the same standard format. Neither side needs to know how the other works internally — they just follow the postal rules (protocols).
+  </div>
+
+  <div class="card">
+    <p>A <strong>web service</strong> is a collection of open protocols and standards used for exchanging data between systems over the Internet.</p>
+
+    <h3>The Architecture</h3>
+    <ul>
+      <li><strong>Front-end</strong> (your browser/device) sends requests</li>
+      <li><strong>Data</strong> lives on a remote server</li>
+      <li><strong>APIs</strong> (Application Programming Interfaces) are the gateways</li>
+      <li>Data is transferred via <strong>HTTP</strong> in formats like <strong>XML</strong> or <strong>JSON</strong></li>
+    </ul>
+
+    <h3>Two Major Architectures</h3>
+    <table>
+      <thead><tr><th>Architecture</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SOAP</strong></td><td>Simple Object Access Protocol — XML-based, strict, enterprise-focused</td></tr>
+        <tr><td><strong>REST</strong></td><td>Representational State Transfer — lightweight, flexible, modern</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================== SECTION 11: REST ======================== -->
+  <h2>11. RESTful Web Services</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — A Restaurant Menu:</strong> A REST API is like a well-organized restaurant menu. Each dish has a clear name (URI), and the menu tells you exactly how to order it. Want the grilled chicken? That's a GET request to <code>/api/chicken</code>. Want to create a custom order? That's a POST to <code>/api/orders</code>. The kitchen (server) prepares it and sends it back. You don't need to know how they cook it — you just follow the menu.
+  </div>
+
+  <div class="card">
+    <p><strong>REST</strong> (Representational State Transfer) is an architectural style that uses <strong>HTTP methods</strong> for CRUD operations on resources.</p>
+
+    <h3>CRUD = HTTP Methods</h3>
+    <table>
+      <thead><tr><th>CRUD Operation</th><th>HTTP Method</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Create</strong></td><td><code>POST</code></td><td>Create a new resource</td></tr>
+        <tr><td><strong>Retrieve</strong></td><td><code>GET</code></td><td>Read/fetch resource(s)</td></tr>
+        <tr><td><strong>Update</strong></td><td><code>PUT</code></td><td>Update an existing resource</td></tr>
+        <tr><td><strong>Delete</strong></td><td><code>DELETE</code></td><td>Remove a resource</td></tr>
+      </tbody>
+    </table>
+
+    <h3>REST URI Convention — Employee Example</h3>
+    <table>
+      <thead><tr><th>URI</th><th>Method</th><th>Action</th></tr></thead>
+    </table>
+    <table>
+      <tbody>
+        <tr><td><code>/api/employees</code></td><td><code>GET</code></td><td>List all employees</td></tr>
+        <tr><td><code>/api/employees/1</code></td><td><code>GET</code></td><td>Get employee with ID 1</td></tr>
+        <tr><td><code>/api/employees</code></td><td><code>POST</code></td><td>Create a new employee</td></tr>
+        <tr><td><code>/api/employees/1</code></td><td><code>PUT</code></td><td>Update employee with ID 1</td></tr>
+        <tr><td><code>/api/employees/1</code></td><td><code>DELETE</code></td><td>Delete employee with ID 1</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box tip">
+      <strong>Design Principle:</strong> REST URIs should be <strong>intuitively understandable</strong>. The URI describes the resource (<code>/api/employees</code>), and the HTTP method describes the action.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 12: API TESTING ======================== -->
+  <h2>12. API Testing</h2>
+
+  <div class="card">
+    <p>API testing validates APIs for:</p>
+    <ul>
+      <li><strong>Functionality</strong> — Does it do what it should?</li>
+      <li><strong>Reliability</strong> — Is it consistent across requests?</li>
+      <li><strong>Performance</strong> — Does it respond quickly under load?</li>
+      <li><strong>Security</strong> — Is it protected against unauthorized access?</li>
+    </ul>
+
+    <h3>Postman — The API Client</h3>
+    <div class="info-box analogy">
+      <strong>Analogy — The Walkie-Talkie:</strong> Postman is like a walkie-talkie designed specifically for talking to APIs. You can type your message (request), choose the channel (HTTP method), set the frequency (headers), and hear the response — all without writing a single line of code.
+    </div>
+    <ul>
+      <li>Used for <strong>creating, sharing, testing, and documenting</strong> APIs</li>
+      <li>Supports all HTTP methods (GET, POST, PUT, DELETE, etc.)</li>
+      <li>Can set headers, body, authentication, and parameters</li>
+      <li>Displays response status, body, headers, and timing</li>
+    </ul>
+
+    <pre><code>// Example: Testing a GET endpoint in Postman
+// 1. Select "GET" from the dropdown
+// 2. Enter URL: https://api.example.com/api/employees
+// 3. Click "Send"
+// 4. View the JSON response in the body panel</code></pre>
+  </div>
+
+  <!-- ======================== SECTION 13: SPA ======================== -->
+  <h2>13. Single-Page Applications (SPA)</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Magic Book:</strong> Imagine a book where, instead of turning to a completely new page, the text on the current page magically rewrites itself to show new content. The cover, the page numbers, and your bookmarks stay the same — only the content changes. That's a SPA: one HTML page that dynamically updates its content without ever loading a new page.
+  </div>
+
+  <div class="card">
+    <p>A <strong>Single-Page Application</strong> dynamically rewrites the current page with new data instead of loading entire new pages from the server.</p>
+
+    <h3>How It Works</h3>
+    <ol>
+      <li>The browser loads <strong>one single HTML page</strong> initially</li>
+      <li>When the user interacts, <strong>AJAX requests</strong> fetch data from the server</li>
+      <li>The server responds with <strong>JSON data</strong> (not a full HTML page)</li>
+      <li>JavaScript <strong>updates the DOM</strong> with the new data</li>
+      <li>The URL may update via the <strong>History API</strong> (for bookmarkability)</li>
+    </ol>
+
+    <h3>Popular SPA Examples</h3>
+    <table>
+      <thead><tr><th>Application</th><th>What It Does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gmail</strong></td><td>Email client that never reloads — tabs, compose, inbox all update dynamically</td></tr>
+        <tr><td><strong>Google Maps</strong></td><td>Pans, zooms, and loads map tiles without page refresh</td></tr>
+        <tr><td><strong>AirBNB</strong></td><td>Search results, filters, and listings update seamlessly</td></tr>
+        <tr><td><strong>Netflix</strong></td><td>Browse categories, watch previews, all without full reloads</td></tr>
+      </tbody>
+    </table>
+
+    <h3>The SPA Foundation</h3>
+    <div class="diagram">
+      <div style="text-align:center; padding:20px;">
+        <div style="display:inline-block; background:#3498db; color:white; padding:12px 24px; border-radius:8px; font-weight:bold;">
+          SPA (Single HTML Page)
+        </div>
+        <div class="arrow">↔</div>
+        <div style="display:inline-block; background:#e74c3c; color:white; padding:12px 24px; border-radius:8px; font-weight:bold;">
+          AJAX (Async Requests)
+        </div>
+        <div class="arrow">↔</div>
+        <div style="display:inline-block; background:#2ecc71; color:white; padding:12px 24px; border-radius:8px; font-weight:bold;">
+          JSON (Data Format)
+        </div>
+        <div class="arrow">↔</div>
+        <div style="display:inline-block; background:#9b59b6; color:white; padding:12px 24px; border-radius:8px; font-weight:bold;">
+          REST API (Server)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 14: FULL EXAMPLE ======================== -->
+  <h2>14. Putting It All Together</h2>
+
+  <div class="card">
+    <h3>Complete Example: AJAX + jQuery + REST + JSON</h3>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button id="loadBtn"&gt;Load Employees&lt;/button&gt;
+  &lt;div id="result"&gt;&lt;/div&gt;
+
+  &lt;script&gt;
+    $(function() {
+
+      $("#loadBtn").on("click", function() {
+        // Show loading indicator
+        $("#result").html("&lt;p&gt;Loading...&lt;/p&gt;");
+
+        // GET request to REST API
+        $.ajax({
+          type: "GET",
+          url: "/api/employees",
+          dataType: "json",
+          success: function(data) {
+            // data is already parsed from JSON
+            var html = "&lt;table&gt;&lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Email&lt;/th&gt;&lt;/tr&gt;";
+            data.forEach(function(emp) {
+              html += "&lt;tr&gt;&lt;td&gt;" + emp.name + "&lt;/td&gt;";
+              html += "&lt;td&gt;" + emp.email + "&lt;/td&gt;&lt;/tr&gt;";
+            });
+            html += "&lt;/table&gt;";
+            $("#result").html(html);
+          },
+          error: function(xhr, status, error) {
+            $("#result").html("&lt;p&gt;Error loading data.&lt;/p&gt;");
+          }
+        });
+      });
+
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <div class="info-box tip">
+      <strong>This example demonstrates:</strong> Document ready, event handling, <code>$.ajax()</code> with configuration, GET request to a REST endpoint, JSON response handling, dynamic DOM update, and error handling — the complete modern web development cycle.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 15: COMPARISON ======================== -->
+  <h2>15. AJAX Methods Comparison</h2>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Method</th><th>Complexity</th><th>Best For</th><th>Configurable?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.load()</code></td><td>Simple</td><td>Quick HTML loading into an element</td><td>Minimal</td></tr>
+        <tr><td><code>$.get()</code></td><td>Simple</td><td>Simple GET requests</td><td>Limited</td></tr>
+        <tr><td><code>$.post()</code></td><td>Simple</td><td>Simple POST requests</td><td>Limited</td></tr>
+        <tr><td><code>$.ajax()</code></td><td>Advanced</td><td>Complex scenarios needing full control</td><td>Full control</td></tr>
+        <tr><td><code>XMLHttpRequest</code></td><td>Verbose</td><td>Raw JS without jQuery</td><td>Full control</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box analogy">
+      <strong>Analogy — Transportation:</strong>
+      <br><code>.load()</code> = Walking next door — simple, for short distances<br>
+      <code>$.get()</code> = Riding a bike — quick, easy, limited capacity<br>
+      <code>$.post()</code> = Driving a car — more capacity, still simple<br>
+      <code>$.ajax()</code> = Flying a plane — full control, handles complex routes<br>
+      <code>XMLHttpRequest</code> = Building your own plane — maximum control, but you assemble every part
+    </div>
+  </div>
+
+  <!-- ======================== INTERACTIVE: FLASHCARDS ======================== -->
+  <h2>Flashcard Review</h2>
+  <p>Click each card to flip it and reveal the answer.</p>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What does AJAX stand for?</strong></div>
+        <div class="flashcard-back">Asynchronous JavaScript and XML. It enables web pages to send and receive data from the server asynchronously, without a full page reload.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What is the difference between synchronous and asynchronous requests?</strong></div>
+        <div class="flashcard-back">Synchronous: page freezes, waits for response, then reloads. Asynchronous: page continues working, response is handled when it arrives.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What readyState value indicates the request is complete?</strong></div>
+        <div class="flashcard-back">ReadyState 4 (DONE). The response has been fully received and is ready to be processed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What are the 4 HTTP methods used in RESTful APIs?</strong></div>
+        <div class="flashcard-back">POST (Create), GET (Retrieve), PUT (Update), DELETE (Delete) — mapping directly to CRUD operations.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What is JSON and what types does it support?</strong></div>
+        <div class="flashcard-back">JSON (JavaScript Object Notation) is a lightweight data interchange format. It supports strings, numbers, objects, arrays, booleans, and null. It does NOT support functions, dates, or undefined.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What is a Single-Page Application (SPA)?</strong></div>
+        <div class="flashcard-back">A web app that dynamically rewrites the current page with new data instead of loading entire new pages. Examples: Gmail, Google Maps, Netflix. Relies on AJAX and JSON.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Why is $.ajax() preferred over $.get()/$.post() for complex requests?</strong></div>
+        <div class="flashcard-back">$.ajax() provides full configuration: custom headers, timeouts, beforeSend/error/complete callbacks, data type control, and more granular lifecycle management.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== INTERACTIVE: QUIZ ======================== -->
+  <h2>Knowledge Check</h2>
+
+  <div class="quiz" id="quiz1">
+    <p><strong>Q1: What does AJAX stand for?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, false)">Advanced JavaScript and XML</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, true)">Asynchronous JavaScript and XML</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, false)">Automated JavaScript and XML</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, false)">Asynchronous JSON and XML</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz2">
+    <p><strong>Q2: Which readyState value means the request is fully complete?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, false)">0 (UNSENT)</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, false)">1 (OPENED)</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, false)">3 (LOADING)</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, true)">4 (DONE)</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz3">
+    <p><strong>Q3: Which HTTP method is used to DELETE a resource in a REST API?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, false)">GET</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, false)">POST</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, false)">PUT</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, true)">DELETE</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz4">
+    <p><strong>Q4: Which jQuery AJAX method provides the most configuration options?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, false)"><code>.load()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, false)"><code>$.get()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, false)"><code>$.post()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, true)"><code>$.ajax()</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz5">
+    <p><strong>Q5: Which of these is NOT a valid JSON value type?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz5', this, false)">String</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz5', this, false)">Array</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz5', this, true)">Function</div>
+    <div class="quiz-option" onclick="checkQuiz('quiz5', this, false)">Null</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <!-- ======================== INTERACTIVE: FILL IN THE BLANK ======================== -->
+  <h2>Fill in the Blank</h2>
+
+  <div class="fill-blank" id="blank1">
+    <p>JSON stands for JavaScript Object _____.</p>
+    <select onchange="checkBlank('blank1', this.value)">
+      <option value="">Select...</option>
+      <option value="Notation">Notation</option>
+      <option value="Notification">Notification</option>
+      <option value="Network">Network</option>
+      <option value="Navigation">Navigation</option>
+    </select>
+    <span class="feedback"></span>
+  </div>
+
+  <div class="fill-blank" id="blank2">
+    <p>In REST, the HTTP method used to create a new resource is _____.</p>
+    <select onchange="checkBlank('blank2', this.value)">
+      <option value="">Select...</option>
+      <option value="POST">POST</option>
+      <option value="GET">GET</option>
+      <option value="PUT">PUT</option>
+      <option value="FETCH">FETCH</option>
+    </select>
+    <span class="feedback"></span>
+  </div>
+
+  <div class="fill-blank" id="blank3">
+    <p>A _____-Page Application rewrites the current page dynamically instead of loading entirely new pages.</p>
+    <select onchange="checkBlank('blank3', this.value)">
+      <option value="">Select...</option>
+      <option value="Single">Single</option>
+      <option value="Multi">Multi</option>
+      <option value="Dynamic">Dynamic</option>
+      <option value="Hybrid">Hybrid</option>
+    </select>
+    <span class="feedback"></span>
+  </div>
+
+  <div class="fill-blank" id="blank4">
+    <p>The _____-Origin Policy restricts AJAX requests to the same domain the page was loaded from.</p>
+    <select onchange="checkBlank('blank4', this.value)">
+      <option value="">Select...</option>
+      <option value="Same">Same</option>
+      <option value="Cross">Cross</option>
+      <option value="Dual">Dual</option>
+      <option value="Multi">Multi</option>
+    </select>
+    <span class="feedback"></span>
+  </div>
+
+  <!-- ======================== INFOGRAPHIC: AJAX FLOW ======================== -->
+  <h2>AJAX Request Flow</h2>
+
+  <div class="diagram">
+    <div style="text-align:center; padding:20px;">
+      <div style="background:#3498db; color:white; padding:12px 24px; border-radius:8px; display:inline-block; font-weight:bold;">
+        1. User Action<br><small>Click, type, scroll</small>
+      </div>
+      <div class="arrow">→</div>
+      <div style="background:#e67e22; color:white; padding:12px 24px; border-radius:8px; display:inline-block; font-weight:bold;">
+        2. JavaScript Intercept<br><small>Event handler fires</small>
+      </div>
+      <div class="arrow">→</div>
+      <div style="background:#e74c3c; color:white; padding:12px 24px; border-radius:8px; display:inline-block; font-weight:bold;">
+        3. AJAX Request Sent<br><small>XMLHttpRequest or $.ajax()</small>
+      </div>
+      <div class="arrow">→</div>
+      <div style="background:#9b59b6; color:white; padding:12px 24px; border-radius:8px; display:inline-block; font-weight:bold;">
+        4. Server Processes<br><small>API endpoint, database</small>
+      </div>
+      <div class="arrow">→</div>
+      <div style="background:#2ecc71; color:white; padding:12px 24px; border-radius:8px; display:inline-block; font-weight:bold;">
+        5. JSON Response<br><small>Data comes back</small>
+      </div>
+      <div class="arrow">→</div>
+      <div style="background:#1abc9c; color:white; padding:12px 24px; border-radius:8px; display:inline-block; font-weight:bold;">
+        6. DOM Updated<br><small>Page changes without reload</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== INFOGRAPHIC: REST ENDPOINTS ======================== -->
+  <h2>REST API Endpoint Map</h2>
+
+  <div class="diagram">
+    <div style="padding:20px; max-width:700px; margin:0 auto;">
+      <div style="background:#2c3e50; color:white; padding:15px; border-radius:8px 8px 0 0; font-weight:bold; text-align:center; font-size:1.1em;">
+        /api/employees
+      </div>
+      <div style="display:flex; flex-wrap:wrap;">
+        <div style="flex:1; min-width:150px; background:#2ecc71; color:white; padding:15px; text-align:center; margin:4px; border-radius:6px;">
+          <strong>GET</strong><br>List All<br><small>Retrieve every employee</small>
+        </div>
+        <div style="flex:1; min-width:150px; background:#3498db; color:white; padding:15px; text-align:center; margin:4px; border-radius:6px;">
+          <strong>POST</strong><br>Create<br><small>Add a new employee</small>
+        </div>
+      </div>
+      <div style="background:#2c3e50; color:white; padding:15px; border-radius:8px 8px 0 0; font-weight:bold; text-align:center; font-size:1.1em; margin-top:10px;">
+        /api/employees/:id
+      </div>
+      <div style="display:flex; flex-wrap:wrap;">
+        <div style="flex:1; min-width:120px; background:#2ecc71; color:white; padding:15px; text-align:center; margin:4px; border-radius:6px;">
+          <strong>GET</strong><br>One<br><small>Get employee by ID</small>
+        </div>
+        <div style="flex:1; min-width:120px; background:#f39c12; color:white; padding:15px; text-align:center; margin:4px; border-radius:6px;">
+          <strong>PUT</strong><br>Update<br><small>Modify employee by ID</small>
+        </div>
+        <div style="flex:1; min-width:120px; background:#e74c3c; color:white; padding:15px; text-align:center; margin:4px; border-radius:6px;">
+          <strong>DELETE</strong><br>Remove<br><small>Delete employee by ID</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== SUMMARY ======================== -->
+  <div class="summary">
+    <h2>Summary</h2>
+    <ul>
+      <li><strong>AJAX</strong> enables asynchronous communication with the server, eliminating full page reloads and creating responsive RIAs.</li>
+      <li><strong>Synchronous</strong> blocks the page; <strong>Asynchronous</strong> lets the page continue while waiting for responses.</li>
+      <li><strong>XMLHttpRequest</strong> is the built-in browser object for AJAX — check <code>readyState === 4</code> and <code>status === 200</code>.</li>
+      <li>jQuery AJAX methods: <code>.load()</code> (simple HTML loading), <code>$.get()</code> (GET), <code>$.post()</code> (POST), <code>$.ajax()</code> (full control).</li>
+      <li><strong>JSON</strong> is a lightweight data format supporting strings, numbers, objects, arrays, booleans, and null — not functions or dates.</li>
+      <li>Parse JSON: <code>JSON.parse()</code>. Encode JSON: <code>JSON.stringify()</code>.</li>
+      <li><strong>REST</strong> uses HTTP methods for CRUD: POST (Create), GET (Read), PUT (Update), DELETE (Delete).</li>
+      <li>REST URIs are resource-based: <code>/api/employees</code> + HTTP method = complete operation.</li>
+      <li><strong>Postman</strong> is used for testing, sharing, and documenting APIs.</li>
+      <li><strong>SPAs</strong> (like Gmail, Netflix) use AJAX + JSON to dynamically update a single HTML page.</li>
+    </ul>
+  </div>
+
+  <!-- ======================== PROGRESS ======================== -->
+  <div class="progress-bar">
+    <div class="progress-text">Topic 14 of 14 — Course Complete!</div>
+    <div style="background:#ddd; border-radius:10px; height:20px; overflow:hidden;">
+      <div style="background:#2ecc71; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:0.85em;">
+        100%
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .container -->
+
+<script>
+// Quiz logic
+function checkQuiz(quizId, element, isCorrect) {
+  var quiz = document.getElementById(quizId);
+  var feedback = quiz.querySelector('.quiz-feedback');
+  var options = quiz.querySelectorAll('.quiz-option');
+
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+  });
+
+  if (isCorrect) {
+    element.style.backgroundColor = '#2ecc71';
+    element.style.color = 'white';
+    feedback.textContent = '✓ Correct!';
+    feedback.style.color = '#2ecc71';
+  } else {
+    element.style.backgroundColor = '#e74c3c';
+    element.style.color = 'white';
+    feedback.textContent = '✗ Incorrect. Review the section above.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+
+// Fill-in-the-blank logic
+var correctAnswers = {
+  blank1: 'Notation',
+  blank2: 'POST',
+  blank3: 'Single',
+  blank4: 'Same'
+};
+
+function checkBlank(blankId, value) {
+  var container = document.getElementById(blankId);
+  var feedback = container.querySelector('.feedback');
+
+  if (value === '') {
+    feedback.textContent = '';
+    return;
+  }
+
+  if (value === correctAnswers[blankId]) {
+    feedback.textContent = ' ✓ Correct!';
+    feedback.style.color = '#2ecc71';
+  } else {
+    feedback.textContent = ' ✗ Try again.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn HTML Fundamentals from scratch - tags, elements, attributes, and more">
+    <meta name="keywords" content="HTML, basics, fundamentals, web development, beginner">
+    <meta name="author" content="TP2543">
+    <title>Topic 3: HTML Fundamentals (Part 1)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="topnav">
+    <a href="index.html" class="nav-brand">TP2543</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">&#9776;</button>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="topic1-introduction.html">Intro</a>
+        <a href="topic2-project.html">Project</a>
+        <a href="topic3-html-basics.html">HTML</a>
+        <a href="topic4-html-forms.html">Forms</a>
+        <a href="topic5-regex.html">Regex</a>
+        <a href="topic6-php-basics.html">PHP</a>
+        <a href="topic7-php-mysql.html">PHP+MySQL</a>
+        <a href="topic8-advanced-php.html">Adv PHP</a>
+        <a href="topic9-mvc-framework.html">MVC</a>
+        <a href="topic10-css.html">CSS</a>
+        <a href="topic11-responsive-bootstrap.html">RWD</a>
+        <a href="topic12-javascript-dom.html">JS+DOM</a>
+        <a href="topic13-jquery.html">jQuery</a>
+        <a href="topic14-ajax-json-rest.html">AJAX</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- Progress Indicator -->
+    <div class="progress-bar">
+        <div class="progress-text">Topic 3 of 14 &mdash; HTML Fundamentals (Part 1)</div>
+        <div style="background:#495057; border-radius:8px; height:12px; width:100%;">
+            <div style="background:#0d6efd; height:12px; border-radius:8px; width:21.4%;"></div>
+        </div>
+    </div>
+
+    <h1>HTML Fundamentals (Part 1)</h1>
+
+    <!-- ==================== SECTION 1: What is HTML? ==================== -->
+    <div class="card">
+        <h2>1. What is HTML?</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Think of HTML as the <em>skeleton</em> of a human body. Just as a skeleton gives the body its shape and structure, HTML gives a web page its structure. Without HTML, a web page would be formless — like a body without bones. CSS is like the skin and clothing (appearance), and JavaScript is like the muscles and brain (behavior). But HTML is the foundation everything else builds upon.
+        </div>
+
+        <p><strong>HTML</strong> stands for <strong>H</strong>yper<strong>T</strong>ext <strong>M</strong>arkup <strong>L</strong>anguage. Let us break down every word:</p>
+
+        <table>
+            <tr>
+                <th>Word</th>
+                <th>Meaning</th>
+            </tr>
+            <tr>
+                <td><strong>HyperText</strong></td>
+                <td>Text that contains links to other texts. When you click a link on a webpage and it takes you somewhere else, that is "hypertext" — text that goes beyond the current page.</td>
+            </tr>
+            <tr>
+                <td><strong>Markup</strong></td>
+                <td>Data included in an electronic document. "Markup" means you annotate plain text with special codes (tags) to define how text should be structured or displayed. Think of it like a teacher marking up a student's essay with red pen — adding notes about structure and formatting.</td>
+            </tr>
+            <tr>
+                <td><strong>Language</strong></td>
+                <td>A set of rules and grammar. Just like English has rules for sentences, HTML has rules for how you write tags and combine elements.</td>
+            </tr>
+        </table>
+
+        <div class="info-box note">
+            <strong>Note:</strong> A <strong>markup language</strong> is a set of rules governing what data may be included in a document and how it is combined with the content of the document. HTML is plain text, but includes a variety of <strong>tags</strong> that define the structure of the document. It defines the structure of text-based and multimedia information in a web page.
+        </div>
+
+        <div class="info-box tip">
+            <strong>Key Fact:</strong> HTML is <strong>not</strong> a programming language like Python or Java. It is a <em>markup language</em> — it structures content but cannot perform logic (like calculations or decisions) on its own.
+        </div>
+
+        <h3>Why is HTML Easy to Learn?</h3>
+        <p>HTML is relatively easy to learn because <strong>every tag is predefined</strong>. You do not invent your own tags — you use the ones that already exist in the HTML specification. Web browsers (Chrome, Firefox, Safari, Edge, etc.) read HTML and display the web page as output.</p>
+
+        <h3>Tools You Need</h3>
+        <p>You can write HTML in <strong>any simple text editor</strong>:</p>
+        <ul>
+            <li><strong>Notepad</strong> (Windows) or <strong>TextEdit</strong> (Mac)</li>
+            <li><strong>Sublime Text</strong> (free, popular among developers)</li>
+            <li><strong>Visual Studio Code (VSCode)</strong> (free, most popular today)</li>
+        </ul>
+        <p>Save your files with a <code>.html</code> or <code>.htm</code> extension. Then open the file in any web browser to see your page.</p>
+    </div>
+
+    <!-- ==================== SECTION 2: History ==================== -->
+    <div class="card">
+        <h2>2. A Brief History of HTML</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Think of HTML's history like the evolution of a car. The first car (HTML 1.0 in 1991) was a simple machine with just 18 parts. Over the decades, new models added features: better engines, air conditioning, GPS. HTML5 is like a modern electric car — sleek, powerful, and packed with features that the original could never do.
+        </div>
+
+        <table>
+            <tr>
+                <th>Year</th>
+                <th>Milestone</th>
+            </tr>
+            <tr>
+                <td>1991</td>
+                <td><strong>Tim Berners-Lee</strong> invented HTML while working at <strong>CERN</strong> (the European Organization for Nuclear Research). The first version had only <strong>18 tags</strong>.</td>
+            </tr>
+            <tr>
+                <td>Late 1990s</td>
+                <td>HTML grew rapidly through versions 2.0, 3.2, and 4.0 as the World Wide Web exploded in popularity.</td>
+            </tr>
+            <tr>
+                <td>2000s</td>
+                <td><strong>XHTML</strong> emerged, enforcing stricter rules (like requiring all tags to be closed). It was like a grammar teacher for HTML.</td>
+            </tr>
+            <tr>
+                <td>2014&ndash;2015</td>
+                <td><strong>HTML5</strong> was finalized. It replaced HTML 3.2, HTML 4, and XHTML with one unified standard. HTML5 introduced many new elements and APIs.</td>
+            </tr>
+            <tr>
+                <td>2016</td>
+                <td><strong>HTML 5.2</strong> improved security, added a Payment Request API, and enhanced accessibility features.</td>
+            </tr>
+            <tr>
+                <td>Today</td>
+                <td>HTML has approximately <strong>142 tags</strong> and continues to evolve.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- ==================== SECTION 3: Must-Have Elements ==================== -->
+    <div class="card">
+        <h2>3. Must-Have Elements (The Four Pillars)</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Every HTML page is like a letter you mail. The <code>&lt;!DOCTYPE html&gt;</code> is like the type of envelope (tells the post office what kind of mail this is). The <code>&lt;html&gt;</code> is the entire envelope itself. The <code>&lt;head&gt;</code> is the information written on the outside of the envelope (sender, subject line, metadata). The <code>&lt;body&gt;</code> is the actual letter inside — the content the reader sees.
+        </div>
+
+        <p>Every single HTML page <strong>must</strong> have these four elements. Without them, the browser may display the page incorrectly.</p>
+
+        <div class="fill-blank" id="fb1">
+            <strong>Fill in the blanks:</strong> Complete the HTML skeleton below:
+            <pre><code>&lt;!DOCTYPE ______&gt;
+&lt;______&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/______&gt;
+  &lt;body&gt;
+    &lt;p&gt;Hello World!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/______&gt;</code></pre>
+            <input type="text" placeholder="Blank 1 (element name)" data-answer="html">
+            <input type="text" placeholder="Blank 2 (opening tag)" data-answer="html">
+            <input type="text" placeholder="Blank 3 (closing head)" data-answer="head">
+            <input type="text" placeholder="Blank 4 (closing tag)" data-answer="html">
+            <button class="quiz-btn" onclick="checkFillBlanks('fb1')">Check Answers</button>
+            <div class="quiz-feedback"></div>
+        </div>
+
+        <h3>What each element does:</h3>
+        <table>
+            <tr>
+                <th>Element</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><code>&lt;!DOCTYPE html&gt;</code></td>
+                <td>Tells the browser: "This document is HTML5." It must be the <strong>very first line</strong>. Without it, the browser switches to "quirks mode" and may render things incorrectly.</td>
+            </tr>
+            <tr>
+                <td><code>&lt;html&gt;</code></td>
+                <td>The <strong>root element</strong>. Everything else goes inside this tag. It wraps the entire page.</td>
+            </tr>
+            <tr>
+                <td><code>&lt;head&gt;</code></td>
+                <td>Contains <strong>metadata</strong> — information about the page that is NOT displayed directly on the page. This includes the title, character set, links to CSS, and more.</td>
+            </tr>
+            <tr>
+                <td><code>&lt;body&gt;</code></td>
+                <td>Contains <strong>everything visible</strong> on the page — text, images, links, buttons, and all other content the user sees and interacts with.</td>
+            </tr>
+        </table>
+
+        <div class="info-box warning">
+            <strong>Warning:</strong> Content placed outside the <code>&lt;body&gt;</code> tag will not be visible on the page. Always put your visible content inside <code>&lt;body&gt;</code>.
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 4: Hello World ==================== -->
+    <div class="card">
+        <h2>4. Hello World — Your First Web Page</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> "Hello World" is the universal first program in every programming language — like the first chord a guitar student learns. It proves your setup works and gives you a starting point to build from.
+        </div>
+
+        <p>Here is the simplest possible HTML page:</p>
+
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    Hello World!
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h3>Important Rules</h3>
+
+        <p><strong>1. HTML does NOT recognize extra white spaces.</strong></p>
+        <p>If you write multiple spaces or press Enter multiple times in your HTML, the browser will collapse them all into a single space. HTML treats whitespace differently from a text editor.</p>
+        <div class="info-box note">
+            <strong>Example:</strong> Writing <code>Hello&nbsp;&nbsp;&nbsp;&nbsp;World</code> (with 4 spaces) displays as <code>Hello World</code> (1 space). To force extra spaces, use the <code>&amp;nbsp;</code> entity (more on this later).
+        </div>
+
+        <p><strong>2. Comments</strong></p>
+        <p>Comments are notes for yourself or other developers. The browser <strong>ignores</strong> comments completely — they do not appear on the page.</p>
+        <pre><code>&lt;!-- This is a comment. The browser will not show this. --&gt;
+
+&lt;!-- Comments can span
+     multiple lines --&gt;</code></pre>
+
+        <p><strong>3. Line Breaks</strong></p>
+        <p>The <code>&lt;br&gt;</code> tag forces a line break (starts text on a new line). It is an <strong>empty tag</strong> — it has no closing tag.</p>
+        <pre><code>&lt;p&gt;Hello&lt;br&gt;World&lt;/p&gt;</code></pre>
+        <p>This displays as:</p>
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px; margin:8px 0;">
+            Hello<br>World
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 5: Title Element ==================== -->
+    <div class="card">
+        <h2>5. The Title Element</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> The <code>&lt;title&gt;</code> is like the <em>name tag</em> you wear at a conference. It appears at the top (in the browser tab), helps people identify you (bookmarks), and helps organizers find you (search engines).
+        </div>
+
+        <p>The <code>&lt;title&gt;</code> element lives inside the <code>&lt;head&gt;</code> and serves three critical purposes:</p>
+
+        <table>
+            <tr>
+                <th>Purpose</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><strong>Browser Tab</strong></td>
+                <td>The title text appears on the browser tab — the small label you see when multiple tabs are open.</td>
+            </tr>
+            <tr>
+                <td><strong>Bookmarks/Favorites</strong></td>
+                <td>When a user bookmarks your page, the title is used as the default bookmark name.</td>
+            </tr>
+            <tr>
+                <td><strong>Search Engines</strong></td>
+                <td>Search engines like Google use the title as the <strong>blue clickable link</strong> in search results. A good title improves your page's visibility.</td>
+            </tr>
+        </table>
+
+        <pre><code>&lt;head&gt;
+    &lt;title&gt;Topic 3: HTML Fundamentals - TP2543&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+    </div>
+
+    <!-- ==================== SECTION 6: Paragraphs & Headings ==================== -->
+    <div class="card">
+        <h2>6. Paragraphs and Headings</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Headings are like the headings in a textbook: H1 is the book title, H2 is the chapter title, H3 is the section heading, and so on. Paragraphs are the body text of each section. Just like a well-organized textbook, your web page needs clear hierarchy.
+        </div>
+
+        <h3>Headings: &lt;h1&gt; through &lt;h6&gt;</h3>
+        <p>HTML provides <strong>six levels</strong> of headings. <code>&lt;h1&gt;</code> is the most important (largest), and <code>&lt;h6&gt;</code> is the least important (smallest).</p>
+
+        <pre><code>&lt;h1&gt;Main Title (largest)&lt;/h1&gt;
+&lt;h2&gt;Sub-Heading&lt;/h2&gt;
+&lt;h3&gt;Sub-sub-Heading&lt;/h3&gt;
+&lt;h4&gt;Heading Level 4&lt;/h4&gt;
+&lt;h5&gt;Heading Level 5&lt;/h5&gt;
+&lt;h6&gt;Heading Level 6 (smallest)&lt;/h6&gt;</code></pre>
+
+        <div style="border:1px solid #ccc; padding:12px; border-radius:6px; margin:10px 0;">
+            <h1 style="margin:4px 0;">h1 — Main Title</h1>
+            <h2 style="margin:4px 0;">h2 — Chapter Title</h2>
+            <h3 style="margin:4px 0;">h3 — Section Heading</h3>
+            <h4 style="margin:4px 0;">h4 — Sub-section</h4>
+            <h5 style="margin:4px 0;">h5 — Minor Heading</h5>
+            <h6 style="margin:4px 0;">h6 — Smallest Heading</h6>
+        </div>
+
+        <div class="info-box tip">
+            <strong>Best Practice:</strong> Use only <strong>one</strong> <code>&lt;h1&gt;</code> per page (it is the main title). Do not skip heading levels (e.g., do not jump from <code>&lt;h2&gt;</code> to <code>&lt;h5&gt;</code>). Search engines and screen readers rely on proper heading hierarchy.
+        </div>
+
+        <h3>Paragraphs: &lt;p&gt;</h3>
+        <p>The <code>&lt;p&gt;</code> tag defines a paragraph of text. Browsers add a small space above and below each paragraph automatically.</p>
+
+        <pre><code>&lt;p&gt;This is the first paragraph of text. It will be displayed
+as a block of text with some space above and below it.&lt;/p&gt;
+
+&lt;p&gt;This is the second paragraph. Each paragraph starts on a
+new line with spacing between them.&lt;/p&gt;</code></pre>
+
+        <h3>Block-Level vs Inline Elements</h3>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> A <strong>block-level</strong> element is like a paragraph in a book — it always starts on a new line and takes up the full width (like a road that spans the entire width of a page). An <strong>inline</strong> element is like a word highlighted in yellow — it stays inside the line and only takes up as much space as it needs (like a sticker placed on the road without blocking traffic).
+        </div>
+
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Behavior</th>
+                <th>Examples</th>
+            </tr>
+            <tr>
+                <td><strong>Block-level</strong></td>
+                <td>Takes up the full width available. Always starts on a new line. Height and width can be set.</td>
+                <td><code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;ul&gt;</code>, <code>&lt;li&gt;</code></td>
+            </tr>
+            <tr>
+                <td><strong>Inline</strong></td>
+                <td>Only takes up as much width as needed. Does NOT start on a new line. Width and height cannot be set.</td>
+                <td><code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;em&gt;</code></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Quiz: Paragraphs and Headings -->
+    <div class="card">
+        <h3>Quiz: Paragraphs &amp; Headings</h3>
+        <div class="quiz" id="quiz-ph">
+            <p><strong>Question 1:</strong> How many heading levels does HTML provide?</p>
+            <div class="quiz-option" data-correct="false">3 (h1, h2, h3)</div>
+            <div class="quiz-option" data-correct="true">6 (h1 through h6)</div>
+            <div class="quiz-option" data-correct="false">5 (h1 through h5)</div>
+            <div class="quiz-option" data-correct="false">Unlimited</div>
+            <div class="quiz-feedback"></div>
+
+            <hr style="margin:12px 0;">
+
+            <p><strong>Question 2:</strong> Which element is a block-level element?</p>
+            <div class="quiz-option" data-correct="false">&lt;span&gt;</div>
+            <div class="quiz-option" data-correct="false">&lt;a&gt;</div>
+            <div class="quiz-option" data-correct="true">&lt;p&gt;</div>
+            <div class="quiz-option" data-correct="false">&lt;b&gt;</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 7: Hyperlinks ==================== -->
+    <div class="card">
+        <h2>7. Hyperlinks</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Hyperlinks are like doors in a building. Each door (link) takes you to a different room (web page). The <code>href</code> attribute is the address written on the door. You can also have doors that open in a new building (<code>_blank</code>), or doors that lead to a specific room in the same building (<code>#id</code>).
+        </div>
+
+        <p>The <code>&lt;a&gt;</code> (anchor) tag creates hyperlinks. The <code>href</code> attribute specifies the destination.</p>
+
+        <h3>Basic Syntax</h3>
+        <pre><code>&lt;a href="https://www.google.com"&gt;Visit Google&lt;/a&gt;</code></pre>
+
+        <h3>Types of Links</h3>
+
+        <p><strong>1. Link to a remote page:</strong></p>
+        <pre><code>&lt;a href="https://www.example.com"&gt;Visit Example&lt;/a&gt;</code></pre>
+
+        <p><strong>2. Link to a file (e.g., a PDF):</strong></p>
+        <pre><code>&lt;a href="documents/brochure.pdf"&gt;Download Brochure&lt;/a&gt;</code></pre>
+
+        <p><strong>3. Link to an email address:</strong></p>
+        <pre><code>&lt;a href="mailto:info@example.com"&gt;Send us an Email&lt;/a&gt;</code></pre>
+        <p>Clicking this link opens the user's default email client.</p>
+
+        <p><strong>4. Internal link (within the same page):</strong></p>
+        <pre><code>&lt;a href="#section2"&gt;Jump to Section 2&lt;/a&gt;
+
+&lt;!-- Later on the same page: --&gt;
+&lt;h2 id="section2"&gt;Section 2&lt;/h2&gt;</code></pre>
+
+        <h3>Target Attribute</h3>
+        <p>The <code>target</code> attribute controls <em>where</em> the linked page opens:</p>
+
+        <table>
+            <tr>
+                <th>Value</th>
+                <th>Behavior</th>
+            </tr>
+            <tr>
+                <td><code>_blank</code></td>
+                <td>Opens the link in a <strong>new tab</strong> or window. Most commonly used.</td>
+            </tr>
+            <tr>
+                <td><code>_self</code></td>
+                <td>Opens the link in the <strong>same tab</strong> (this is the default behavior).</td>
+            </tr>
+            <tr>
+                <td><code>_parent</code></td>
+                <td>Opens the link in the parent frame (used with iframes/frames).</td>
+            </tr>
+            <tr>
+                <td><code>_top</code></td>
+                <td>Opens the link in the full body of the window, canceling all frames.</td>
+            </tr>
+        </table>
+
+        <pre><code>&lt;a href="https://www.google.com" target="_blank"&gt;Open Google in new tab&lt;/a&gt;</code></pre>
+    </div>
+
+    <!-- ==================== SECTION 8: Images ==================== -->
+    <div class="card">
+        <h2>8. Images</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> The <code>&lt;img&gt;</code> tag is like placing a picture frame on a wall. The <code>src</code> (source) is the actual photograph inside the frame. The <code>alt</code> text is the label card you place below the frame in a museum — it describes the picture for people who cannot see it.
+        </div>
+
+        <h3>Basic Syntax</h3>
+        <pre><code>&lt;img src="photo.jpg" alt="A beautiful sunset" width="600" height="400"&gt;</code></pre>
+
+        <h3>Supported Image Formats</h3>
+        <table>
+            <tr>
+                <th>Format</th>
+                <th>Extension</th>
+                <th>Best For</th>
+            </tr>
+            <tr>
+                <td>JPEG/JPG</td>
+                <td>.jpg, .jpeg</td>
+                <td>Photographs, complex images with many colors. Lossy compression (smaller file size, some quality loss).</td>
+            </tr>
+            <tr>
+                <td>GIF</td>
+                <td>.gif</td>
+                <td>Simple animations, images with few colors. Supports transparency but limited to 256 colors.</td>
+            </tr>
+            <tr>
+                <td>PNG</td>
+                <td>.png</td>
+                <td>Images needing transparency, logos, graphics. Better quality than JPEG but larger file size.</td>
+            </tr>
+            <tr>
+                <td>SVG</td>
+                <td>.svg</td>
+                <td>Scalable vector graphics — logos, icons, illustrations. Can be resized infinitely without quality loss.</td>
+            </tr>
+        </table>
+
+        <h3>The alt Attribute (Accessibility)</h3>
+        <p>The <code>alt</code> attribute provides <strong>alternative text</strong> for the image. It is displayed when:</p>
+        <ul>
+            <li>The image fails to load (broken link)</li>
+            <li>A blind user uses a screen reader to browse the page</li>
+            <li>The user has images disabled in their browser</li>
+        </ul>
+        <div class="info-box warning">
+            <strong>Important:</strong> Always include the <code>alt</code> attribute. It is required by the HTML specification and essential for accessibility.
+        </div>
+
+        <h3>Image as a Hyperlink</h3>
+        <p>Wrap an <code>&lt;img&gt;</code> tag inside an <code>&lt;a&gt;</code> tag to make the image clickable:</p>
+        <pre><code>&lt;a href="https://www.example.com"&gt;
+    &lt;img src="logo.png" alt="Company Logo"&gt;
+&lt;/a&gt;</code></pre>
+
+        <h3>Image Maps</h3>
+        <p>An image map lets you define <strong>clickable areas</strong> on a single image, each linking to a different destination:</p>
+        <pre><code>&lt;img src="worldmap.jpg" alt="World Map" usemap="#mymap" width="600" height="400"&gt;
+
+&lt;map name="mymap"&gt;
+    &lt;area shape="rect" coords="50,50,200,200" href="europe.html" alt="Europe"&gt;
+    &lt;area shape="circle" coords="400,300,80" href="asia.html" alt="Asia"&gt;
+    &lt;area shape="poly" coords="100,300,200,350,150,400" href="africa.html" alt="Africa"&gt;
+&lt;/map&gt;</code></pre>
+        <div class="info-box note">
+            <strong>Note:</strong> Image maps are considered a legacy technique. In modern web development, you would typically use separate smaller images or CSS/JavaScript for clickable regions.
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 9: File Paths ==================== -->
+    <div class="card">
+        <h2>9. Absolute vs Relative File Paths</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> An <strong>absolute path</strong> is like giving someone your full postal address: "123 Main Street, Springfield, IL 62701, USA" — it works from anywhere in the world. A <strong>relative path</strong> is like saying "it is two doors down from here" — it only works if you are starting from the right place.
+        </div>
+
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Format</th>
+                <th>Example</th>
+            </tr>
+            <tr>
+                <td><strong>Absolute</strong></td>
+                <td>Full URL including protocol (http:// or https://)</td>
+                <td><code>https://www.example.com/images/photo.jpg</code></td>
+            </tr>
+            <tr>
+                <td><strong>Relative</strong></td>
+                <td>Path relative to the current file's location</td>
+                <td><code>images/photo.jpg</code> or <code>../images/photo.jpg</code></td>
+            </tr>
+        </table>
+
+        <h3>Relative Path Examples</h3>
+        <div class="info-box analogy">
+            <strong>Folder structure analogy:</strong> Imagine your website is a filing cabinet:
+            <pre style="background:#f8f9fa; padding:8px; border-radius:4px; margin:8px 0;">
+website/
+├── index.html
+├── about/
+│   └── about.html
+├── images/
+│   └── logo.png
+└── css/
+    └── style.css
+            </pre>
+        </div>
+
+        <ul>
+            <li>From <code>index.html</code> to <code>logo.png</code>: <code>images/logo.png</code></li>
+            <li>From <code>about.html</code> to <code>logo.png</code>: <code>../images/logo.png</code> (go up one folder, then into images)</li>
+            <li><code>../</code> means "go up one directory level"</li>
+            <li><code>./</code> means "current directory"</li>
+        </ul>
+
+        <div class="info-box tip">
+            <strong>Best Practice:</strong> Always use <strong>relative paths</strong> for links within your website. This way, your site works on any server without needing to change URLs. Only use absolute paths for linking to external websites.
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 10: Special Characters ==================== -->
+    <div class="card">
+        <h2>10. Special Characters (HTML Entities)</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> HTML entities are like escape codes. Some characters have special meaning in HTML (like <code>&lt;</code> and <code>&gt;</code> which define tags). If you want to display these characters as actual text on the page, you need to "escape" them using entities — similar to how you would tell someone, "I am talking about the <em>symbol</em> &lt;, not the <em>action</em> of opening a tag."
+        </div>
+
+        <p>Some characters cannot be typed directly into HTML because they have special meanings. Use <strong>HTML entities</strong> instead:</p>
+
+        <table>
+            <tr>
+                <th>Entity</th>
+                <th>Code</th>
+                <th>Display</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>&amp;amp;</code></td>
+                <td><code>&amp;amp;</code></td>
+                <td>&amp;</td>
+                <td>Ampersand</td>
+            </tr>
+            <tr>
+                <td><code>&amp;lt;</code></td>
+                <td><code>&amp;lt;</code></td>
+                <td>&lt;</td>
+                <td>Less than</td>
+            </tr>
+            <tr>
+                <td><code>&amp;gt;</code></td>
+                <td><code>&amp;gt;</code></td>
+                <td>&gt;</td>
+                <td>Greater than</td>
+            </tr>
+            <tr>
+                <td><code>&amp;nbsp;</code></td>
+                <td><code>&amp;nbsp;</code></td>
+                <td>&nbsp;</td>
+                <td>Non-breaking space (forces a space)</td>
+            </tr>
+            <tr>
+                <td><code>&amp;copy;</code></td>
+                <td><code>&amp;copy;</code></td>
+                <td>&copy;</td>
+                <td>Copyright symbol</td>
+            </tr>
+            <tr>
+                <td><code>&amp;quot;</code></td>
+                <td><code>&amp;quot;</code></td>
+                <td>&quot;</td>
+                <td>Quotation mark</td>
+            </tr>
+            <tr>
+                <td><code>&amp;apos;</code></td>
+                <td><code>&amp;apos;</code></td>
+                <td>&apos;</td>
+                <td>Apostrophe</td>
+            </tr>
+        </table>
+
+        <h3>Decimal and Hexadecimal Codes</h3>
+        <p>You can also use numeric codes to display any Unicode character:</p>
+        <pre><code>&lt;p&gt;Copyright &amp;#169; 2024 My Website&lt;/p&gt;       &lt;!-- Decimal --&gt;
+&lt;p&gt;Copyright &amp;#xA9; 2024 My Website&lt;/p&gt;       &lt;!-- Hexadecimal --&gt;</code></pre>
+        <p>Both display: Copyright &copy; 2024 My Website</p>
+    </div>
+
+    <!-- ==================== SECTION 11: Horizontal Rules ==================== -->
+    <div class="card">
+        <h2>11. Horizontal Rules</h2>
+
+        <p>The <code>&lt;hr&gt;</code> tag creates a horizontal line (thematic break) to separate content sections:</p>
+
+        <pre><code>&lt;p&gt;First section of content.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;p&gt;Second section of content.&lt;/p&gt;</code></pre>
+
+        <p>This renders as:</p>
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px; margin:8px 0;">
+            <p>First section of content.</p>
+            <hr>
+            <p>Second section of content.</p>
+        </div>
+
+        <div class="info-box note">
+            <strong>Note:</strong> The <code>&lt;hr&gt;</code> tag is a legacy element. In modern web development, you should prefer using <strong>CSS</strong> (e.g., <code>border-top</code> or <code>::after</code> pseudo-elements) to create dividers, as CSS gives you full control over the line's appearance.
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 12: Lists ==================== -->
+    <div class="card">
+        <h2>12. Lists</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Lists are like grocery lists. An <strong>unordered list</strong> is like a shopping list where order does not matter (you can buy milk or bread first). An <strong>ordered list</strong> is like a recipe — the steps must happen in order (step 1, step 2, step 3).
+        </div>
+
+        <h3>Unordered List (&lt;ul&gt;)</h3>
+        <p>Items are marked with bullets. The order of items does not matter.</p>
+        <pre><code>&lt;ul&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px; margin:8px 0;">
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ul>
+        </div>
+
+        <h3>Ordered List (&lt;ol&gt;)</h3>
+        <p>Items are numbered automatically. Order matters.</p>
+        <pre><code>&lt;ol&gt;
+    &lt;li&gt;Step 1: Write the HTML&lt;/li&gt;
+    &lt;li&gt;Step 2: Add the CSS&lt;/li&gt;
+    &lt;li&gt;Step 3: Write the JavaScript&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px; margin:8px 0;">
+            <ol>
+                <li>Step 1: Write the HTML</li>
+                <li>Step 2: Add the CSS</li>
+                <li>Step 3: Write the JavaScript</li>
+            </ol>
+        </div>
+
+        <h3>Nested Lists</h3>
+        <p>You can place lists inside other lists to create sub-categories:</p>
+        <pre><code>&lt;ul&gt;
+    &lt;li&gt;Frontend
+        &lt;ul&gt;
+            &lt;li&gt;HTML&lt;/li&gt;
+            &lt;li&gt;CSS&lt;/li&gt;
+            &lt;li&gt;JavaScript&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;Backend
+        &lt;ul&gt;
+            &lt;li&gt;PHP&lt;/li&gt;
+            &lt;li&gt;Python&lt;/li&gt;
+            &lt;li&gt;Java&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px; margin:8px 0;">
+            <ul>
+                <li>Frontend
+                    <ul>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </li>
+                <li>Backend
+                    <ul>
+                        <li>PHP</li>
+                        <li>Python</li>
+                        <li>Java</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 13: Tables ==================== -->
+    <div class="card">
+        <h2>13. Tables</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> An HTML table is like a spreadsheet. Rows go left to right, columns go up and down. <code>&lt;th&gt;</code> cells are bold header labels (like column titles in Excel), and <code>&lt;td&gt;</code> cells are the regular data cells.
+        </div>
+
+        <h3>Basic Table Structure</h3>
+        <pre><code>&lt;table&gt;
+    &lt;caption&gt;Student Grades&lt;/caption&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Grade&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Alice&lt;/td&gt;
+            &lt;td&gt;A&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Bob&lt;/td&gt;
+            &lt;td&gt;B+&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Average&lt;/td&gt;
+            &lt;td&gt;A-&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px; margin:8px 0;">
+            <table style="width:100%; border-collapse:collapse;">
+                <caption style="margin-bottom:8px; font-weight:bold;">Student Grades</caption>
+                <thead>
+                    <tr style="background:#f0f0f0;">
+                        <th style="border:1px solid #ccc; padding:6px; text-align:left;">Name</th>
+                        <th style="border:1px solid #ccc; padding:6px; text-align:left;">Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #ccc; padding:6px;">Alice</td>
+                        <td style="border:1px solid #ccc; padding:6px;">A</td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #ccc; padding:6px;">Bob</td>
+                        <td style="border:1px solid #ccc; padding:6px;">B+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Table Elements Explained</h3>
+        <table>
+            <tr>
+                <th>Element</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><code>&lt;table&gt;</code></td>
+                <td>Creates the table container</td>
+            </tr>
+            <tr>
+                <td><code>&lt;caption&gt;</code></td>
+                <td>Title/label for the table (appears above the table)</td>
+            </tr>
+            <tr>
+                <td><code>&lt;thead&gt;</code></td>
+                <td>Groups the header rows</td>
+            </tr>
+            <tr>
+                <td><code>&lt;tbody&gt;</code></td>
+                <td>Groups the body/content rows</td>
+            </tr>
+            <tr>
+                <td><code>&lt;tfoot&gt;</code></td>
+                <td>Groups the footer rows (like totals or summaries)</td>
+            </tr>
+            <tr>
+                <td><code>&lt;tr&gt;</code></td>
+                <td>A table row (goes left to right)</td>
+            </tr>
+            <tr>
+                <td><code>&lt;th&gt;</code></td>
+                <td>A header cell (bold and centered by default)</td>
+            </tr>
+            <tr>
+                <td><code>&lt;td&gt;</code></td>
+                <td>A data cell (normal content)</td>
+            </tr>
+        </table>
+
+        <h3>Merging Cells</h3>
+        <p><strong>colspan</strong> merges cells horizontally (across columns):</p>
+        <pre><code>&lt;tr&gt;
+    &lt;td colspan="2"&gt;This cell spans 2 columns&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+
+        <p><strong>rowspan</strong> merges cells vertically (across rows):</p>
+        <pre><code>&lt;tr&gt;
+    &lt;td rowspan="2"&gt;This cell spans 2 rows&lt;/td&gt;
+    &lt;td&gt;Cell 2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Cell 3&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+
+        <div style="border:1px solid #ccc; padding:10px; border-radius:6px; margin:8px 0;">
+            <table style="width:100%; border-collapse:collapse;">
+                <tr>
+                    <td colspan="2" style="border:1px solid #ccc; padding:6px; background:#e9ecef; text-align:center; font-weight:bold;">Colspan = 2 (spans across)</td>
+                    <td style="border:1px solid #ccc; padding:6px;">Normal</td>
+                </tr>
+                <tr>
+                    <td rowspan="2" style="border:1px solid #ccc; padding:6px; background:#e9ecef; text-align:center; font-weight:bold; vertical-align:middle;">Rowspan = 2 (spans down)</td>
+                    <td style="border:1px solid #ccc; padding:6px;">Row 2</td>
+                    <td style="border:1px solid #ccc; padding:6px;">Row 2</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid #ccc; padding:6px;">Row 3</td>
+                    <td style="border:1px solid #ccc; padding:6px;">Row 3</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quiz: Tables -->
+    <div class="card">
+        <h3>Quiz: Tables</h3>
+        <div class="quiz" id="quiz-tables">
+            <p><strong>Question 1:</strong> Which attribute merges cells horizontally?</p>
+            <div class="quiz-option" data-correct="false">rowspan</div>
+            <div class="quiz-option" data-correct="true">colspan</div>
+            <div class="quiz-option" data-correct="false">merge</div>
+            <div class="quiz-option" data-correct="false">span</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 14: Div vs Span ==================== -->
+    <div class="card">
+        <h2>14. Div vs Span</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> A <code>&lt;div&gt;</code> is like a <strong>shipping box</strong> — it is a container that holds multiple items and takes up the entire shelf. A <code>&lt;span&gt;</code> is like a <strong>label sticker</strong> — you stick it on one item inside the box to highlight or identify it. Both are containers, but at different scales.
+        </div>
+
+        <table>
+            <tr>
+                <th>Element</th>
+                <th>Type</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><code>&lt;div&gt;</code></td>
+                <td>Block-level</td>
+                <td>Groups large sections of content. Takes up full width. Used for layout and structure.</td>
+            </tr>
+            <tr>
+                <td><code>&lt;span&gt;</code></td>
+                <td>Inline</td>
+                <td>Groups a small piece of content within a line. Only takes up as much width as needed. Used for styling specific words or phrases.</td>
+            </tr>
+        </table>
+
+        <pre><code>&lt;div style="background: lightblue; padding: 10px;"&gt;
+    &lt;p&gt;This is a &lt;span style="color: red; font-weight: bold;"&gt;highlighted word&lt;/span&gt; in a paragraph.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+        <div class="info-box note">
+            <strong>Note:</strong> Both <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> have no visual effect by themselves. They are purely structural containers. You typically style them using CSS.
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 15: Inline Text Formatting ==================== -->
+    <div class="card">
+        <h2>15. Inline Text Formatting Tags</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> These tags are like tools in a writer's toolkit. <code>&lt;b&gt;</code> is a highlighter pen (makes text bold). <code>&lt;i&gt;</code> is an italicizer (slants text). <code>&lt;strong&gt;</strong> is like underlining a word in red — it means "this is really important." <code>&lt;em&gt;</code> is like adding stress to your voice when speaking.
+        </div>
+
+        <table>
+            <tr>
+                <th>Tag</th>
+                <th>Purpose</th>
+                <th>Visual Result</th>
+            </tr>
+            <tr>
+                <td><code>&lt;b&gt;</code></td>
+                <td>Bold text (visual emphasis only)</td>
+                <td><b>This is bold</b></td>
+            </tr>
+            <tr>
+                <td><code>&lt;i&gt;</code></td>
+                <td>Italic text (visual emphasis only)</td>
+                <td><i>This is italic</i></td>
+            </tr>
+            <tr>
+                <td><code>&lt;em&gt;</code></td>
+                <td>Emphasized text (semantic — tells browsers/screen readers this is important)</td>
+                <td><em>This is emphasized</em></td>
+            </tr>
+            <tr>
+                <td><code>&lt;strong&gt;</code></td>
+                <td>Strong importance (semantic — stronger than <code>&lt;b&gt;</code>)</td>
+                <td><strong>This is strong</strong></td>
+            </tr>
+            <tr>
+                <td><code>&lt;u&gt;</code></td>
+                <td>Underlined text</td>
+                <td><u>This is underlined</u></td>
+            </tr>
+            <tr>
+                <td><code>&lt;s&gt;</code></td>
+                <td>Strikethrough text (no longer relevant)</td>
+                <td><s>This is struck</s></td>
+            </tr>
+            <tr>
+                <td><code>&lt;mark&gt;</code></td>
+                <td>Highlighted text (like a yellow marker)</td>
+                <td><mark>This is highlighted</mark></td>
+            </tr>
+            <tr>
+                <td><code>&lt;sub&gt;</code></td>
+                <td>Subscript text (like H<sub>2</sub>O)</td>
+                <td>H<sub>2</sub>O</td>
+            </tr>
+            <tr>
+                <td><code>&lt;sup&gt;</code></td>
+                <td>Superscript text (like x<sup>2</sup>)</td>
+                <td>x<sup>2</sup></td>
+            </tr>
+        </table>
+
+        <div class="info-box tip">
+            <strong>Important Distinction:</strong> <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code> both make text bold, but <code>&lt;strong&gt;</code> carries <em>semantic meaning</em> — it tells the browser and screen readers that the text has extra importance. Similarly, <code>&lt;i&gt;</code> vs <code>&lt;em&gt;</code>. Always prefer the semantic versions (<code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>) for better accessibility.
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 16: Meta Elements ==================== -->
+    <div class="card">
+        <h2>16. Meta Elements</h2>
+
+        <div class="info-box analogy">
+            <strong>Analogy:</strong> Meta tags are like the <em>resume summary</em> at the top of a job application. The hiring manager (search engine) does not see this summary on the main resume page, but it helps them quickly understand what the resume is about, who wrote it, and how to categorize it.
+        </div>
+
+        <p><code>&lt;meta&gt;</code> tags go inside <code>&lt;head&gt;</code> and provide <strong>metadata</strong> — data about the page that is not visible to users but is used by browsers, search engines, and other web tools.</p>
+
+        <h3>Common Meta Tags</h3>
+
+        <pre><code>&lt;head&gt;
+    &lt;!-- Character encoding --&gt;
+    &lt;meta charset="UTF-8"&gt;
+
+    &lt;!-- Page description for search engines --&gt;
+    &lt;meta name="description" content="Learn HTML fundamentals from scratch"&gt;
+
+    &lt;!-- Keywords for search engines --&gt;
+    &lt;meta name="keywords" content="HTML, web development, beginner"&gt;
+
+    &lt;!-- Author of the page --&gt;
+    &lt;meta name="author" content="John Doe"&gt;
+
+    &lt;!-- Software that generated the page --&gt;
+    &lt;meta name="generator" content="VSCode"&gt;
+
+    &lt;!-- Auto-refresh the page every 30 seconds --&gt;
+    &lt;meta http-equiv="refresh" content="30"&gt;
+
+    &lt;!-- Responsive design viewport --&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;/head&gt;</code></pre>
+
+        <h3>Key Meta Tags Explained</h3>
+        <table>
+            <tr>
+                <th>Meta Tag</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><code>charset="UTF-8"</code></td>
+                <td>Sets the character encoding. UTF-8 supports virtually all characters and symbols in the world. <strong>Always include this.</strong></td>
+            </tr>
+            <tr>
+                <td><code>name="description"</code></td>
+                <td>A short description of the page. Search engines display this below the title in search results.</td>
+            </tr>
+            <tr>
+                <td><code>name="keywords"</code></td>
+                <td>Comma-separated keywords related to the page. Less important today (search engines rely less on this).</td>
+            </tr>
+            <tr>
+                <td><code>name="author"</code></td>
+                <td>The author of the web page.</td>
+            </tr>
+            <tr>
+                <td><code>http-equiv="refresh"</code></td>
+                <td>Automatically redirects or refreshes the page. <code>content="30"</code> means refresh every 30 seconds. You can also redirect: <code>content="5;url=https://newsite.com"</code> (redirect after 5 seconds).</td>
+            </tr>
+            <tr>
+                <td><code>name="viewport"</code></td>
+                <td>Controls how the page is displayed on different devices. Essential for responsive design.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Quiz: Meta & Formatting -->
+    <div class="card">
+        <h3>Quiz: Meta Elements &amp; Formatting</h3>
+        <div class="quiz" id="quiz-meta">
+            <p><strong>Question 1:</strong> Which meta tag is essential for supporting all characters and symbols?</p>
+            <div class="quiz-option" data-correct="false">&lt;meta name="keywords"&gt;</div>
+            <div class="quiz-option" data-correct="true">&lt;meta charset="UTF-8"&gt;</div>
+            <div class="quiz-option" data-correct="false">&lt;meta name="viewport"&gt;</div>
+            <div class="quiz-option" data-correct="false">&lt;meta name="description"&gt;</div>
+            <div class="quiz-feedback"></div>
+
+            <hr style="margin:12px 0;">
+
+            <p><strong>Question 2:</strong> What is the semantic equivalent of <code>&lt;b&gt;</code> tag?</p>
+            <div class="quiz-option" data-correct="false">&lt;i&gt;</div>
+            <div class="quiz-option" data-correct="true">&lt;strong&gt;</div>
+            <div class="quiz-option" data-correct="false">&lt;u&gt;</div>
+            <div class="quiz-option" data-correct="false">&lt;em&gt;</div>
+            <div class="quiz-feedback"></div>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 17: Flashcards ==================== -->
+    <div class="card">
+        <h2>17. Flashcards Review</h2>
+        <p>Click a card to flip it and reveal the answer.</p>
+
+        <div class="flashcard-container">
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What does HTML stand for?</div>
+                    <div class="flashcard-back">HyperText Markup Language</div>
+                </div>
+            </div>
+
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">Who invented HTML and when?</div>
+                    <div class="flashcard-back">Tim Berners-Lee in 1991 at CERN</div>
+                </div>
+            </div>
+
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What are the 4 must-have elements of every HTML page?</div>
+                    <div class="flashcard-back">&lt;!DOCTYPE html&gt;, &lt;html&gt;, &lt;head&gt;, &lt;body&gt;</div>
+                </div>
+            </div>
+
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What is the difference between block-level and inline elements?</div>
+                    <div class="flashcard-back">Block-level takes full width and starts on a new line. Inline only takes as much width as needed and does not break the line.</div>
+                </div>
+            </div>
+
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What does the alt attribute do in an &lt;img&gt; tag?</div>
+                    <div class="flashcard-back">Provides alternative text for accessibility — displayed when the image cannot load, or read by screen readers for blind users.</div>
+                </div>
+            </div>
+
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What is the difference between &lt;b&gt; and &lt;strong&gt;?</div>
+                    <div class="flashcard-back">&lt;b&gt; is purely visual (bold). &lt;strong&gt; is semantic — it indicates the text has strong importance, which screen readers convey to users.</div>
+                </div>
+            </div>
+
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What are HTML entities? Give an example.</div>
+                    <div class="flashcard-back">Special codes for characters that have meaning in HTML. Example: &amp;lt; displays &lt;, &amp;amp; displays &amp;, &amp;nbsp; creates a non-breaking space.</div>
+                </div>
+            </div>
+
+            <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front">What does colspan do in a table?</div>
+                    <div class="flashcard-back">Merges table cells horizontally across multiple columns.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Collapsible Quick Reference ==================== -->
+    <div class="card">
+        <h2>18. Quick Reference Guide</h2>
+
+        <div class="collapsible">
+            <div class="collapsible-header">Basic Document Structure</div>
+            <div class="collapsible-body">
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Visible content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="collapsible-header">All Tags We Covered</div>
+            <div class="collapsible-body">
+                <table>
+                    <tr><th>Tag</th><th>Purpose</th></tr>
+                    <tr><td><code>&lt;!DOCTYPE&gt;</code></td><td>Declares HTML5 document type</td></tr>
+                    <tr><td><code>&lt;html&gt;</code></td><td>Root element</td></tr>
+                    <tr><td><code>&lt;head&gt;</code></td><td>Metadata container</td></tr>
+                    <tr><td><code>&lt;body&gt;</code></td><td>Visible content container</td></tr>
+                    <tr><td><code>&lt;title&gt;</code></td><td>Page title (browser tab)</td></tr>
+                    <tr><td><code>&lt;meta&gt;</code></td><td>Metadata about the page</td></tr>
+                    <tr><td><code>&lt;h1&gt;-&lt;h6&gt;</code></td><td>Headings (6 levels)</td></tr>
+                    <tr><td><code>&lt;p&gt;</code></td><td>Paragraph</td></tr>
+                    <tr><td><code>&lt;a&gt;</code></td><td>Hyperlink</td></tr>
+                    <tr><td><code>&lt;img&gt;</code></td><td>Image</td></tr>
+                    <tr><td><code>&lt;map&gt;</code></td><td>Image map</td></tr>
+                    <tr><td><code>&lt;ul&gt;</code></td><td>Unordered list</td></tr>
+                    <tr><td><code>&lt;ol&gt;</code></td><td>Ordered list</td></tr>
+                    <tr><td><code>&lt;li&gt;</code></td><td>List item</td></tr>
+                    <tr><td><code>&lt;table&gt;</code></td><td>Table</td></tr>
+                    <tr><td><code>&lt;tr&gt;</code></td><td>Table row</td></tr>
+                    <tr><td><code>&lt;th&gt;</code></td><td>Table header cell</td></tr>
+                    <tr><td><code>&lt;td&gt;</code></td><td>Table data cell</td></tr>
+                    <tr><td><code>&lt;div&gt;</code></td><td>Block-level container</td></tr>
+                    <tr><td><code>&lt;span&gt;</code></td><td>Inline container</td></tr>
+                    <tr><td><code>&lt;b&gt;</code></td><td>Bold (visual only)</td></tr>
+                    <tr><td><code>&lt;strong&gt;</code></td><td>Strong importance (semantic)</td></tr>
+                    <tr><td><code>&lt;i&gt;</code></td><td>Italic (visual only)</td></tr>
+                    <tr><td><code>&lt;em&gt;</code></td><td>Emphasis (semantic)</td></tr>
+                    <tr><td><code>&lt;u&gt;</code></td><td>Underline</td></tr>
+                    <tr><td><code>&lt;s&gt;</code></td><td>Strikethrough</td></tr>
+                    <tr><td><code>&lt;mark&gt;</code></td><td>Highlight</td></tr>
+                    <tr><td><code>&lt;sub&gt;</code></td><td>Subscript</td></tr>
+                    <tr><td><code>&lt;sup&gt;</code></td><td>Superscript</td></tr>
+                    <tr><td><code>&lt;br&gt;</code></td><td>Line break (empty tag)</td></tr>
+                    <tr><td><code>&lt;hr&gt;</code></td><td>Horizontal rule (empty tag)</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="collapsible-header">Absolute vs Relative Paths</div>
+            <div class="collapsible-body">
+                <p><strong>Absolute:</strong> Full URL — <code>https://www.example.com/images/photo.jpg</code></p>
+                <p><strong>Relative:</strong> Path from current file — <code>images/photo.jpg</code></p>
+                <p><code>../</code> = go up one folder</p>
+                <p><code>./</code> = current folder</p>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="collapsible-header">HTML Special Characters</div>
+            <div class="collapsible-body">
+                <table>
+                    <tr><td><code>&amp;amp;</code></td><td>&amp;</td></tr>
+                    <tr><td><code>&amp;lt;</code></td><td>&lt;</td></tr>
+                    <tr><td><code>&amp;gt;</code></td><td>&gt;</td></tr>
+                    <tr><td><code>&amp;nbsp;</code></td><td>Non-breaking space</td></tr>
+                    <tr><td><code>&amp;copy;</code></td><td>&copy;</td></tr>
+                    <tr><td><code>&amp;quot;</code></td><td>&quot;</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="collapsible">
+            <div class="collapsible-header">Link Target Values</div>
+            <div class="collapsible-body">
+                <table>
+                    <tr><td><code>_blank</code></td><td>New tab/window</td></tr>
+                    <tr><td><code>_self</code></td><td>Same tab (default)</td></tr>
+                    <tr><td><code>_parent</code></td><td>Parent frame</td></tr>
+                    <tr><td><code>_top</code></td><td>Full body of window</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Summary ==================== -->
+    <div class="card">
+        <h2>Summary</h2>
+        <div class="summary">
+            <ul>
+                <li><strong>HTML</strong> is the standard markup language for creating web pages. It provides the <em>structure</em> of a page.</li>
+                <li>Every page needs <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, and <code>&lt;body&gt;</code>.</li>
+                <li><strong>Tags</strong> define elements. Most come in opening/closing pairs (<code>&lt;tag&gt;...&lt;/tag&gt;</code>); some are empty (<code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>).</li>
+                <li><strong>Block-level</strong> elements (div, p, h1-h6) take full width. <strong>Inline</strong> elements (span, a, b, i) take only needed width.</li>
+                <li><strong>Headings</strong> (h1-h6) create hierarchy. <strong>Paragraphs</strong> (p) hold body text.</li>
+                <li><strong>Hyperlinks</strong> (&lt;a href="..."&gt;) connect pages. <strong>Images</strong> (&lt;img src="..." alt="..."&gt;) embed visuals.</li>
+                <li><strong>Lists</strong> organize content: &lt;ul&gt; for bullets, &lt;ol&gt; for numbers, &lt;li&gt; for items.</li>
+                <li><strong>Tables</strong> display tabular data with &lt;table&gt;, &lt;tr&gt;, &lt;th&gt;, &lt;td&gt;.</li>
+                <li><strong>&lt;div&gt;</strong> is a block-level container; <strong>&lt;span&gt;</strong> is an inline container.</li>
+                <li><strong>HTML entities</strong> display special characters (&amp;amp; &amp;lt; &amp;gt; &amp;nbsp;).</li>
+                <li><strong>Meta tags</strong> provide invisible metadata (charset, description, keywords) for browsers and search engines.</li>
+                <li>Use <strong>relative paths</strong> for internal links. Use <strong>semantic</strong> tags (&lt;strong&gt;, &lt;em&gt;) over visual ones (&lt;b&gt;, &lt;i&gt;).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Navigation between topics -->
+    <div class="steps">
+        <a href="topic2-project.html" class="step-item" style="text-decoration:none; color:inherit;">
+            &larr; Previous: Project Setup (Topic 2)
+        </a>
+        <a href="topic4-html-forms.html" class="step-item" style="text-decoration:none; color:inherit;">
+            Next: HTML Forms (Topic 4) &rarr;
+        </a>
+    </div>
+
+</div>
+
+<script>
+// Quiz functionality
+document.querySelectorAll('.quiz').forEach(function(quiz) {
+    var options = quiz.querySelectorAll('.quiz-option');
+    var feedback = quiz.querySelector('.quiz-feedback');
+
+    options.forEach(function(option) {
+        option.addEventListener('click', function() {
+            var previouslySelected = quiz.querySelector('.quiz-option.selected');
+            if (previouslySelected) {
+                previouslySelected.classList.remove('selected');
+            }
+            this.classList.add('selected');
+
+            if (this.getAttribute('data-correct') === 'true') {
+                feedback.textContent = 'Correct! Well done.';
+                feedback.style.color = '#198754';
+                feedback.style.fontWeight = 'bold';
+            } else {
+                feedback.textContent = 'Incorrect. Try again!';
+                feedback.style.color = '#dc3545';
+                feedback.style.fontWeight = 'bold';
+            }
+        });
+    });
+});
+
+// Fill-in-the-blank functionality
+function checkFillBlanks(id) {
+    var container = document.getElementById(id);
+    var inputs = container.querySelectorAll('input[type="text"]');
+    var feedback = container.querySelector('.quiz-feedback');
+    var allCorrect = true;
+
+    inputs.forEach(function(input) {
+        var answer = input.getAttribute('data-answer').toLowerCase().trim();
+        var userAnswer = input.value.toLowerCase().trim();
+
+        if (userAnswer === answer) {
+            input.style.borderColor = '#198754';
+            input.style.backgroundColor = '#d4edda';
+        } else {
+            input.style.borderColor = '#dc3545';
+            input.style.backgroundColor = '#f8d7da';
+            allCorrect = false;
+        }
+    });
+
+    if (allCorrect) {
+        feedback.textContent = 'All answers correct! Great job.';
+        feedback.style.color = '#198754';
+    } else {
+        feedback.textContent = 'Some answers are incorrect. Check the highlighted fields.';
+        feedback.style.color = '#dc3545';
+    }
+}
+
+// Collapsible sections
+document.querySelectorAll('.collapsible-header').forEach(function(header) {
+    header.addEventListener('click', function() {
+        this.parentElement.classList.toggle('active');
+    });
+});
+
+// Flashcard flip
+document.querySelectorAll('.flashcard').forEach(function(card) {
+    card.addEventListener('click', function() {
+        this.classList.toggle('flipped');
+    });
+});
+</script>
+
+</body>
+</html>

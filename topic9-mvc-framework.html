@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 9: CRUD, OOPHP, MVC &amp; PHP Framework</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ============================== -->
+  <!-- TOPIC TITLE &amp; PROGRESS        -->
+  <!-- ============================== -->
+  <h1>CRUD, OOPHP, MVC &amp; PHP Framework</h1>
+  <p>Master the building blocks of every web application: CRUD operations, Object-Oriented PHP, the MVC design pattern, and PHP frameworks.</p>
+
+  <div class="progress-bar"><div class="progress-text">Topic 9 of 14 &mdash; 64%</div></div>
+
+  <!-- ============================== -->
+  <!-- LEARNING OUTCOMES              -->
+  <!-- ============================== -->
+  <div class="card">
+    <h2>Learning Outcomes</h2>
+    <p>After this topic you will be able to:</p>
+    <ul>
+      <li>Explain CRUD operations and their SQL equivalents</li>
+      <li>Build CRUD functionality in PHP using multiple approaches</li>
+      <li>Describe OOPHP concepts: classes, objects, inheritance, encapsulation, polymorphism</li>
+      <li>Explain the MVC pattern and how data flows through an MVC application</li>
+      <li>Know when to use (and when not to use) a PHP framework</li>
+      <li>Understand URL routing and the Front Controller pattern</li>
+      <li>Build the skeleton of your own MVC framework</li>
+    </ul>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 1: CRUD OPERATIONS                    -->
+  <!-- ============================================= -->
+  <h2>1. CRUD Operations</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; A Filing Cabinet:</strong>
+    Think of a database as a filing cabinet. <strong>Creating</strong> a record is like adding a new folder. <strong>Reading</strong> is looking at what is inside a folder. <strong>Updating</strong> is rewriting a page inside a folder. <strong>Deleting</strong> is throwing the folder away. Every application that stores data performs these four actions &mdash; nothing more, nothing less.
+  </div>
+
+  <div class="card">
+    <h3>What is CRUD?</h3>
+    <p><strong>CRUD</strong> stands for the four basic operations performed on persistent storage (like a database):</p>
+    <table>
+      <thead>
+        <tr><th>CRUD</th><th>Description</th><th>SQL Equivalent</th><th>HTTP Method</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>C</strong>reate</td><td>Add a new record</td><td><code>INSERT INTO</code></td><td>POST</td></tr>
+        <tr><td><strong>R</strong>ead</td><td>Retrieve / view records</td><td><code>SELECT</code></td><td>GET</td></tr>
+        <tr><td><strong>U</strong>pdate</td><td>Modify an existing record</td><td><code>UPDATE</code></td><td>POST / PUT</td></tr>
+        <tr><td><strong>D</strong>elete</td><td>Remove a record</td><td><code>DELETE FROM</code></td><td>POST / DELETE</td></tr>
+      </tbody>
+    </table>
+
+    <h3>CRUD Variants</h3>
+    <p>Some extended forms of CRUD are commonly used:</p>
+    <ul>
+      <li><strong>SCRUD</strong> &mdash; <strong>S</strong>earch + CRUD. Adds search/filter functionality to the Read operation so users can find specific records.</li>
+      <li><strong>CRUDL</strong> &mdash; CRUD + <strong>L</strong>isting. Adds paginated listing of records, which is essential when you have hundreds or thousands of rows.</li>
+    </ul>
+  </div>
+
+  <div class="info-box tip">
+    <strong>Tip:</strong> Almost every web application you use &mdash; from social media to e-commerce &mdash; is built on CRUD. When you sign up (Create), view your feed (Read), edit your profile (Update), or remove a post (Delete), you are using CRUD operations.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 2: BUILDING CRUD IN PHP               -->
+  <!-- ============================================= -->
+  <h2>2. Building CRUD in PHP</h2>
+
+  <div class="card">
+    <h3>Three Approaches to Building CRUD</h3>
+
+    <div class="steps">
+      <div class="step-item">
+        <strong>Approach 1: Separate PHP Files per Operation</strong>
+        <p>Each CRUD operation has its own pair of files &mdash; a UI page (HTML form) and a processing page (PHP script that handles the logic).</p>
+        <pre><code>create.php        → HTML form for creating a record
+create_process.php → PHP script to insert into DB
+read.php           → Display a single record
+update.php         → HTML form for editing
+update_process.php → PHP script to update DB
+delete_process.php → PHP script to delete from DB</code></pre>
+        <p>This is the simplest approach but leads to <strong>many files</strong> and duplicated connection code.</p>
+      </div>
+
+      <div class="step-item">
+        <strong>Approach 2: All Operations in One Function File</strong>
+        <p>All CRUD logic lives in a single file of functions. Each form page includes this file and calls the relevant function.</p>
+        <pre><code>functions.php    → contains create_record(), read_record(), etc.
+form_page.php    → includes functions.php, calls create_record()</code></pre>
+        <p>Better code reuse, but still <strong>procedural</strong> and hard to scale.</p>
+      </div>
+
+      <div class="step-item">
+        <strong>Approach 3: OOP PHP with MVC Structure</strong>
+        <p>Use Object-Oriented PHP organised into Models, Views, and Controllers. This is the <strong>professional standard</strong> and what frameworks help you build.</p>
+        <pre><code>Models/    → User.php (data &amp; business logic)
+Views/     → user_form.php (HTML presentation)
+Controllers/ → UserController.php (handles input, coordinates)</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Restaurant Kitchen:</strong>
+    <strong>Approach 1</strong> is like having a separate chef for every dish who also serves the food &mdash; chaotic. <strong>Approach 2</strong> is one chef who does everything &mdash; better but exhausting. <strong>Approach 3</strong> is a proper kitchen: chefs (Controllers) take orders, prep cooks (Models) prepare ingredients, and servers (Views) deliver plates. Each role is clear and professional.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 3: OBJECT ORIENTED PHP (OOPHP)        -->
+  <!-- ============================================= -->
+  <h2>3. Object-Oriented PHP (OOPHP)</h2>
+
+  <div class="card">
+    <h3>Why OOP Over Procedural?</h3>
+    <p>Procedural PHP writes code as a sequence of instructions. OOPPHP organises code into <strong>objects</strong> that bundle data and behaviour together. Here are the key advantages:</p>
+
+    <table>
+      <thead>
+        <tr><th>Advantage</th><th>Explanation</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Faster Execution</td><td>OOP code can be optimised and cached more efficiently by the engine</td></tr>
+        <tr><td>Clear Structure</td><td>Code is organised into logical classes that mirror real-world concepts</td></tr>
+        <tr><td>DRY Code</td><td>Don't Repeat Yourself &mdash; write once, reuse everywhere via inheritance</td></tr>
+        <tr><td>Easier Maintenance</td><td>Changes in one class propagate automatically to all users of that class</td></tr>
+        <tr><td>Easier Debugging</td><td>Problems are isolated to specific classes rather than scattered across files</td></tr>
+        <tr><td>Reusability</td><td>Build a class once and use it across multiple projects or modules</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Blueprints vs. Random Lumber:</strong>
+    Procedural code is like throwing random planks of wood together to build a shed. OOP is like having a <strong>blueprint</strong> (class) from which you can produce identical houses (objects). Each house has its own paint colour and furniture (properties) but shares the same floor plan (methods).
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 4: OOP TERMS                          -->
+  <!-- ============================================= -->
+  <h2>4. OOP Terminology</h2>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Class</strong></div>
+        <div class="flashcard-back">A <strong>blueprint</strong> or template that defines the properties (data) and methods (behaviour) that objects of that type will have. Example: a <code>Car</code> class defines that every car has a colour and can drive.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Object</strong></div>
+        <div class="flashcard-back">A specific <strong>instance</strong> of a class. If <code>Car</code> is the class, then <code>$myCar = new Car()</code> creates an object &mdash; a real car with actual values.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Member Variable (Property)</strong></div>
+        <div class="flashcard-back">A variable defined inside a class. It stores data specific to each object. Example: <code>public $colour = "red";</code></div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Member Function (Method)</strong></div>
+        <div class="flashcard-back">A function defined inside a class. It defines the behaviour of objects. Example: <code>public function drive() { ... }</code></div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Constructor</strong></div>
+        <div class="flashcard-back">A special method (<code>__construct()</code>) that runs automatically when you create a new object. Used to initialise properties.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Destructor</strong></div>
+        <div class="flashcard-back">A special method (<code>__destruct()</code>) that runs when the object is destroyed. Used for cleanup tasks like closing database connections.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Parent / Child Class</strong></div>
+        <div class="flashcard-back">A <strong>parent</strong> class (also called base/super class) is inherited from. A <strong>child</strong> class (derived/sub class) extends the parent, gaining its properties and methods.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Inheritance</strong></div>
+        <div class="flashcard-back">The mechanism by which a child class acquires the public and protected properties/methods of its parent class using the <code>extends</code> keyword.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Polymorphism</strong></div>
+        <div class="flashcard-back">The ability for different classes to be treated through the same interface. A <code>Shape</code> method can accept a <code>Circle</code>, <code>Square</code>, or <code>Triangle</code> &mdash; each responds differently to <code>draw()</code>.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Encapsulation</strong></div>
+        <div class="flashcard-back">Bundling data and methods together and restricting direct access to some components. Achieved via <code>private</code> properties with <code>public</code> getter/setter methods.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Data Abstraction</strong></div>
+        <div class="flashcard-back">Hiding complex implementation details and showing only the essential features. The user of a <code>Car</code> object calls <code>start()</code> without knowing how the engine works internally.</div>
+      </div>
+    </div>
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Overloading</strong></div>
+        <div class="flashcard-back">Defining multiple methods with the same name but different parameters. PHP handles this differently from languages like Java &mdash; using magic methods.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box note">
+    <strong>Note:</strong> Click any flashcard above to flip it and reveal the answer. Review them until you can recall each term from memory.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 5: CLASS BASICS                       -->
+  <!-- ============================================= -->
+  <h2>5. Class Basics in PHP</h2>
+
+  <div class="card">
+    <h3>Anatomy of a Class</h3>
+    <pre><code>&lt;?php
+class Car {
+    // Member variables (properties)
+    public $colour;
+    public $speed = 0;
+
+    // Constructor - runs when object is created
+    public function __construct($colour) {
+        $this-&gt;colour = $colour;   // $this refers to the current object
+    }
+
+    // Member function (method)
+    public function accelerate($amount) {
+        $this-&gt;speed += $amount;
+        echo "The $this-&gt;colour car is now going $this-&gt;speed km/h&lt;br&gt;";
+    }
+
+    public function brake() {
+        $this-&gt;speed = 0;
+        echo "The car has stopped.&lt;br&gt;";
+    }
+}
+
+// Creating objects (instances)
+$myCar = new Car("red");
+$yourCar = new Car("blue");
+
+$myCar-&gt;accelerate(60);   // "The red car is now going 60 km/h"
+$yourCar-&gt;accelerate(80); // "The blue car is now going 80 km/h"
+$myCar-&gt;brake();          // "The car has stopped."
+?&gt;</code></pre>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Cookie Cutter:</strong>
+    The <strong>class</strong> is the cookie cutter shape. The <strong>objects</strong> are the individual cookies you press out. Each cookie (object) has its own icing colour and sprinkles (properties), but they all share the same shape (methods).
+  </div>
+
+  <div class="card">
+    <h3>Properties: <code>var</code>, <code>public</code>, <code>private</code>, <code>protected</code></h3>
+    <p>Properties are variables inside a class. In modern PHP, always use access modifiers instead of <code>var</code>:</p>
+    <pre><code>&lt;?php
+class Employee {
+    public $name;         // Accessible from anywhere
+    private $salary;      // Accessible ONLY inside this class
+    protected $department; // Accessible inside this class AND child classes
+
+    public function __construct($name, $salary, $department) {
+        $this-&gt;name = $name;
+        $this-&gt;salary = $salary;
+        $this-&gt;department = $department;
+    }
+
+    // Public method to access private data (getter)
+    public function getSalary() {
+        return $this-&gt;salary;
+    }
+
+    // Public method to modify private data (setter)
+    public function setSalary($newSalary) {
+        if ($newSalary &gt; 0) {
+            $this-&gt;salary = $newSalary;
+        }
+    }
+}
+
+$emp = new Employee("Alice", 5000, "Engineering");
+echo $emp-&gt;name;        // OK - public
+// echo $emp-&gt;salary;   // ERROR - private
+echo $emp-&gt;getSalary();  // OK - uses public getter
+?&gt;</code></pre>
+
+    <h3>Access Modifiers Summary</h3>
+    <table>
+      <thead>
+        <tr><th>Modifier</th><th>Same Class</th><th>Child Class</th><th>Outside Class</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>public</code></td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td><code>protected</code></td><td>Yes</td><td>Yes</td><td>No</td></tr>
+        <tr><td><code>private</code></td><td>Yes</td><td>No</td><td>No</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; House Access:</strong>
+    <strong>Public</strong> = front door, anyone can walk in. <strong>Protected</strong> = family rooms, only family (children) and you can enter. <strong>Private</strong> = your bedroom, only you can enter. This is exactly how access modifiers work for classes and their children.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 6: INHERITANCE                        -->
+  <!-- ============================================= -->
+  <h2>6. Inheritance</h2>
+
+  <div class="card">
+    <h3>The <code>extends</code> Keyword</h3>
+    <p>Inheritance lets a child class acquire properties and methods from a parent class. The child inherits all <strong>public</strong> and <strong>protected</strong> members. <strong>Private</strong> members are NOT inherited (they exist but cannot be accessed directly).</p>
+
+    <pre><code>&lt;?php
+// Parent class
+class Animal {
+    public $name;
+    protected $sound;
+
+    public function __construct($name, $sound) {
+        $this-&gt;name = $name;
+        $this-&gt;sound = $sound;
+    }
+
+    public function speak() {
+        return "$this-&gt;name says $this-&gt;sound!";
+    }
+}
+
+// Child class - inherits from Animal
+class Dog extends Animal {
+    public function __construct($name) {
+        parent::__construct($name, "Woof"); // Call parent constructor
+    }
+
+    // Child can add its own methods
+    public function fetch($item) {
+        return "$this-&gt;name fetches the $item!";
+    }
+}
+
+class Cat extends Animal {
+    public function __construct($name) {
+        parent::__construct($name, "Meow");
+    }
+}
+
+$dog = new Dog("Rex");
+$cat = new Cat("Whiskers");
+
+echo $dog-&gt;speak();          // "Rex says Woof!"
+echo $dog-&gt;fetch("ball");    // "Rex fetches the ball!"
+echo $cat-&gt;speak();          // "Whiskers says Meow!"
+?&gt;</code></pre>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Family Traits:</strong>
+    Inheritance in OOP is like real family inheritance. A child inherits eye colour and height range (public/protected) from their parents. They also get a private diary (private) that nobody else can read directly. The child can also develop new skills (new methods) that the parent doesn't have.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 7: MVC PATTERN                        -->
+  <!-- ============================================= -->
+  <h2>7. The MVC Pattern</h2>
+
+  <div class="card">
+    <h3>What is MVC?</h3>
+    <p><strong>MVC</strong> stands for <strong>Model - View - Controller</strong>. It is a design pattern that separates an application into three interconnected components. This separation makes code cleaner, easier to test, and simpler to maintain.</p>
+  </div>
+
+  <div class="card">
+    <h3>The Three Components</h3>
+
+    <div class="steps">
+      <div class="step-item">
+        <strong>Model (The Data Layer)</strong>
+        <ul>
+          <li>Manages all data, logic, and rules of the application</li>
+          <li>Handles database operations (CRUD)</li>
+          <li>Contains business rules and validation</li>
+          <li>Notifies the View when data changes</li>
+          <li><strong>Knows nothing about the UI</strong> &mdash; it just manages data</li>
+        </ul>
+      </div>
+      <div class="step-item">
+        <strong>View (The Presentation Layer)</strong>
+        <ul>
+          <li>Displays data to the user (HTML, CSS)</li>
+          <li>Receives data from the Controller</li>
+          <li>Contains the user interface</li>
+          <li>May contain minimal logic for display formatting</li>
+          <li><strong>Knows nothing about database queries</strong> &mdash; it just renders data</li>
+        </ul>
+      </div>
+      <div class="step-item">
+        <strong>Controller (The Coordinator)</strong>
+        <ul>
+          <li>Handles user input (form submissions, URL requests)</li>
+          <li>Interacts with the Model to process data</li>
+          <li>Selects the appropriate View to render</li>
+          <li>Acts as the middleman between Model and View</li>
+          <li><strong>The brain</strong> &mdash; decides what happens next</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy &mdash; Restaurant Order:</strong>
+    You (the <strong>User</strong>) tell the waiter (the <strong>Controller</strong>) what you want. The waiter passes your order to the kitchen (the <strong>Model</strong>) which prepares the food from ingredients (the database). The waiter then brings the plated dish (the <strong>View</strong>) back to you. You never go into the kitchen directly, and the kitchen never comes to your table.
+  </div>
+
+  <div class="card">
+    <h3>MVC Data Flow</h3>
+
+    <div class="diagram">
+      <div class="step-item"><strong>User</strong> sends request (clicks link / submits form)</div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item"><strong>Controller</strong> receives request, determines what action is needed</div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item"><strong>Model</strong> performs database query, applies business rules, returns data</div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item"><strong>Controller</strong> passes data to the appropriate View</div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item"><strong>View</strong> renders HTML using the data from the Model</div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item"><strong>Browser</strong> displays the HTML to the user</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>MVC Code Example</h3>
+    <pre><code>&lt;?php
+// === MODEL: User.php ===
+class User {
+    private $db;
+
+    public function __construct($db) {
+        $this-&gt;db = $db;
+    }
+
+    public function findAll() {
+        $stmt = $this-&gt;db-&gt;query("SELECT * FROM users");
+        return $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findById($id) {
+        $stmt = $this-&gt;db-&gt;prepare("SELECT * FROM users WHERE id = ?");
+        $stmt-&gt;execute([$id]);
+        return $stmt-&gt;fetch(PDO::FETCH_ASSOC);
+    }
+}
+
+// === CONTROLLER: UserController.php ===
+class UserController {
+    private $userModel;
+
+    public function __construct($db) {
+        $this-&gt;userModel = new User($db);
+    }
+
+    public function index() {
+        $users = $this-&gt;userModel-&gt;findAll();  // Ask Model for data
+        require 'Views/user_list.php';          // Load the View
+    }
+
+    public function show($id) {
+        $user = $this-&gt;userModel-&gt;findById($id);
+        require 'Views/user_detail.php';
+    }
+}
+
+// === VIEW: Views/user_list.php ===
+// &lt;h1&gt;All Users&lt;/h1&gt;
+// &lt;ul&gt;
+// &lt;?php foreach ($users as $user): ?&gt;
+//   &lt;li&gt;&lt;?= htmlspecialchars($user['name']) ?&gt;&lt;/li&gt;
+// &lt;?php endforeach; ?&gt;
+// &lt;/ul&gt;
+?&gt;</code></pre>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 8: MVC BENEFITS                       -->
+  <!-- ============================================= -->
+  <h2>8. MVC Benefits</h2>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>Benefit</th><th>Explanation</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Separation of Concerns</strong></td><td>Each component has a single, well-defined responsibility. Front-end developers work on Views, back-end developers work on Models.</td></tr>
+        <tr><td><strong>Multiple Representations</strong></td><td>Same data (Model) can be rendered as HTML, JSON, or XML &mdash; just swap the View.</td></tr>
+        <tr><td><strong>Team Collaboration</strong></td><td>Designers modify Views without touching logic. Developers modify Controllers/Models without breaking the layout.</td></tr>
+        <tr><td><strong>Easier Maintenance</strong></td><td>Bug in data logic? Check the Model. Layout issue? Check the View. Input issue? Check the Controller.</td></tr>
+        <tr><td><strong>Reusability</strong></td><td>Models can be reused across different Controllers. Views can be reused with different data.</td></tr>
+        <tr><td><strong>Extensibility</strong></td><td>New features can be added as new Models, Views, or Controllers without rewriting existing code.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 9: WHEN TO USE A FRAMEWORK            -->
+  <!-- ============================================= -->
+  <h2>9. PHP Frameworks &mdash; When to Use One</h2>
+
+  <div class="card">
+    <h3>What is a PHP Framework?</h3>
+    <p>A PHP framework is a <strong>reusable skeleton</strong> of libraries, tools, and coding conventions. It provides a structured foundation so you don't start from scratch.</p>
+
+    <h3>Benefits of Using a Framework</h3>
+    <ul>
+      <li><strong>Avoid reinventing the wheel</strong> &mdash; authentication, routing, database abstraction are already built</li>
+      <li><strong>Enforce structure and standards</strong> &mdash; your code follows best practices by default</li>
+      <li><strong>Speed up development</strong> &mdash; you write application logic, not boilerplate</li>
+      <li><strong>Improve reliability</strong> &mdash; frameworks are battle-tested by thousands of developers</li>
+      <li><strong>Maintenance benefits</strong> &mdash; follows conventions so other developers can understand your code</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>When to USE a Framework</h3>
+    <ul>
+      <li>The project will <strong>scale</strong> to many pages and features</li>
+      <li>You need long-term <strong>maintainability</strong></li>
+      <li>A <strong>team</strong> is working on the project</li>
+      <li>You need built-in <strong>security</strong> features (CSRF, XSS protection, input sanitisation)</li>
+    </ul>
+
+    <h3>When NOT to Use a Framework</h3>
+    <ul>
+      <li>Building a very <strong>simple static site</strong> (a few HTML pages)</li>
+      <li>Creating a <strong>quick prototype</strong> or proof of concept</li>
+      <li>You don't want the <strong>overhead</strong> and learning curve</li>
+      <li>The project is a small script that won't grow</li>
+    </ul>
+  </div>
+
+  <div class="info-box warning">
+    <strong>Warning:</strong> Using a framework for a simple 3-page website is like hiring a construction crew to build a birdhouse. The overhead outweighs the benefits. Choose the right tool for the job.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SECTION 10: BUILDING YOUR OWN FRAMEWORK       -->
+  <!-- ============================================= -->
+  <h2>10. Building Your Own MVC Framework</h2>
+
+  <div class="card">
+    <h3>Framework Directory Structure</h3>
+    <pre><code>my-framework/
+├── .htaccess              → URL rewriting rules
+├── index.php              → Front Controller (entry point)
+├── core/
+│   ├── Controller.php     → Base Controller class
+│   ├── Database.php       → Database connection singleton
+│   └── Identifier.php     → Route identifier / helper
+├── controllers/
+│   ├── HomeController.php
+│   └── UserController.php
+├── models/
+│   ├── HomeModel.php
+│   └── UserModel.php
+└── views/
+    ├── home/
+    │   └── index.php
+    └── user/
+        ├── list.php
+        └── detail.php</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>URL Routing with <code>.htaccess</code></h3>
+    <p>URL routing maps a user's request URL to the correct controller and method. Apache's <code>.htaccess</code> file rewrites all URLs to a single entry point:</p>
+
+    <pre><code># .htaccess - Redirect all requests to index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]</code></pre>
+
+    <div class="info-box analogy">
+      <strong>Analogy &mdash; Mail Sorting Office:</strong>
+      The <code>.htaccess</code> is the mail sorting office. Every letter (URL request) that doesn't match a known address (existing file) gets redirected to the main office (<code>index.php</code>), which reads the address and routes it to the correct department (Controller).
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The Front Controller (<code>index.php</code>)</h3>
+    <p>The <strong>Front Controller</strong> is a single entry point that handles all requests. It parses the URL, loads the right controller, and calls the right method:</p>
+
+    <pre><code>&lt;?php
+// index.php - Front Controller
+
+// Get the URL parameter
+$url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : 'home';
+$url = explode('/', $url);
+
+// Determine controller and method
+$controllerName = ucfirst(array_shift($url)) . 'Controller';
+$methodName     = array_shift($url) ?: 'index';
+$params         = $url;
+
+// Load the controller file
+$controllerFile = "controllers/$controllerName.php";
+if (file_exists($controllerFile)) {
+    require_once $controllerFile;
+    $controller = new $controllerName();
+
+    // Call the method with any remaining parameters
+    if (method_exists($controller, $methodName)) {
+        call_user_func_array([$controller, $methodName], $params);
+    } else {
+        echo "Method $methodName not found.";
+    }
+} else {
+    echo "Controller $controllerName not found.";
+}
+?&gt;</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Core Classes</h3>
+
+    <pre><code>&lt;?php
+// core/Controller.php - Base Controller class
+class Controller {
+    protected $db;
+
+    public function __construct() {
+        $this-&gt;db = Database::getInstance()-&gt;getConnection();
+    }
+
+    protected function model($modelName) {
+        $modelFile = "models/$modelName.php";
+        require_once $modelFile;
+        return new $modelName($this-&gt;db);
+    }
+
+    protected function view($viewPath, $data = []) {
+        extract($data);
+        $viewFile = "views/$viewPath.php";
+        if (file_exists($viewFile)) {
+            require_once $viewFile;
+        }
+    }
+}
+
+// core/Database.php - Database connection (Singleton)
+class Database {
+    private static $instance = null;
+    private $connection;
+
+    private function __construct() {
+        $this-&gt;connection = new PDO(
+            "mysql:host=localhost;dbname=mydb",
+            "root", ""
+        );
+        $this-&gt;connection-&gt;setAttribute(
+            PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION
+        );
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public function getConnection() {
+        return $this-&gt;connection;
+    }
+}
+?&gt;</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Request Flow Summary</h3>
+    <div class="diagram">
+      <div class="step-item">1. User requests <code>example.com/user/show/42</code></div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item">2. <code>.htaccess</code> rewrites to <code>index.php?url=user/show/42</code></div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item">3. <code>index.php</code> parses URL &rarr; Controller: <code>UserController</code>, Method: <code>show</code>, Param: <code>42</code></div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item">4. Loads <code>UserController.php</code> and calls <code>show(42)</code></div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item">5. Controller asks <code>UserModel</code> to find user with ID 42 (database query)</div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item">6. Model returns user data to Controller</div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item">7. Controller passes data to <code>views/user/detail.php</code></div>
+      <div class="arrow">&darr;</div>
+      <div class="step-item">8. View renders HTML and sends response to browser</div>
+    </div>
+  </div>
+
+  <div class="info-box tip">
+    <strong>Tip:</strong> Popular PHP frameworks like Laravel, Symfony, and CodeIgniter all follow the MVC pattern internally. Understanding this custom framework skeleton will make learning any of them much easier.
+  </div>
+
+  <!-- ============================================= -->
+  <!-- QUIZ SECTION                                  -->
+  <!-- ============================================= -->
+  <h2>Knowledge Check</h2>
+
+  <div class="quiz" id="quiz1">
+    <p><strong>1. Which SQL statement corresponds to the "Update" operation in CRUD?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">INSERT INTO</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">SELECT</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">UPDATE</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">DELETE FROM</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz2">
+    <p><strong>2. Which access modifier allows access only within the class itself?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">public</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">protected</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">private</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">var</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz3">
+    <p><strong>3. In MVC, which component handles user input and coordinates Model and View?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">Model</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">Controller</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">View</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">Router</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz4">
+    <p><strong>4. What does the <code>extends</code> keyword do in PHP?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Creates a new instance of a class</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Imports a file</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">Makes a child class inherit from a parent class</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Defines a constant</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz5">
+    <p><strong>5. What is the Front Controller pattern?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">A single entry point (index.php) that handles all requests</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A controller that handles only GET requests</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">The first controller loaded in a multi-page app</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A controller for the homepage only</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz6">
+    <p><strong>6. In MVC, where does the business logic and database interaction live?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">View</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">Model</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Controller</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Router</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz7">
+    <p><strong>7. What does <code>$this</code> refer to inside a PHP class method?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">The parent class</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">The current object instance</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">The class definition</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">The global scope</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz8">
+    <p><strong>8. Which of these is NOT a benefit of using a PHP framework?</strong></p>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">Built-in security features</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">Faster development</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">Code reusability</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)">Guarantees zero bugs</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- FILL IN THE BLANK                             -->
+  <!-- ============================================= -->
+  <h2>Fill in the Blank</h2>
+
+  <div class="fill-blank" id="fb1">
+    <p>1. CRUD stands for <input type="text" data-answer="Create, Read, Update, Delete" placeholder="___, ___, ___, ___">.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb1')">Check Answer</button>
+  </div>
+
+  <div class="fill-blank" id="fb2">
+    <p>2. The special PHP method that runs automatically when an object is created is <code>__<input type="text" data-answer="construct" placeholder="_______">()</code>.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb2')">Check Answer</button>
+  </div>
+
+  <div class="fill-blank" id="fb3">
+    <p>3. The keyword used to make a child class inherit from a parent class is <input type="text" data-answer="extends" placeholder="_______">.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb3')">Check Answer</button>
+  </div>
+
+  <div class="fill-blank" id="fb4">
+    <p>4. MVC stands for Model, <input type="text" data-answer="View" placeholder="____">, Controller.</p>
+    <div class="quiz-feedback"></div>
+    <button class="quiz-btn" onclick="checkFillBlank('fb4')">Check Answer</button>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SUMMARY                                       -->
+  <!-- ============================================= -->
+  <h2>Summary</h2>
+
+  <div class="summary">
+    <ul>
+      <li><strong>CRUD</strong> = Create, Read, Update, Delete &mdash; the four fundamental operations on persistent storage, mapping directly to SQL INSERT, SELECT, UPDATE, DELETE.</li>
+      <li><strong>OOPPHP</strong> provides clear structure, code reuse, and easier maintenance through classes, objects, inheritance, and encapsulation.</li>
+      <li><strong>Access Modifiers</strong> control visibility: <code>public</code> (everywhere), <code>protected</code> (class + children), <code>private</code> (class only).</li>
+      <li><strong>Inheritance</strong> uses <code>extends</code> to create child classes that inherit public and protected members from a parent.</li>
+      <li><strong>MVC</strong> separates applications into Model (data/logic), View (presentation), and Controller (input/coordination).</li>
+      <li>MVC Flow: User &rarr; Controller &rarr; Model &rarr; Controller &rarr; View &rarr; Browser.</li>
+      <li><strong>PHP Frameworks</strong> provide reusable skeletons, enforce standards, and speed up development.</li>
+      <li>The <strong>Front Controller</strong> pattern uses a single <code>index.php</code> entry point with <code>.htaccess</code> URL rewriting.</li>
+      <li><code>call_user_func_array()</code> dynamically invokes controller methods based on the parsed URL.</li>
+    </ul>
+  </div>
+
+</div><!-- /.container -->
+
+<script>
+// Quiz logic
+function checkAnswer(quizId, element, isCorrect) {
+  var quiz = document.getElementById(quizId);
+  var feedback = quiz.querySelector('.quiz-feedback');
+  var options = quiz.querySelectorAll('.quiz-option');
+
+  // Disable further clicks
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+  });
+
+  if (isCorrect) {
+    element.style.background = '#2ecc71';
+    element.style.color = '#fff';
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#2ecc71';
+  } else {
+    element.style.background = '#e74c3c';
+    element.style.color = '#fff';
+    feedback.textContent = 'Incorrect. Try reviewing the section above.';
+    feedback.style.color = '#e74c3c';
+    // Highlight the correct answer
+    options.forEach(function(opt) {
+      if (opt.getAttribute('onclick').indexOf('true') !== -1) {
+        opt.style.background = '#2ecc71';
+        opt.style.color = '#fff';
+      }
+    });
+  }
+}
+
+// Fill in the blank logic
+function checkFillBlank(fbId) {
+  var container = document.getElementById(fbId);
+  var input = container.querySelector('input');
+  var feedback = container.querySelector('.quiz-feedback');
+  var userAnswer = input.value.trim().toLowerCase();
+  var correctAnswer = input.getAttribute('data-answer').toLowerCase();
+
+  if (userAnswer === correctAnswer) {
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#2ecc71';
+    input.style.borderColor = '#2ecc71';
+  } else {
+    feedback.textContent = 'Incorrect. The correct answer is: ' + input.getAttribute('data-answer');
+    feedback.style.color = '#e74c3c';
+    input.style.borderColor = '#e74c3c';
+  }
+}
+
+// Flashcard flip
+document.querySelectorAll('.flashcard').forEach(function(card) {
+  card.addEventListener('click', function() {
+    this.classList.toggle('flipped');
+  });
+});
+</script>
+
+</body>
+</html>

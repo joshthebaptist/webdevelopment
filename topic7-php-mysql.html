@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 7: PHP &amp; MySQL/MariaDB</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Topic 7: PHP &amp; MySQL/MariaDB</h1>
+
+  <!-- Progress -->
+  <div class="progress-bar"><div class="progress-text">0% Complete</div></div>
+
+  <div class="info-box analogy">
+    <strong>Analogy:</strong> If PHP is the chef in a restaurant kitchen, then MySQL is the pantry where all the ingredients (data) are stored. The chef needs to open the pantry, grab what they need, put things back, and sometimes throw things away. PHP and MySQL work together the same way — PHP sends requests, MySQL serves the data.
+  </div>
+
+  <!-- ==================== SECTION 1: What is MySQL ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>1. What is MySQL?</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>Definition</h3>
+        <p><strong>MySQL</strong> is an open-source <strong>Relational Database Management System (RDBMS)</strong> created in 1995 by <strong>Monty Widenius</strong> and <strong>David Axmark</strong>. It is the most popular open-source database used with PHP in the <strong>LAMP</strong>, <strong>WAMP</strong>, and <strong>XAMPP</strong> stacks.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy — What is an RDBMS?</strong><br>
+        Imagine a spreadsheet program like Excel. Now imagine it is a full server application that many programs can talk to at the same time, that enforces rules about what data can go where, and that can handle millions of rows efficiently. That is essentially what an RDBMS is. MySQL is one specific RDBMS — like how "Ford" is a specific car brand. Other brands (RDBMS) include PostgreSQL, SQLite, and Oracle.
+      </div>
+
+      <div class="card">
+        <h3>Real-World Usage</h3>
+        <p>MySQL powers some of the biggest websites in the world:</p>
+        <ul>
+          <li><strong>Facebook</strong> — stores billions of user profiles, posts, and messages</li>
+          <li><strong>WordPress</strong> — powers over 40% of all websites on the internet</li>
+          <li><strong>Netflix</strong> — manages user accounts and viewing history</li>
+          <li><strong>YouTube</strong> — handles video metadata and comments</li>
+          <li><strong>Booking.com</strong> — manages hotel listings and reservations</li>
+          <li><strong>Airbnb</strong> — stores listings, reviews, and booking data</li>
+        </ul>
+      </div>
+
+      <div class="info-box note">
+        <strong>Note:</strong> MySQL is part of the <strong>LAMP stack</strong> (Linux, Apache, MySQL, PHP) — the classic combination of technologies that powers most web applications. When you install XAMPP or WAMP on your computer, MySQL comes bundled and ready to use.
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What does RDBMS stand for?</h3></div>
+            <div class="flashcard-back"><p>Relational Database Management System — a system that stores data in tables with defined relationships between them.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Who created MySQL and when?</h3></div>
+            <div class="flashcard-back"><p>Monty Widenius and David Axmark in 1995.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Name 3 companies that use MySQL.</h3></div>
+            <div class="flashcard-back"><p>Facebook, WordPress, Netflix (also YouTube, Booking.com, Airbnb).</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 2: phpMyAdmin ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>2. phpMyAdmin</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>What is phpMyAdmin?</h3>
+        <p><strong>phpMyAdmin</strong> is a free, web-based tool for administering MySQL databases. It has been around since <strong>1998</strong> and is written entirely in <strong>PHP</strong>. It provides a graphical interface so you don't have to type every SQL command by hand.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> If MySQL is the pantry, then phpMyAdmin is the glass window into the pantry that lets you see all the shelves, move items around, and reorganize — all without needing to know the exact language the pantry shelf-labels are written in. You <em>can</em> use SQL directly, but phpMyAdmin also gives you buttons, forms, and visual tools.
+      </div>
+
+      <div class="card">
+        <h3>Other MySQL Tools</h3>
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>phpMyAdmin</strong></td><td>Web-based</td><td>Runs in your browser, written in PHP, most popular for LAMP stacks</td></tr>
+            <tr><td><strong>MySQL Workbench</strong></td><td>Desktop app</td><td>Official MySQL GUI from Oracle, supports design, modeling, and administration</td></tr>
+            <tr><td><strong>SQLTools</strong></td><td>VS Code Extension</td><td>Lightweight database manager inside Visual Studio Code</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip:</strong> When you install XAMPP, phpMyAdmin is included. Access it at <code>http://localhost/phpmyadmin</code> in your browser.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 3: What is MariaDB ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>3. What is MariaDB?</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>The Story of MariaDB</h3>
+        <p><strong>MariaDB</strong> is a <strong>fork</strong> (a copy that diverges into its own project) of MySQL. In <strong>2009</strong>, Oracle Corporation acquired Sun Microsystems (which owned MySQL). Many in the open-source community were concerned about the future of MySQL under Oracle, so Monty Widenius (one of MySQL's original creators) forked the codebase and created MariaDB.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Imagine a popular recipe that belongs to a restaurant. When the restaurant is bought by a large corporation, the original chef is worried the recipe might change or become restricted. So the chef takes the recipe, opens a new restaurant, and keeps cooking the same dish — maybe even improving it. The food tastes the same (compatible), but now it is under new management. MariaDB is the chef's new restaurant.
+      </div>
+
+      <div class="card">
+        <h3>Why MariaDB?</h3>
+        <ul>
+          <li><strong>Full binary "drop-in" replacement</strong> — you can swap MySQL for MariaDB and everything just works</li>
+          <li><strong>Compatible data</strong> — same database files, same formats</li>
+          <li><strong>Compatible APIs and protocols</strong> — same code talks to both</li>
+          <li><strong>Same filenames and ports</strong> — same default port 3306</li>
+          <li><strong>Maintains MySQL connectors</strong> — PDO, mysqli, and other drivers work with MariaDB too</li>
+        </ul>
+      </div>
+
+      <div class="info-box note">
+        <strong>Note:</strong> In practice, for this course it does not matter whether you use MySQL or MariaDB. The SQL syntax, PHP connection code, and tools like phpMyAdmin work identically with both.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 4: Database Queries ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>4. Database Queries &amp; CRUD</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>What is a Query?</h3>
+        <p>A <strong>database query</strong> is a request to access, retrieve, modify, or delete data in a database. Every time your PHP script needs information from the database, it sends a query.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy — CRUD:</strong> Think of a library system. <strong>C</strong>reate = adding a new book to the catalogue. <strong>R</strong>ead = searching for and reading a book's details. <strong>U</strong>pdate = correcting a typo on a book's info card. <strong>D</strong>elete = removing a book that has been discarded. Every database operation falls into one of these four categories.
+      </div>
+
+      <div class="card">
+        <h3>The Four CRUD Operations</h3>
+        <table>
+          <thead>
+            <tr><th>CRUD</th><th>SQL Statement</th><th>What It Does</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Create</strong></td>
+              <td><code>INSERT</code></td>
+              <td>Adds a new row to a table</td>
+              <td><code>INSERT INTO users (name, email) VALUES ('Ali', 'ali@mail.com');</code></td>
+            </tr>
+            <tr>
+              <td><strong>Read</strong></td>
+              <td><code>SELECT</code></td>
+              <td>Retrieves data from a table</td>
+              <td><code>SELECT * FROM users WHERE id = 1;</code></td>
+            </tr>
+            <tr>
+              <td><strong>Update</strong></td>
+              <td><code>UPDATE</code></td>
+              <td>Modifies existing rows</td>
+              <td><code>UPDATE users SET email = 'new@mail.com' WHERE id = 1;</code></td>
+            </tr>
+            <tr>
+              <td><strong>Delete</strong></td>
+              <td><code>DELETE</code></td>
+              <td>Removes rows from a table</td>
+              <td><code>DELETE FROM users WHERE id = 1;</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Warning:</strong> Always be careful with <code>DELETE</code> and <code>UPDATE</code> statements. Without a <code>WHERE</code> clause, they will affect <strong>every row</strong> in the table. Imagine accidentally deleting every user in your system!
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Which SQL statement corresponds to the "Read" operation in CRUD?</h3></div>
+            <div class="flashcard-back"><p><code>SELECT</code></p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What does INSERT do?</h3></div>
+            <div class="flashcard-back"><p>It adds a new row (record) to a database table — the "Create" in CRUD.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What happens if you run UPDATE without a WHERE clause?</h3></div>
+            <div class="flashcard-back"><p>Every row in the table gets updated — usually a disaster!</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 5: Connecting to MySQL ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>5. Connecting to MySQL — APIs Comparison</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>Three PHP APIs for MySQL</h3>
+        <p>PHP has historically offered three different ways (APIs) to connect to MySQL databases:</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Feature</th><th><code>mysql</code></th><th><code>mysqli</code></th><th><code>PDO</code></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Full Name</td><td>MySQL (original)</td><td>MySQL Improved</td><td>PHP Data Objects</td></tr>
+          <tr><td>Status</td><td>❌ Deprecated (2012), removed in PHP 7</td><td>✅ Supported</td><td>✅ Supported (recommended)</td></tr>
+          <tr><td>Procedural Style</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+          <tr><td>Object-Oriented Style</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Multiple DB Drivers</td><td>No (MySQL only)</td><td>No (MySQL only)</td><td>✅ Yes — 12 different drivers</td></tr>
+          <tr><td>Prepared Statements</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Object Mapping</td><td>No</td><td>No</td><td>Yes</td></tr>
+          <tr><td>Transactions</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Think of these three APIs as three different phones you could use to call the database. The old <code>mysql</code> phone was a basic landline — it worked, but it had no caller ID, no voicemail, and it was discontinued. The <code>mysqli</code> phone is a modern smartphone that only works with one carrier (MySQL). <strong>PDO</strong> is an unlocked smartphone that works with any carrier (MySQL, PostgreSQL, SQLite, etc.) and has all the features.
+      </div>
+
+      <div class="card">
+        <h3>Why PDO?</h3>
+        <ul>
+          <li><strong>12 different database drivers</strong> — switch from MySQL to SQLite or PostgreSQL by changing one line</li>
+          <li><strong>Object-Oriented Programming (OOP)</strong> — modern, clean code</li>
+          <li><strong>Object Mapping</strong> — map database rows to PHP objects</li>
+          <li><strong>Prepared Statements</strong> — protects against SQL injection</li>
+          <li><strong>Transactions</strong> — ensure data integrity with commit/rollback</li>
+        </ul>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Warning:</strong> Never use the old <code>mysql</code> functions. They were removed in PHP 7.0 (2015). Always use <strong>PDO</strong> for new projects. In this course, we use PDO exclusively.
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Which MySQL API should you use in modern PHP?</h3></div>
+            <div class="flashcard-back"><p><strong>PDO</strong> (PHP Data Objects) — it is the most flexible, supports multiple databases, and includes prepared statements.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>How many database drivers does PDO support?</h3></div>
+            <div class="flashcard-back"><p>12 different drivers.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 6: PDO Class Methods ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>6. PDO Class &amp; PDOStatement Class Methods</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>The PDO Class</h3>
+        <p>When you create a database connection, you create an instance of the <code>PDO</code> class. This object is your main interface to the database.</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>__construct($dsn, $user, $pass)</code></td><td>Creates a new PDO instance (establishes connection)</td></tr>
+          <tr><td><code>beginTransaction()</code></td><td>Starts a transaction (groups multiple queries as one atomic operation)</td></tr>
+          <tr><td><code>commit()</code></td><td>Commits (saves) the current transaction</td></tr>
+          <tr><td><code>rollBack()</code></td><td>Rolls back (undoes) the current transaction</td></tr>
+          <tr><td><code>query($sql)</code></td><td>Executes a SQL query and returns a <code>PDOStatement</code> (used for SELECT)</td></tr>
+          <tr><td><code>exec($sql)</code></td><td>Executes a SQL statement and returns affected row count (used for INSERT/UPDATE/DELETE)</td></tr>
+          <tr><td><code>prepare($sql)</code></td><td>Prepares a SQL template with placeholders for later execution</td></tr>
+          <tr><td><code>lastInsertId()</code></td><td>Returns the auto-incremented ID of the last inserted row</td></tr>
+          <tr><td><code>errorCode()</code></td><td>Returns the SQLSTATE error code</td></tr>
+          <tr><td><code>errorInfo()</code></td><td>Returns detailed error information array</td></tr>
+          <tr><td><code>quote($string)</code></td><td>Escapes and quotes a string for safe SQL use</td></tr>
+          <tr><td><code>setAttribute($attr, $value)</code></td><td>Sets a connection attribute (e.g., error mode)</td></tr>
+          <tr><td><code>getAttribute($attr)</code></td><td>Gets a connection attribute</td></tr>
+        </tbody>
+      </table>
+
+      <div class="card">
+        <h3>The PDOStatement Class</h3>
+        <p>When you run a query with <code>query()</code> or <code>prepare()</code>, you get back a <code>PDOStatement</code> object. This represents your result set or prepared statement.</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>bindParam($pos, $var)</code></td><td>Binds a PHP variable to a placeholder in a prepared statement</td></tr>
+          <tr><td><code>execute($params)</code></td><td>Executes the prepared statement (optionally with bound parameters)</td></tr>
+          <tr><td><code>fetch()</code></td><td>Fetches the next row from the result set as an array or object</td></tr>
+          <tr><td><code>fetchAll()</code></td><td>Fetches all remaining rows as a nested array</td></tr>
+          <tr><td><code>rowCount()</code></td><td>Returns the number of rows affected or returned</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> The <code>PDO</code> object is like a waiter at a restaurant. You (PHP code) tell the waiter what you want (the SQL query). The waiter goes to the kitchen (database), gets your result, and brings it back on a tray (<code>PDOStatement</code>). The tray can hold one plate (<code>fetch()</code>) or all the plates at once (<code>fetchAll()</code>).
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 7: Connection Steps ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>7. Connecting to MySQL — Step by Step</h2></div>
+    <div class="collapsible-body">
+
+      <div class="steps">
+        <div class="step-item"><strong>Step 1:</strong> Create a PDO instance with your credentials</div>
+        <div class="step-item"><strong>Step 2:</strong> Set the error mode to <code>ERRMODE_EXCEPTION</code></div>
+        <div class="step-item"><strong>Step 3:</strong> Wrap everything in a <code>try/catch</code> block for exception handling</div>
+        <div class="step-item"><strong>Step 4:</strong> Close the connection (set variable to <code>null</code>)</div>
+      </div>
+
+      <div class="card">
+        <h3>Full Connection Example</h3>
+        <pre><code>&lt;?php
+$host = '127.0.0.1';
+$db   = 'my_database';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            =&gt; PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE =&gt; PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   =&gt; false,
+];
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+    echo "Connected successfully!";
+} catch (\PDOException $e) {
+    throw new \PDOException($e-&gt;getMessage(), (int)$e-&gt;getCode());
+}
+
+// When done, close connection:
+$pdo = null;
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip — The DSN:</strong> DSN stands for <strong>Data Source Name</strong>. It is a string that tells PDO <em>which</em> database driver to use, <em>where</em> the server is, and <em>which</em> database to connect to. Format: <code>"mysql:host=HOSTNAME;dbname=DATABASE;charset=CHARSET"</code>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Security:</strong> Never hard-code your database password in a production file that could be exposed. Use environment variables or a separate config file outside the web root.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 8: Running Queries ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>8. Running Queries — query() vs exec()</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>Two Methods for Two Purposes</h3>
+        <table>
+          <thead>
+            <tr><th>Method</th><th>Use For</th><th>Returns</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>$pdo-&gt;query($sql)</code></td><td><code>SELECT</code> statements</td><td>A <code>PDOStatement</code> object (result set you can loop through)</td></tr>
+            <tr><td><code>$pdo-&gt;exec($sql)</code></td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>The number of rows affected (an integer)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Example: SELECT with query()</h3>
+        <pre><code>&lt;?php
+$stmt = $pdo-&gt;query('SELECT name, email FROM users');
+while ($row = $stmt-&gt;fetch()) {
+    echo $row['name'] . ' - ' . $row['email'] . '&lt;br&gt;';
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Example: INSERT with exec()</h3>
+        <pre><code>&lt;?php
+$count = $pdo-&gt;exec("INSERT INTO users (name, email) VALUES ('Siti', 'siti@mail.com')");
+echo "Rows inserted: $count";
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>SQL Rules Inside PHP</h3>
+        <ul>
+          <li>The entire SQL query must be <strong>quoted</strong> as a PHP string (single or double quotes)</li>
+          <li><strong>String values</strong> in SQL must be quoted: <code>VALUES ('Ali')</code></li>
+          <li><strong>Numeric values</strong> do NOT need quotes: <code>WHERE id = 1</code></li>
+          <li><strong>NULL</strong> values do NOT get quotes: <code>VALUES (NULL)</code></li>
+        </ul>
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Which method returns a PDOStatement — query() or exec()?</h3></div>
+            <div class="flashcard-back"><p><code>query()</code> returns a PDOStatement. <code>exec()</code> returns the affected row count.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 9: Last Inserted Record ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>9. Getting the Last Inserted Record</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>lastInsertId()</h3>
+        <p>When you insert a row into a table with an <strong>AUTO_INCREMENT</strong> primary key, MySQL automatically assigns the next number. PHP can retrieve this number using <code>$pdo-&gt;lastInsertId()</code>.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Imagine you are at a ticket counter. You fill out a form and hand it in. The clerk stamps it with ticket number 42. You did not choose 42 — the system assigned it. <code>lastInsertId()</code> is like asking "what number did the system just give me?" and the clerk answers "42."
+      </div>
+
+      <div class="card">
+        <h3>Example</h3>
+        <pre><code>&lt;?php
+$pdo-&gt;exec("INSERT INTO users (name, email) VALUES ('Ahmed', 'ahmed@mail.com')");
+$newId = $pdo-&gt;lastInsertId();
+echo "New user created with ID: $newId";
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box note">
+        <strong>Note:</strong> <code>lastInsertId()</code> only works with <strong>AUTO_INCREMENT</strong> columns. If your table does not use AUTO_INCREMENT, this method will not return a meaningful value.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 10: Transactions ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>10. Transactions</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>What is a Transaction?</h3>
+        <p>A <strong>transaction</strong> is a group of database operations that are treated as a single unit. Either <strong>all</strong> of them succeed, or <strong>none</strong> of them are applied. This ensures data integrity.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy — The Bank Transfer:</strong> You transfer RM 500 from Account A to Account B. This involves two steps: (1) subtract RM 500 from A, (2) add RM 500 to B. What if step 1 succeeds but step 2 fails? You'd lose RM 500! A transaction ensures that if step 2 fails, step 1 is also <strong>undone</strong> (rolled back). It is all-or-nothing.
+      </div>
+
+      <div class="steps">
+        <div class="step-item"><strong>beginTransaction()</strong> — marks the start of a transaction. Returns <code>true</code> on success.</div>
+        <div class="step-item"><strong>commit()</strong> — saves all changes made since beginTransaction(). Returns <code>true</code> on success.</div>
+        <div class="step-item"><strong>rollBack()</strong> — undoes all changes made since beginTransaction(). Returns <code>true</code> on success.</div>
+      </div>
+
+      <div class="card">
+        <h3>Example</h3>
+        <pre><code>&lt;?php
+try {
+    $pdo-&gt;beginTransaction();
+
+    $pdo-&gt;exec("UPDATE accounts SET balance = balance - 500 WHERE id = 1");
+    $pdo-&gt;exec("UPDATE accounts SET balance = balance + 500 WHERE id = 2");
+
+    $pdo-&gt;commit();
+    echo "Transfer successful!";
+} catch (Exception $e) {
+    $pdo-&gt;rollBack();
+    echo "Transfer failed: " . $e-&gt;getMessage();
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Warning:</strong> Not all database tables support transactions. The table must use a transactional engine like <strong>InnoDB</strong> (the default in modern MySQL). The older <strong>MyISAM</strong> engine does not support transactions.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 11: Fetching Data ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>11. Fetching Data — fetch() vs fetchAll()</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>Two Ways to Retrieve Results</h3>
+        <p>A <code>PDOStatement</code> can only be <strong>looped through once</strong>. Once you have iterated over it, you cannot go back to the beginning. This is because it is a forward-only cursor — like reading a scroll from top to bottom.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Imagine a slot machine. <code>fetch()</code> is like pulling the lever once — you get one result. <code>fetchAll()</code> is like asking the machine to dump all its results into a bucket at once.
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Method</th><th>What It Does</th><th>Returns</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>fetch()</code></td><td>Retrieves the <strong>next single row</strong> from the result set</td><td>One row as an associative array, or <code>false</code> when no more rows</td></tr>
+          <tr><td><code>fetchAll()</code></td><td>Retrieves <strong>all remaining rows</strong> at once</td><td>A nested array (all rows)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="card">
+        <h3>Using fetch() — One Row at a Time</h3>
+        <pre><code>&lt;?php
+$stmt = $pdo-&gt;query('SELECT * FROM users');
+while ($row = $stmt-&gt;fetch()) {
+    echo $row['name'] . ' — ' . $row['email'] . '&lt;br&gt;';
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Using fetchAll() — All Rows at Once</h3>
+        <pre><code>&lt;?php
+$stmt = $pdo-&gt;query('SELECT * FROM users');
+$users = $stmt-&gt;fetchAll();
+
+foreach ($users as $user) {
+    echo $user['name'] . ' — ' . $user['email'] . '&lt;br&gt;';
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip:</strong> Use <code>fetch()</code> when you have many rows and want to process them one at a time (memory efficient). Use <code>fetchAll()</code> when you need all the data at once (convenient for small datasets or when you want to use array functions).
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Can a PDOStatement be looped more than once?</h3></div>
+            <div class="flashcard-back"><p>No. A PDOStatement is forward-only and can only be iterated once. If you need the data again, use <code>fetchAll()</code> to store it in an array first.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 12: Prepared Statements ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>12. Prepared Statements &amp; SQL Injection</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>What are Prepared Statements?</h3>
+        <p>A <strong>prepared statement</strong> is a two-step process: first you create a SQL <strong>template</strong> with placeholders, then you <strong>execute</strong> it by binding actual values. This separates the SQL logic from the data.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Mad Libs:</strong> You know the word game Mad Libs? You create a story template with blanks: "The ___ (adjective) cat sat on the ___ (noun)." Later, someone fills in the blanks. The story structure is decided <em>before</em> you know the words. Prepared statements work the same way — the SQL structure is decided before the data is plugged in. This prevents the data from "changing the story."
+      </div>
+
+      <div class="card">
+        <h3>Three Advantages of Prepared Statements</h3>
+        <ul>
+          <li><strong>Reduced parsing time</strong> — the database prepares the query plan once and can reuse it</li>
+          <li><strong>Minimized network bandwidth</strong> — the template is sent once, only values are sent on each execution</li>
+          <li><strong>Prevents SQL Injection</strong> — user input is <em>never</em> treated as SQL code, only as data</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>SQL Injection Attack</h3>
+        <p><strong>SQL Injection</strong> is a security vulnerability where an attacker inserts malicious SQL code into an input field. Consider this scenario:</p>
+
+        <div class="info-box warning">
+          <strong>Dangerous Example (DO NOT do this):</strong><br><br>
+          A login form checks:<br>
+          <code>$sql = "SELECT * FROM login WHERE username='$user' AND password='$pass'";</code><br><br>
+          An attacker enters this password:<br>
+          <code>x'; DELETE FROM login WHERE '0'='0</code><br><br>
+          The resulting SQL becomes:<br>
+          <code>SELECT * FROM login WHERE username='attacker' AND password='x'; DELETE FROM login WHERE '0'='0';</code><br><br>
+          This would first check the login, then <strong>delete every single row</strong> in the login table!
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Prepared Statement — Preventing SQL Injection</h3>
+        <pre><code>&lt;?php
+// STEP 1: Prepare the template with placeholders
+$stmt = $pdo-&gt;prepare('SELECT * FROM users WHERE email = :email AND password = :pass');
+
+// STEP 2: Execute with actual values
+$stmt-&gt;execute([
+    ':email' =&gt; $email,
+    ':pass'  =&gt; $password
+]);
+
+$user = $stmt-&gt;fetch();
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Alternative: bindParam()</h3>
+        <pre><code>&lt;?php
+$stmt = $pdo-&gt;prepare('INSERT INTO users (name, email) VALUES (:name, :email)');
+$stmt-&gt;bindParam(':name', $name);
+$stmt-&gt;bindParam(':email', $email);
+
+$name  = 'Siti';
+$email = 'siti@mail.com';
+$stmt-&gt;execute();
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box note">
+        <strong>Note:</strong> There are two types of placeholders: <strong>named</strong> (<code>:email</code>) and <strong>positional</strong> (<code>?</code>). Named placeholders are recommended because they are more readable and less error-prone.
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What is SQL Injection?</h3></div>
+            <div class="flashcard-back"><p>An attack where malicious SQL code is inserted into input fields to manipulate the database query, potentially destroying or stealing data.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>How do prepared statements prevent SQL injection?</h3></div>
+            <div class="flashcard-back"><p>They separate the SQL template (structure) from the data (values). User input is always treated as literal data, never as executable SQL code.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What are the 3 advantages of prepared statements?</h3></div>
+            <div class="flashcard-back"><p>1. Reduced parsing time (query plan reused). 2. Minimized bandwidth (template sent once). 3. Prevents SQL injection.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== QUIZ ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>Knowledge Check</h2></div>
+    <div class="collapsible-body">
+
+      <div class="quiz" id="quiz1">
+        <h3>Q1: Which PHP API should you use for MySQL connections in modern PHP?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">mysql_ functions</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">PDO (PHP Data Objects)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">mysqli only</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz2">
+        <h3>Q2: What does PDO stand for?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">PHP Database Operations</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">PHP Data Objects</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">Public Data Outlet</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz3">
+        <h3>Q3: Which PDO method should you use for a SELECT query?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">exec()</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">query()</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">prepare()</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz4">
+        <h3>Q4: What does fetchAll() return?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">A single row</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">A nested array of all rows</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">An integer count</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz5">
+        <h3>Q5: What is MariaDB?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A brand-new database unrelated to MySQL</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A PHP framework</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">A drop-in replacement fork of MySQL</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz6">
+        <h3>Q6: What is the danger of SQL Injection?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">It slows down your database</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">Attackers can execute arbitrary SQL code to destroy or steal data</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">It only affects old browsers</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz7">
+        <h3>Q7: What does lastInsertId() return?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">The total number of rows in the table</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">The AUTO_INCREMENT ID of the most recently inserted row</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">The number of affected rows</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz8">
+        <h3>Q8: Which method starts a transaction in PDO?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">commit()</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">rollBack()</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)">beginTransaction()</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="resetAllQuizzes()">Reset All Answers</button>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUMMARY ==================== -->
+  <div class="summary">
+    <h2>Topic 7 Summary</h2>
+    <ul>
+      <li><strong>MySQL</strong> is the world's most popular open-source RDBMS, created in 1995.</li>
+      <li><strong>phpMyAdmin</strong> is a web-based tool for administering MySQL databases.</li>
+      <li><strong>MariaDB</strong> is a drop-in replacement fork of MySQL, created in 2009.</li>
+      <li><strong>CRUD</strong> = Create (INSERT), Read (SELECT), Update (UPDATE), Delete (DELETE).</li>
+      <li><strong>PDO</strong> is the recommended PHP API for database connections — it supports 12 drivers, OOP, prepared statements, and transactions.</li>
+      <li>Use <code>query()</code> for SELECT, <code>exec()</code> for INSERT/UPDATE/DELETE.</li>
+      <li><strong>Prepared statements</strong> separate SQL from data to prevent <strong>SQL injection</strong>.</li>
+      <li><strong>Transactions</strong> ensure all-or-nothing execution with <code>beginTransaction()</code>, <code>commit()</code>, and <code>rollBack()</code>.</li>
+      <li>Use <code>fetch()</code> for single rows and <code>fetchAll()</code> for all rows at once.</li>
+      <li>Use <code>lastInsertId()</code> to get the AUTO_INCREMENT ID of the last inserted row.</li>
+    </ul>
+  </div>
+
+</div><!-- /.container -->
+
+<script>
+// Collapsible sections
+document.querySelectorAll('.collapsible-header').forEach(header => {
+  header.addEventListener('click', () => {
+    header.parentElement.classList.toggle('active');
+  });
+});
+
+// Quiz logic
+function checkAnswer(quizId, element, isCorrect) {
+  const quiz = document.getElementById(quizId);
+  const feedback = quiz.querySelector('.quiz-feedback');
+  quiz.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.remove('correct', 'incorrect');
+    opt.style.pointerEvents = 'none';
+  });
+  if (isCorrect) {
+    element.classList.add('correct');
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#27ae60';
+  } else {
+    element.classList.add('incorrect');
+    feedback.textContent = 'Incorrect. Try again after reset.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+
+function resetAllQuizzes() {
+  document.querySelectorAll('.quiz').forEach(quiz => {
+    quiz.querySelectorAll('.quiz-option').forEach(opt => {
+      opt.classList.remove('correct', 'incorrect');
+      opt.style.pointerEvents = 'auto';
+    });
+    quiz.querySelector('.quiz-feedback').textContent = '';
+  });
+}
+
+// Progress tracking
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.collapsible');
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = Math.min(100, Math.round((scrolled / total) * 100));
+  const bar = document.querySelector('.progress-bar .progress-text');
+  if (bar) bar.textContent = pct + '% Complete';
+});
+</script>
+
+</body>
+</html>

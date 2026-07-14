@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 13: jQuery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Topic 13: jQuery — Write Less, Do More</h1>
+
+  <!-- ======================== SECTION 1: WHAT IS JQUERY ======================== -->
+  <h2>1. What is jQuery?</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Universal Remote:</strong> Imagine you have a dozen different devices in your living room — a TV, speakers, a DVD player, a projector. Instead of learning every individual remote control, you buy a <em>universal remote</em> that speaks every device's language. jQuery is that universal remote for your web page. Instead of writing verbose, browser-specific JavaScript to manipulate the DOM, handle events, or animate elements, jQuery gives you one clean, simple interface to do it all.
+  </div>
+
+  <div class="card">
+    <p><strong>jQuery</strong> is a fast, small, and feature-rich JavaScript library. It makes the following tasks dramatically simpler:</p>
+    <ul>
+      <li><strong>HTML document traversal</strong> — finding elements on the page</li>
+      <li><strong>DOM manipulation</strong> — adding, removing, or changing elements</li>
+      <li><strong>Event handling</strong> — responding to clicks, hovers, key presses, etc.</li>
+      <li><strong>Animation</strong> — showing, hiding, fading, and sliding elements</li>
+      <li><strong>Ajax</strong> — communicating with servers without page reloads</li>
+    </ul>
+    <p>Created by <strong>John Resig</strong> in 2006, its motto is <em>"Write less, do more."</em></p>
+  </div>
+
+  <div class="info-box note">
+    <strong>Key Fact:</strong> Over <strong>70% of the 10 million most popular websites</strong> use jQuery. Major companies like Google, Microsoft, IBM, and Netflix rely on it.
+  </div>
+
+  <h3>Core Features at a Glance</h3>
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>DOM Manipulation</td><td>Easily select and modify elements</td></tr>
+      <tr><td>Event Handling</td><td>Clean, cross-browser event binding</td></tr>
+      <tr><td>AJAX Support</td><td>Simplified server communication</td></tr>
+      <tr><td>Animations</td><td>Rich visual effects out of the box</td></tr>
+      <tr><td>Lightweight</td><td>~19KB minified &amp; gzipped</td></tr>
+      <tr><td>Cross-browser</td><td>IE 6+, Firefox 2+, Safari 3+, Chrome, Opera 9+</td></tr>
+      <tr><td>CSS3 Selectors</td><td>Powerful element selection using CSS syntax</td></tr>
+      <tr><td>XPath Syntax</td><td>Advanced path-based selection</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ======================== SECTION 2: SYNTAX ======================== -->
+  <h2>2. jQuery Syntax</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Command Sentence:</strong> Think of jQuery syntax like giving instructions to a very capable assistant. The formula is: <code>$(who).what()</code>. You say <em>who</em> you want to act on (the selector), and <em>what</em> you want done (the action). "Hey jQuery, hide the image." → <code>$("img").hide()</code>.
+  </div>
+
+  <div class="card">
+    <h3>The Core Pattern</h3>
+    <pre><code>$(selector).action()</code></pre>
+    <ul>
+      <li><code><strong>$</strong></code> — The jQuery function (alias for <code>jQuery</code>)</li>
+      <li><code><strong>selector</strong></code> — Finds HTML elements on the page</li>
+      <li><code><strong>action()</strong></code> — The operation to perform on those elements</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <table>
+      <thead>
+        <tr><th>Code</th><th>Meaning</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>$(this).hide()</code></td><td>Hide the current element</td></tr>
+        <tr><td><code>$("img").hide()</code></td><td>Hide all &lt;img&gt; elements</td></tr>
+        <tr><td><code>$(".test").hide()</code></td><td>Hide all elements with class="test"</td></tr>
+        <tr><td><code>$("#test").hide()</code></td><td>Hide the element with id="test"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================== SECTION 3: DOCUMENT READY ======================== -->
+  <h2>3. The Document Ready Event</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Opening a Shop:</strong> You wouldn't start serving customers before the shop is fully open, lights are on, and shelves are stocked. Similarly, you should never manipulate the DOM before the HTML document is fully loaded and ready. The <code>$(document).ready()</code> event is jQuery's way of saying: "Wait until everything is loaded, <em>then</em> start working."
+  </div>
+
+  <div class="card">
+    <p>jQuery lets you detect when the document is fully loaded and safe to manipulate. There are two common syntaxes:</p>
+
+    <h3>Full Version</h3>
+    <pre><code>$(document).ready(function() {
+    // Your code here — runs when the DOM is ready
+    console.log("Document is ready!");
+});</code></pre>
+
+    <h3>Shorthand Version (Recommended)</h3>
+    <pre><code>$(function() {
+    // Same thing, shorter syntax
+    console.log("Document is ready!");
+});</code></pre>
+
+    <div class="info-box tip">
+      <strong>Tip:</strong> Both versions do the exact same thing. The shorthand <code>$(function(){...})</code> is more concise and preferred in modern code.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 4: SELECTORS ======================== -->
+  <h2>4. jQuery Selectors</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — A Targeting System:</strong> Selectors are like a GPS for your webpage. You can target a single building (ID), an entire neighborhood (class), or every road in the city (wildcard). The more specific your address, the more precise the result.
+  </div>
+
+  <div class="card">
+    <p>jQuery selectors are <strong>based on CSS selectors</strong> plus jQuery-specific extensions. They find HTML elements by their tag name, id, class, attributes, and more.</p>
+
+    <h3>Basic Selectors</h3>
+    <table>
+      <thead>
+        <tr><th>Selector</th><th>Example</th><th>Selects</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Element</td><td><code>$("p")</code></td><td>All &lt;p&gt; elements</td></tr>
+        <tr><td>ID</td><td><code>$("#test")</code></td><td>The element with id="test"</td></tr>
+        <tr><td>Class</td><td><code>$(".test")</code></td><td>All elements with class="test"</td></tr>
+        <tr><td>Wildcard</td><td><code>$("*")</code></td><td>All elements on the page</td></tr>
+        <tr><td>Current</td><td><code>$(this)</code></td><td>The currently selected element</td></tr>
+        <tr><td>Compound</td><td><code>$("p.intro")</code></td><td>All &lt;p&gt; with class="intro"</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Advanced Selectors</h3>
+    <table>
+      <thead>
+        <tr><th>Selector</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>$("p:first")</code></td><td>The first &lt;p&gt; element</td></tr>
+        <tr><td><code>$("[href]")</code></td><td>All elements with an href attribute</td></tr>
+        <tr><td><code>$("a[target='_blank']")</code></td><td>Links that open in a new tab</td></tr>
+        <tr><td><code>$(".myClass, #myId, p:first")</code></td><td>Grouped selector — matches any</td></tr>
+      </tbody>
+    </table>
+
+    <h3>jQuery-Specific Selectors</h3>
+    <table>
+      <thead>
+        <tr><th>Selector</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>$(":button")</code></td><td>All button elements</td></tr>
+        <tr><td><code>$("tr:even")</code></td><td>Even-numbered table rows (0-indexed)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================== SECTION 5: EVENTS ======================== -->
+  <h2>5. Event Methods</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Doorbell &amp; Alarms:</strong> Events are like doorbells and sensors in a house. When someone presses the doorbell (click), you respond by opening the door. When smoke is detected (error), you trigger the alarm. jQuery lets you attach "listeners" to elements so they react when something happens.
+  </div>
+
+  <div class="card">
+    <p>Every event method in jQuery corresponds to a standard DOM event. Here is a comprehensive categorized list:</p>
+
+    <h3>Document Loading Events</h3>
+    <table>
+      <thead><tr><th>Event</th><th>Fires When...</th></tr></thead>
+      <tbody>
+        <tr><td><code>load</code></td><td>An element (like an image) finishes loading</td></tr>
+        <tr><td><code>ready</code></td><td>The DOM is fully loaded</td></tr>
+        <tr><td><code>unload</code></td><td>The user navigates away from the page</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Mouse Events</h3>
+    <table>
+      <thead><tr><th>Event</th><th>Fires When...</th></tr></thead>
+      <tbody>
+        <tr><td><code>click</code></td><td>An element is clicked</td></tr>
+        <tr><td><code>dblclick</code></td><td>An element is double-clicked</td></tr>
+        <tr><td><code>mouseenter</code></td><td>The mouse enters the element</td></tr>
+        <tr><td><code>mouseleave</code></td><td>The mouse leaves the element</td></tr>
+        <tr><td><code>mousedown</code></td><td>A mouse button is pressed down</td></tr>
+        <tr><td><code>mouseup</code></td><td>A mouse button is released</td></tr>
+        <tr><td><code>mousemove</code></td><td>The mouse moves within the element</td></tr>
+        <tr><td><code>mouseover</code></td><td>The mouse is over the element (bubbles up)</td></tr>
+        <tr><td><code>mouseout</code></td><td>The mouse leaves the element (bubbles up)</td></tr>
+        <tr><td><code>hover</code></td><td>Combines mouseenter + mouseleave</td></tr>
+        <tr><td><code>toggle</code></td><td>Cycles through click handlers</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Form Events</h3>
+    <table>
+      <thead><tr><th>Event</th><th>Fires When...</th></tr></thead>
+      <tbody>
+        <tr><td><code>blur</code></td><td>An element loses focus</td></tr>
+        <tr><td><code>focus</code></td><td>An element gains focus</td></tr>
+        <tr><td><code>focusin</code></td><td>An element gains focus (bubbles up)</td></tr>
+        <tr><td><code>focusout</code></td><td>An element loses focus (bubbles up)</td></tr>
+        <tr><td><code>change</code></td><td>A form element's value changes</td></tr>
+        <tr><td><code>select</code></td><td>Text is selected in an input</td></tr>
+        <tr><td><code>submit</code></td><td>A form is submitted</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Keyboard Events</h3>
+    <table>
+      <thead><tr><th>Event</th><th>Fires When...</th></tr></thead>
+      <tbody>
+        <tr><td><code>keydown</code></td><td>A key is pressed down</td></tr>
+        <tr><td><code>keypress</code></td><td>A character key is pressed (deprecated)</td></tr>
+        <tr><td><code>keyup</code></td><td>A key is released</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Browser Events</h3>
+    <table>
+      <thead><tr><th>Event</th><th>Fires When...</th></tr></thead>
+      <tbody>
+        <tr><td><code>error</code></td><td>An error occurs (e.g., broken image)</td></tr>
+        <tr><td><code>resize</code></td><td>The browser window is resized</td></tr>
+        <tr><td><code>scroll</code></td><td>The user scrolls</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================== SECTION 6: EVENT HANDLING ======================== -->
+  <h2>6. Event Handling with <code>.on()</code></h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Subscribing to Notifications:</strong> The <code>.on()</code> method is like signing up for push notifications. You say "Notify me when this button is clicked," and jQuery registers your callback. When the event fires, your function runs.
+  </div>
+
+  <div class="card">
+    <h3>Basic Event Binding</h3>
+    <pre><code>$("#myButton").click(function() {
+    alert("Button was clicked!");
+});</code></pre>
+
+    <h3>Using .on() — More Flexible</h3>
+    <pre><code>$("#myButton").on("click", function() {
+    alert("Button was clicked!");
+});</code></pre>
+
+    <h3>Multiple Events on One Element</h3>
+    <pre><code>$("#myElement").on("click mouseenter", function() {
+    $(this).css("background-color", "yellow");
+});</code></pre>
+
+    <h3>Event Delegation (for dynamic elements)</h3>
+    <pre><code>// Attaches handler to all current AND future .item elements
+$("#parentList").on("click", ".item", function() {
+    $(this).toggleClass("active");
+});</code></pre>
+
+    <div class="info-box tip">
+      <strong>Why .on() is preferred:</strong> It supports event delegation (handling events for elements that don't exist yet), can bind multiple handlers, and is the most consistent API across jQuery versions.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 7: CSS & DIMENSIONS ======================== -->
+  <h2>7. CSS Manipulation &amp; Dimensions</h2>
+
+  <div class="card">
+    <h3>The <code>.css()</code> Method</h3>
+    <p>Get or set CSS properties on elements:</p>
+    <pre><code>// Get a CSS value
+var color = $("p").css("color");
+
+// Set a single CSS property
+$("p").css("color", "red");
+
+// Set multiple CSS properties
+$("p").css({
+    "color": "blue",
+    "font-size": "20px",
+    "background-color": "#f0f0f0"
+});</code></pre>
+
+    <h3>Dimension Methods</h3>
+    <div class="info-box analogy">
+      <strong>Analogy — Measuring a Box:</strong> Imagine a gift box inside a shipping box. The <em>content</em> is the gift. <code>height()</code> measures just the gift. <code>innerHeight()</code> includes wrapping paper (padding). <code>outerHeight()</code> includes the gift box itself (border). <code>outerHeight(true)</code> includes the shipping box too (margin).
+    </div>
+    <table>
+      <thead><tr><th>Method</th><th>Includes</th></tr></thead>
+      <tbody>
+        <tr><td><code>height()</code></td><td>Content height only</td></tr>
+        <tr><td><code>innerHeight()</code></td><td>Content + padding</td></tr>
+        <tr><td><code>outerHeight()</code></td><td>Content + padding + border</td></tr>
+        <tr><td><code>outerHeight(true)</code></td><td>Content + padding + border + margin</td></tr>
+        <tr><td><code>width()</code></td><td>Content width only</td></tr>
+        <tr><td><code>innerWidth()</code></td><td>Content + padding</td></tr>
+        <tr><td><code>outerWidth()</code></td><td>Content + padding + border</td></tr>
+        <tr><td><code>outerWidth(true)</code></td><td>Content + padding + border + margin</td></tr>
+      </tbody>
+    </table>
+    <pre><code>// Get the height of all div elements
+var h = $("div").height();
+
+// Set the height
+$("div").height(200);</code></pre>
+  </div>
+
+  <!-- ======================== SECTION 8: EFFECTS ======================== -->
+  <h2>8. jQuery Effects</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Stage Curtains:</strong> Effects are like theatrical stage techniques. <code>hide()</code> is dropping the curtain. <code>show()</code> is raising it. <code>fadeIn()</code> is a slow spotlight fade-in. <code>slideDown()</code> is a curtain lowering from above. jQuery gives you a full toolkit of visual transitions.
+  </div>
+
+  <div class="card">
+    <h3>Show / Hide / Toggle</h3>
+    <pre><code>$("p").hide();          // Instantly hide
+$("p").hide(500);       // Hide over 500 milliseconds
+
+$("p").show();          // Show the element
+$("p").show(1000);      // Show over 1 second
+
+$("p").toggle();        // Toggle visibility
+$("p").toggle(500);     // Toggle with animation</code></pre>
+
+    <h3>Fading Effects</h3>
+    <pre><code>$("p").fadeOut();            // Fade out (display: none)
+$("p").fadeOut(1000);
+
+$("p").fadeIn();             // Fade in
+$("p").fadeIn(1000);
+
+$("p").fadeToggle();         // Toggle with fade
+
+$("p").fadeTo(1000, 0.5);   // Fade to a specific opacity</code></pre>
+
+    <h3>Sliding Effects</h3>
+    <pre><code>$("p").slideDown();          // Slide down (reveal)
+$("p").slideDown(1000);
+
+$("p").slideUp();            // Slide up (hide)
+$("p").slideUp(1000);
+
+$("p").slideToggle();        // Toggle with sliding</code></pre>
+
+    <div class="info-box warning">
+      <strong>Note:</strong> <code>hide()</code> sets <code>display: none</code>. <code>fadeOut()</code> animates opacity to 0, then sets <code>display: none</code>. The visual result differs because <code>fadeOut</code> gives a smoother transition.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 9: ANIMATION ======================== -->
+  <h2>9. Custom Animation with <code>.animate()</code></h2>
+
+  <div class="card">
+    <p>The <code>animate()</code> method lets you animate <strong>numeric CSS properties</strong> over time:</p>
+
+    <pre><code>$("div").animate({
+    width: "70%",
+    height: "200px",
+    marginLeft: "150px",
+    opacity: 0.5
+}, 1000);  // duration in milliseconds</code></pre>
+
+    <h3>Animatable Properties</h3>
+    <p>You can animate any <strong>numeric</strong> CSS property:</p>
+    <ul>
+      <li><code>width</code>, <code>height</code></li>
+      <li><code>margin</code>, <code>padding</code> (all sides)</li>
+      <li><code>opacity</code></li>
+      <li><code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code></li>
+      <li><code>font-size</code>, <code>line-height</code></li>
+    </ul>
+
+    <div class="info-box warning">
+      <strong>Limitation:</strong> Basic jQuery <code>animate()</code> <strong>cannot</strong> animate non-numeric CSS properties like <code>color</code>, <code>background-color</code>, or <code>border-color</code>. You need a plugin like <code>jQuery Color</code> for color animations.
+    </div>
+
+    <h3>Animation Queue Control</h3>
+    <table>
+      <thead><tr><th>Method</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>.stop()</code></td><td>Stop the current animation</td></tr>
+        <tr><td><code>.finish()</code></td><td>Stop all queued animations and jump to final state</td></tr>
+        <tr><td><code>.queue()</code></td><td>Show or modify the animation queue</td></tr>
+        <tr><td><code>.clearQueue()</code></td><td>Remove all queued animations</td></tr>
+        <tr><td><code>.delay(ms)</code></td><td>Pause before next queued animation</td></tr>
+        <tr><td><code>.dequeue()</code></td><td>Execute the next queued function</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Chaining Animations</h3>
+    <pre><code>$("div")
+    .animate({ height: "300px" }, 1000)
+    .animate({ width: "300px" }, 1000)
+    .fadeOut(500);</code></pre>
+  </div>
+
+  <!-- ======================== SECTION 10: CHAINING ======================== -->
+  <h2>10. Method Chaining</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — A Sentence of Actions:</strong> Chaining is like saying in one breath: "Walk to the store, pick up milk, pay for it, and walk back." Instead of writing four separate sentences (four lines of code), you connect them into one fluent sentence. Each action passes the result to the next.
+  </div>
+
+  <div class="card">
+    <p>jQuery allows you to <strong>chain</strong> multiple methods on the same element in a single statement. Each method returns the jQuery object, allowing the next method to be called on the same selection.</p>
+
+    <h3>Without Chaining</h3>
+    <pre><code>$("h1").css("color", "red");
+$("h1").addClass("title");
+$("h1").slideDown(500);</code></pre>
+
+    <h3>With Chaining</h3>
+    <pre><code>$("h1")
+    .css("color", "red")
+    .addClass("title")
+    .slideDown(500);</code></pre>
+
+    <h3>Real-World Example</h3>
+    <pre><code>$("#alertBox")
+    .hide()
+    .html("Form submitted successfully!")
+    .addClass("alert-success")
+    .fadeIn(500)
+    .delay(2000)
+    .fadeOut(500);</code></pre>
+
+    <div class="info-box tip">
+      <strong>Why chain?</strong> Cleaner, more readable code. Fewer lines. Less repetition of selectors.
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 11: JQUERY & BOOTSTRAP ======================== -->
+  <h2>11. jQuery and Bootstrap</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Power and Interface:</strong> If jQuery is the engine (powerful, low-level JavaScript logic), then Bootstrap is the car body (beautiful, responsive design). Bootstrap provides the look; jQuery brings it to life with interactivity. Together, they form a complete package.
+  </div>
+
+  <div class="card">
+    <p>Bootstrap's interactive components (modals, dropdowns, tooltips, carousels, etc.) are powered by <strong>jQuery plugins</strong>. When you click a Bootstrap dropdown button, jQuery handles the show/hide logic behind the scenes.</p>
+
+    <h3>Key Bootstrap jQuery Plugins</h3>
+    <table>
+      <thead><tr><th>Plugin</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Transitions</td><td>CSS3 transition support</td></tr>
+        <tr><td>Modal</td><td>Popup dialogs / overlay windows</td></tr>
+        <tr><td>Dropdown</td><td>Floating toggle menus</td></tr>
+        <tr><td>Scrollspy</td><td>Auto-update navigation based on scroll</td></tr>
+        <tr><td>Tab</td><td>Tabbed content areas</td></tr>
+        <tr><td>Tooltip</td><td>Small pop-up information boxes</td></tr>
+        <tr><td>Popover</td><td>Rich content pop-ups</td></tr>
+        <tr><td>Alert</td><td>Dismissable alert messages</td></tr>
+        <tr><td>Button</td><td>Enhanced button states</td></tr>
+        <tr><td>Collapse</td><td>Accordion-style content panels</td></tr>
+        <tr><td>Carousel</td><td>Image/content sliders</td></tr>
+        <tr><td>Affix</td><td>Pin elements during scroll</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======================== SECTION 12: BOOTSTRAP MODAL ======================== -->
+  <h2>12. Bootstrap Modal Deep Dive</h2>
+
+  <div class="card">
+    <div class="info-box analogy">
+      <strong>Analogy — The Popup Window:</strong> A modal is like a cashier's window that pops up in front of you. You must interact with it (or dismiss it) before you can return to the rest of the store. It "captures" your attention by dimming the background.
+    </div>
+
+    <h3>Modal HTML Structure</h3>
+    <pre><code>&lt;!-- Button trigger --&gt;
+&lt;button data-bs-toggle="modal" data-bs-target="#myModal"&gt;
+  Open Modal
+&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div class="modal" id="myModal"&gt;
+  &lt;div class="modal-dialog"&gt;
+    &lt;div class="modal-content"&gt;
+
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title"&gt;Modal Title&lt;/h5&gt;
+        &lt;button data-bs-dismiss="modal"&gt;&amp;times;&lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;div class="modal-body"&gt;
+        &lt;p&gt;Modal content goes here.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class="modal-footer"&gt;
+        &lt;button data-bs-dismiss="modal"&gt;Close&lt;/button&gt;
+        &lt;button&gt;Save Changes&lt;/button&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+    <h3>Key Attributes</h3>
+    <table>
+      <thead><tr><th>Attribute</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>data-bs-toggle="modal"</code></td><td>Tells Bootstrap this button opens a modal</td></tr>
+        <tr><td><code>data-bs-target="#myModal"</code></td><td>Points to the modal element's ID</td></tr>
+        <tr><td><code>data-bs-dismiss="modal"</code></td><td>On any element, clicking it closes the modal</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Opening / Closing with jQuery</h3>
+    <pre><code>// Open modal programmatically
+$("#myModal").modal("show");
+
+// Close modal programmatically
+$("#myModal").modal("hide");</code></pre>
+
+    <div class="info-box note">
+      <strong>Two ways to trigger:</strong>
+      <br>1. <strong>Data attributes</strong> (no JavaScript needed): <code>data-bs-toggle</code> and <code>data-bs-target</code>
+      <br>2. <strong>jQuery</strong>: <code>$("#myModal").modal("show")</code>
+    </div>
+  </div>
+
+  <!-- ======================== SECTION 13: JQUERY PLUGINS ======================== -->
+  <h2>13. jQuery Plugins</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — App Store for jQuery:</strong> Plugins are like apps you install on your phone. jQuery is the operating system, and plugins add new capabilities — a camera app, a calculator, a map. You install a plugin by including its JavaScript file, and suddenly jQuery gains new methods.
+  </div>
+
+  <div class="card">
+    <p>jQuery plugins are <strong>standard JavaScript files</strong> that extend jQuery with new methods. They follow a convention of adding to the <code>$.fn</code> prototype.</p>
+
+    <h3>How to Include a Plugin</h3>
+    <pre><code>&lt;head&gt;
+  &lt;!-- jQuery first --&gt;
+  &lt;script src="jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+  &lt;!-- Then the plugin --&gt;
+  &lt;script src="jquery.plugin.js"&gt;&lt;/script&gt;
+&lt;/head&gt;</code></pre>
+
+    <div class="info-box warning">
+      <strong>Order matters:</strong> Always include the jQuery library <em>before</em> any plugins that depend on it.
+    </div>
+
+    <h3>DataTable Plugin Example</h3>
+    <p>The <strong>DataTable</strong> plugin transforms a plain HTML table into a powerful, interactive listing with sorting, searching, and pagination.</p>
+    <pre><code>&lt;script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(document).ready(function() {
+    $("#myTable").DataTable();
+});
+&lt;/script&gt;</code></pre>
+  </div>
+
+  <!-- ======================== SECTION 14: COMPREHENSIVE EXAMPLE ======================== -->
+  <h2>14. Putting It All Together</h2>
+
+  <div class="card">
+    <h3>Complete Example: Interactive FAQ Page</h3>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+  &lt;style&gt;
+    .faq-answer { display: none; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;FAQ&lt;/h1&gt;
+
+  &lt;div class="faq-item"&gt;
+    &lt;h3 class="faq-question"&gt;What is jQuery?&lt;/h3&gt;
+    &lt;p class="faq-answer"&gt;A fast JavaScript library.&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;div class="faq-item"&gt;
+    &lt;h3 class="faq-question"&gt;Is it free?&lt;/h3&gt;
+    &lt;p class="faq-answer"&gt;Yes, it is open source!&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    $(function() {
+      // Click a question to toggle its answer
+      $(".faq-question").on("click", function() {
+        $(this)
+          .next(".faq-answer")
+          .slideToggle(300)
+          .siblings(".faq-answer")
+          .slideUp(300);
+      });
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <div class="info-box tip">
+      <strong>What this demonstrates:</strong> Document ready, selectors, event handling (<code>.on()</code>), chaining, and effects (<code>slideToggle</code>, <code>slideUp</code>) — all core jQuery concepts working together.
+    </div>
+  </div>
+
+  <!-- ======================== INTERACTIVE: FLASHCARDS ======================== -->
+  <h2>Flashcard Review</h2>
+  <p>Click each card to flip it and reveal the answer.</p>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What does the $ symbol represent in jQuery?</strong></div>
+        <div class="flashcard-back">It is the jQuery function alias. <code>$(selector)</code> is shorthand for <code>jQuery(selector)</code>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Why use $(document).ready()?</strong></div>
+        <div class="flashcard-back">To ensure the DOM is fully loaded before running jQuery code, preventing errors from selecting non-existent elements.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What CSS property cannot be animated with basic jQuery .animate()?</strong></div>
+        <div class="flashcard-back">Color properties (e.g., <code>color</code>, <code>background-color</code>). A plugin like jQuery Color is needed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What is method chaining?</strong></div>
+        <div class="flashcard-back">Calling multiple jQuery methods on the same selection in a single statement. Each method returns the jQuery object, enabling the next call.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>Why is .on() preferred over .click()?</strong></div>
+        <div class="flashcard-back">.on() supports event delegation, multiple events, and is the unified API across all jQuery versions.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><strong>What Bootstrap components rely on jQuery?</strong></div>
+        <div class="flashcard-back">Modals, Dropdowns, Tooltips, Popovers, Carousels, Tabs, Collapse/Accordion, Alerts, and more.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== INTERACTIVE: QUIZ ======================== -->
+  <h2>Knowledge Check</h2>
+
+  <div class="quiz" id="quiz1">
+    <p><strong>Q1: Which selector targets all elements with class "highlight"?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, false)"><code>$("highlight")</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, true)"><code>$(".highlight")</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, false)"><code>$("#highlight")</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz1', this, false)"><code>$("*highlight")</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz2">
+    <p><strong>Q2: What is the shorthand for $(document).ready(function(){...})?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, false)"><code>$(function(){...})</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, false)"><code>$.ready(function(){...})</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, false)"><code>document.ready(function(){...})</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz2', this, false)"><code>jQuery.load(function(){...})</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz3">
+    <p><strong>Q3: Which method allows you to animate custom numeric CSS properties?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, false)"><code>.css()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, false)"><code>.effect()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, true)"><code>.animate()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz3', this, false)"><code>.transition()</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz4">
+    <p><strong>Q4: How do you open a Bootstrap modal with jQuery?</strong></p>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, false)"><code>$("#myModal").open()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, true)"><code>$("#myModal").modal("show")</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, false)"><code>$("#myModal").showModal()</code></div>
+    <div class="quiz-option" onclick="checkQuiz('quiz4', this, false)"><code>$("#myModal").display()</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <!-- ======================== INTERACTIVE: FILL IN THE BLANK ======================== -->
+  <h2>Fill in the Blank</h2>
+
+  <p>Complete each statement by selecting the correct option:</p>
+
+  <div class="fill-blank" id="blank1">
+    <p>The jQuery motto is "Write less, _____ more."</p>
+    <select onchange="checkBlank('blank1', this.value)">
+      <option value="">Select...</option>
+      <option value="do">do</option>
+      <option value="get">get</option>
+      <option value="make">make</option>
+      <option value="use">use</option>
+    </select>
+    <span class="feedback"></span>
+  </div>
+
+  <div class="fill-blank" id="blank2">
+    <p>The <code>.on()</code> method is preferred over individual event methods because it supports event _____ and multiple handlers.</p>
+    <select onchange="checkBlank('blank2', this.value)">
+      <option value="">Select...</option>
+      <option value="delegation">delegation</option>
+      <option value="creation">creation</option>
+      <option value="prevention">prevention</option>
+      <option value="duplication">duplication</option>
+    </select>
+    <span class="feedback"></span>
+  </div>
+
+  <div class="fill-blank" id="blank3">
+    <p>jQuery was created by _____ Resig in 2006.</p>
+    <select onchange="checkBlank('blank3', this.value)">
+      <option value="">Select...</option>
+      <option value="John">John</option>
+      <option value="James">James</option>
+      <option value="Jake">Jake</option>
+      <option value="Jason">Jason</option>
+    </select>
+    <span class="feedback"></span>
+  </div>
+
+  <!-- ======================== INFOGRAPHIC: JQUERY ARCHITECTURE ======================== -->
+  <h2>jQuery Architecture Overview</h2>
+
+  <div class="diagram">
+    <div style="text-align:center; padding: 20px;">
+      <div style="background:#4a90d9; color:white; padding:15px 30px; border-radius:10px; display:inline-block; font-weight:bold; font-size:1.2em;">
+        Your HTML Page
+      </div>
+      <div class="arrow">⬇</div>
+      <div style="background:#e74c3c; color:white; padding:15px 30px; border-radius:10px; display:inline-block; font-weight:bold; font-size:1.2em;">
+        jQuery Library (~19KB)
+      </div>
+      <div class="arrow">⬇</div>
+      <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:10px;">
+        <div style="background:#2ecc71; color:white; padding:12px 18px; border-radius:8px; font-weight:bold;">
+          Selectors<br><small>Find elements</small>
+        </div>
+        <div style="background:#f39c12; color:white; padding:12px 18px; border-radius:8px; font-weight:bold;">
+          DOM Methods<br><small>Modify elements</small>
+        </div>
+        <div style="background:#9b59b6; color:white; padding:12px 18px; border-radius:8px; font-weight:bold;">
+          Events<br><small>React to user</small>
+        </div>
+        <div style="background:#1abc9c; color:white; padding:12px 18px; border-radius:8px; font-weight:bold;">
+          Effects<br><small>Animate</small>
+        </div>
+        <div style="background:#e67e22; color:white; padding:12px 18px; border-radius:8px; font-weight:bold;">
+          Ajax<br><small>Server comm</small>
+        </div>
+      </div>
+      <div class="arrow">⬇</div>
+      <div style="background:#34495e; color:white; padding:15px 30px; border-radius:10px; display:inline-block; font-weight:bold; font-size:1.1em;">
+        Cross-Browser JavaScript (IE 6+, FF, Chrome, Safari, Opera)
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== SUMMARY ======================== -->
+  <div class="summary">
+    <h2>Summary</h2>
+    <ul>
+      <li><strong>jQuery</strong> is a lightweight JavaScript library that simplifies DOM manipulation, events, animations, and Ajax.</li>
+      <li>Syntax: <code>$(selector).action()</code> — the <code>$</code> is the jQuery function.</li>
+      <li>Always wrap code in <code>$(document).ready()</code> or <code>$(function(){...})</code> to ensure the DOM is loaded.</li>
+      <li><strong>Selectors</strong> use CSS syntax plus jQuery extensions to find elements.</li>
+      <li><strong>Event handling</strong> with <code>.on()</code> provides the most flexibility, including delegation.</li>
+      <li><strong>Effects</strong>: hide, show, toggle, fade, slide — all with animation support.</li>
+      <li><code>.animate()</code> handles custom animations for numeric CSS properties (not colors without plugins).</li>
+      <li><strong>Chaining</strong> allows multiple methods in a single statement for cleaner code.</li>
+      <li><strong>Bootstrap</strong> components rely on jQuery plugins for interactivity.</li>
+      <li><strong>Plugins</strong> extend jQuery's capabilities; include them after the jQuery library.</li>
+    </ul>
+  </div>
+
+  <!-- ======================== PROGRESS ======================== -->
+  <div class="progress-bar">
+    <div class="progress-text">Topic 13 of 14</div>
+    <div style="background:#ddd; border-radius:10px; height:20px; overflow:hidden;">
+      <div style="background:#4a90d9; width:92.86%; height:100%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:0.85em;">
+        92.86%
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .container -->
+
+<script>
+// Quiz logic
+function checkQuiz(quizId, element, isCorrect) {
+  var quiz = document.getElementById(quizId);
+  var feedback = quiz.querySelector('.quiz-feedback');
+  var options = quiz.querySelectorAll('.quiz-option');
+
+  // Disable all options after selection
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+  });
+
+  if (isCorrect) {
+    element.style.backgroundColor = '#2ecc71';
+    element.style.color = 'white';
+    feedback.textContent = '✓ Correct!';
+    feedback.style.color = '#2ecc71';
+  } else {
+    element.style.backgroundColor = '#e74c3c';
+    element.style.color = 'white';
+    feedback.textContent = '✗ Incorrect. Try reviewing the section above.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+
+// Fill-in-the-blank logic
+var correctAnswers = {
+  blank1: 'do',
+  blank2: 'delegation',
+  blank3: 'John'
+};
+
+function checkBlank(blankId, value) {
+  var container = document.getElementById(blankId);
+  var feedback = container.querySelector('.feedback');
+
+  if (value === '') {
+    feedback.textContent = '';
+    return;
+  }
+
+  if (value === correctAnswers[blankId]) {
+    feedback.textContent = ' ✓ Correct!';
+    feedback.style.color = '#2ecc71';
+  } else {
+    feedback.textContent = ' ✗ Try again.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+</script>
+
+</body>
+</html>

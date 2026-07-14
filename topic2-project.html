@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 2: Course Project Overview</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; width: 100%; }
+      .nav-links.show { display: flex; }
+      .topnav { flex-wrap: wrap; }
+    }
+    .tier-compare { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin: 20px 0; }
+    .tier-box { flex: 1; min-width: 240px; max-width: 400px; border: 2px solid #cbd5e1; border-radius: 12px; padding: 20px; text-align: center; }
+    .tier-box h3 { margin-top: 0; }
+    .tier-old { border-color: #f97316; background: #fff7ed; }
+    .tier-new { border-color: #22c55e; background: #f0fdf4; }
+    .timeline { border-left: 3px solid #3b82f6; margin-left: 20px; padding-left: 20px; }
+    .timeline-item { position: relative; margin-bottom: 24px; }
+    .timeline-item::before { content: ''; position: absolute; left: -29px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #3b82f6; }
+  </style>
+</head>
+<body>
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html" class="active">Project</a>
+    <a href="topic3-html-basics.html">HTML Basics</a>
+    <a href="topic4-html-forms.html">HTML Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP Basics</a>
+    <a href="topic7-php-mysql.html">PHP &amp; MySQL</a>
+    <a href="topic8-advanced-php.html">Advanced PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">Responsive</a>
+    <a href="topic12-javascript-dom.html">JS &amp; DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX/REST</a>
+  </div>
+</nav>
+
+<!-- ==================== PROGRESS ==================== -->
+<div class="container">
+  <div class="progress-bar">
+    <div class="progress-text">Section 1 of 1 &mdash; Topic 2 Complete</div>
+    <div style="background:#e2e8f0;border-radius:8px;height:18px;overflow:hidden;">
+      <div id="progressFill" style="background:#3b82f6;height:100%;width:0%;transition:width 0.4s;border-radius:8px;"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN HEADING ==================== -->
+  <h1>Topic 2: Course Project Overview</h1>
+  <p>In this topic, you will understand the course project structure. You will learn how you are going to transform a <strong>2-tier system</strong> from your previous course (TU2983) into a <strong>web-based 3-tier system</strong> through three guided project tasks.</p>
+
+  <!-- ==================== SECTION 1: FROM TU2983 TO TP2543 ==================== -->
+  <div class="card">
+    <h2>1. From TU2983 to TP2543</h2>
+    <p>In your previous course <strong>TU2983 (Advanced Database)</strong>, you developed a <strong>2-tier &ldquo;ordering&rdquo; system</strong> with 3 basic functionalities:</p>
+    <ol>
+      <li><strong>Manage Products</strong> &mdash; Add, view, edit, and delete products.</li>
+      <li><strong>Make an Order</strong> &mdash; Select products and create an order.</li>
+      <li><strong>View an Order</strong> &mdash; Look up existing orders and their details.</li>
+    </ol>
+    <p>In <strong>TP2543</strong>, you will take this same system &mdash; using the <strong>same theme, problems, data, and functionalities</strong> &mdash; and transform it into a <strong>web-based 3-tier system</strong>. This means adding a web browser interface (frontend) and a web server layer on top of your existing database and logic.</p>
+
+    <div class="info-box analogy">
+      <strong>&#x1F3EA; Analogy &mdash; From Food Truck to Full Restaurant:</strong>
+      <ul>
+        <li><strong>2-tier (Food Truck):</strong> You have a food truck. The cook (application logic) directly accesses the fridge (database) and hands food to the customer through a small window. It works, but it&rsquo;s limited &mdash; only one window, limited menu, no dining area.</li>
+        <li><strong>3-tier (Full Restaurant):</strong> Now you upgrade to a full restaurant. You add a beautiful <strong>dining room</strong> (frontend/browser interface) where customers sit comfortably, browse a nice menu (HTML pages), and place orders with <strong>waiters</strong> (web server). The waiters take orders to the <strong>kitchen</strong> (application server), where chefs cook using ingredients from the <strong>pantry</strong> (database). Each tier has its own role, and the system is more scalable, maintainable, and professional.</li>
+      </ul>
+    </div>
+
+    <!-- 2-tier vs 3-tier comparison -->
+    <div class="tier-compare">
+      <div class="tier-box tier-old">
+        <h3>&#x1F69B; 2-Tier System</h3>
+        <p><strong>Client &harr; Database</strong></p>
+        <p>The application logic runs directly on the client, communicating directly with the database. No web server in between.</p>
+        <p style="color:#f97316; font-weight:600;">Limited to desktop apps &mdash; not web-accessible.</p>
+      </div>
+      <div class="tier-box tier-new">
+        <h3>&#x1F3E0; 3-Tier System</h3>
+        <p><strong>Presentation Tier &harr; Logic Tier &harr; Data Tier</strong></p>
+        <p>Three separate layers: Frontend (browser), Backend (web + application server), and Database. Each tier communicates through defined interfaces.</p>
+        <p style="color:#22c55e; font-weight:600;">Web-accessible, scalable, maintainable.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 2: THE 3 PROJECT TASKS ==================== -->
+  <div class="card">
+    <h2>2. The 3 Project Tasks</h2>
+    <p>You will complete <strong>3 self-directed project tasks</strong> throughout the course. Each task builds on the previous one, progressively transforming your 2-tier system into a full web-based 3-tier application.</p>
+    <p>Each project task uses <strong>&ldquo;motorbike&rdquo;</strong> as the example product in the instructions. At the end of each task, you must modify the project to use <strong>your own chosen products</strong> (the same products from your TU2983 project).</p>
+
+    <div class="info-box warning">
+      <strong>&#x26A0;&#xFE0F; Important:</strong> The instructions use &ldquo;motorbike&rdquo; as a placeholder. You <strong>must</strong> replace &ldquo;motorbike&rdquo; with your own products (e.g., books, electronics, clothing &mdash; whatever you used in TU2983). Do not submit the motorbike example as your final project!
+    </div>
+
+    <!-- Timeline of tasks -->
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>Project Task 1</h3>
+        <p>Begin transforming your 2-tier desktop system into a web-based system. You will set up the basic web infrastructure and create the initial frontend-backend connection.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Project Task 2</h3>
+        <p>Build upon Task 1 by enhancing your web application with additional functionalities and improving the interaction between frontend and backend.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Project Task 3</h3>
+        <p>Complete the transformation by adding final enhancements, polishing the application, and ensuring all three core functionalities (manage products, make an order, view an order) work in the web-based 3-tier system.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== COLLAPSIBLE: TASK DETAILS ==================== -->
+  <div class="card">
+    <h2>3. Project Task Details</h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Project Task 1: Setting Up the Web-Based System
+      </div>
+      <div class="collapsible-body">
+        <h3>Objective</h3>
+        <p>Transform your existing 2-tier system into the foundation of a web-based application. This task focuses on establishing the initial architecture and basic connectivity.</p>
+
+        <h3>What You Will Do</h3>
+        <ol>
+          <li><strong>Set up the web environment</strong> &mdash; Configure XAMPP, create your project folder in the <code>htdocs</code> directory, and set up your database in phpMyAdmin.</li>
+          <li><strong>Create the frontend</strong> &mdash; Build basic HTML pages that will serve as the user interface for your ordering system.</li>
+          <li><strong>Connect to the database</strong> &mdash; Write PHP scripts that connect your web application to the MySQL database.</li>
+          <li><strong>Display data</strong> &mdash; Retrieve product data from the database and display it on your web page.</li>
+        </ol>
+
+        <h3>Example with Motorbike (You Replace with Your Products)</h3>
+        <p>The instructions will guide you to create a motorbike ordering system. For example, displaying a list of motorbikes with their names, prices, and descriptions on a web page.</p>
+
+        <div class="info-box tip">
+          <strong>&#x1F4A1; Tip:</strong> Focus on understanding the <em>flow</em> of data: Browser &rarr; PHP &rarr; MySQL &rarr; PHP &rarr; Browser. This flow is the heart of every web application.
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Project Task 2: Enhancing Functionality
+      </div>
+      <div class="collapsible-body">
+        <h3>Objective</h3>
+        <p>Build on the foundation from Task 1 by implementing the full CRUD operations and improving the user experience.</p>
+
+        <h3>What You Will Do</h3>
+        <ol>
+          <li><strong>Implement Create &amp; Delete</strong> &mdash; Build forms that allow users to add new products and remove existing ones through the web interface.</li>
+          <li><strong>Implement Update</strong> &mdash; Allow users to edit existing product information through the web application.</li>
+          <li><strong>Implement Read</strong> &mdash; Enhance the product display with search, filter, or detail views.</li>
+          <li><strong>Basic ordering functionality</strong> &mdash; Allow users to place orders through the web interface.</li>
+        </ol>
+
+        <h3>Example with Motorbike (You Replace with Your Products)</h3>
+        <p>The instructions will show you how to add, edit, and delete motorbikes through the web interface, and how to create basic ordering functionality.</p>
+
+        <div class="info-box warning">
+          <strong>&#x26A0;&#xFE0F; Reminder:</strong> At the end of this task, replace &ldquo;motorbike&rdquo; with your own products. Make sure all CRUD operations work with your product data.
+        </div>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Project Task 3: Final Enhancements &amp; Polish
+      </div>
+      <div class="collapsible-body">
+        <h3>Objective</h3>
+        <p>Complete your web-based 3-tier system with final enhancements, proper error handling, and a polished user experience.</p>
+
+        <h3>What You Will Do</h3>
+        <ol>
+          <li><strong>Complete the ordering system</strong> &mdash; Ensure the full order workflow works: select products, place order, view order history.</li>
+          <li><strong>View order details</strong> &mdash; Implement the functionality to view detailed order information.</li>
+          <li><strong>Error handling</strong> &mdash; Add proper error messages for invalid inputs, database errors, and edge cases.</li>
+          <li><strong>Polish the UI</strong> &mdash; Improve the look and feel of your application with CSS styling.</li>
+          <li><strong>Final testing</strong> &mdash; Test all functionalities thoroughly before submission.</li>
+        </ol>
+
+        <h3>Example with Motorbike (You Replace with Your Products)</h3>
+        <p>The instructions will guide you through completing the motorbike ordering system with all three core functionalities fully operational. You will then adapt everything to your own product domain.</p>
+
+        <div class="info-box tip">
+          <strong>&#x1F4A1; Tip:</strong> By the end of Task 3, your 2-tier desktop system should be fully transformed into a web-based 3-tier system with a browser frontend, PHP backend, and MySQL database &mdash; all working together seamlessly.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 3: 3-TIER ARCHITECTURE ==================== -->
+  <div class="card">
+    <h2>4. Understanding the 3-Tier Architecture</h2>
+    <p>Your project follows the <strong>3-tier architecture</strong> pattern, which separates your application into three logical layers:</p>
+
+    <div class="diagram">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px; max-width:500px; margin:0 auto;">
+        <div style="background:#3b82f6; color:#fff; padding:14px 20px; border-radius:8px; width:100%; text-align:center; font-weight:600;">
+          &#x1F4BB; Presentation Tier (Frontend)<br>
+          <small>HTML, CSS &mdash; Runs in the browser</small>
+        </div>
+        <div style="font-size:24px; color:#64748b;">&#x2193; HTTP &#x2193;</div>
+        <div style="background:#22c55e; color:#fff; padding:14px 20px; border-radius:8px; width:100%; text-align:center; font-weight:600;">
+          &#x2699;&#xFE0F; Logic Tier (Backend)<br>
+          <small>PHP scripts &mdash; Runs on the server (Apache)</small>
+        </div>
+        <div style="font-size:24px; color:#64748b;">&#x2193; SQL &#x2193;</div>
+        <div style="background:#eab308; color:#1a1a1a; padding:14px 20px; border-radius:8px; width:100%; text-align:center; font-weight:600;">
+          &#x1F5C4;&#xFE0F; Data Tier (Database)<br>
+          <small>MySQL &mdash; Stores all application data</small>
+        </div>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>Presentation Tier</strong> &mdash; The HTML pages styled with CSS that users interact with in their browser. This tier handles how data is displayed and how users input information.</li>
+      <li><strong>Logic Tier</strong> &mdash; The PHP scripts running on the Apache server. This tier processes user input, executes business logic (e.g., calculating order totals, validating data), and communicates with the database.</li>
+      <li><strong>Data Tier</strong> &mdash; The MySQL database that stores all persistent data (products, orders, customers). This tier is responsible for data storage, retrieval, and integrity.</li>
+    </ul>
+
+    <div class="info-box analogy">
+      <strong>&#x1F3EA; Analogy &mdash; The Restaurant Upgrade:</strong>
+      <ul>
+        <li><strong>Presentation Tier</strong> = The dining room and menu &mdash; Customers see the menu, choose seats, and place orders with waiters.</li>
+        <li><strong>Logic Tier</strong> = The kitchen &mdash; Chefs receive orders, follow recipes, coordinate preparation, and plate the food.</li>
+        <li><strong>Data Tier</strong> = The pantry and storage &mdash; Where all ingredients are organized, stored, and retrieved as needed.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== FLASHCARDS ==================== -->
+  <div class="card">
+    <h2>5. Key Terms &mdash; Flashcards</h2>
+    <p>Click on a flashcard to flip it and reveal the definition.</p>
+
+    <div class="flashcard-container">
+      <!-- Flashcard 1 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>2-Tier System</strong></div>
+          <div class="flashcard-back">An application architecture with two layers: a client (presentation) and a database (data). The application logic runs directly on the client, communicating directly with the database. Typically a desktop application.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 2 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>3-Tier System</strong></div>
+          <div class="flashcard-back">An application architecture with three layers: Presentation Tier (frontend), Logic Tier (backend/application server), and Data Tier (database). Each tier has a distinct responsibility and communicates through defined interfaces.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 3 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>CRUD</strong></div>
+          <div class="flashcard-back">Create, Read, Update, Delete &mdash; The four basic operations performed on data. In this project: Manage Products (Create, Read, Update, Delete), Make an Order (Create), View an Order (Read).</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 4 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Presentation Tier</strong></div>
+          <div class="flashcard-back">The frontend layer of a 3-tier system. It handles the user interface and user experience, built with HTML, CSS, and possibly JavaScript. Runs in the user&rsquo;s browser.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 5 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Logic Tier</strong></div>
+          <div class="flashcard-back">The backend layer of a 3-tier system. It processes business logic, handles data validation, performs calculations, and mediates between the presentation and data tiers. In this course, it runs PHP on Apache.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 6 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Data Tier</strong></div>
+          <div class="flashcard-back">The database layer of a 3-tier system. It manages persistent data storage and retrieval. In this course, it is a MySQL database accessed via SQL queries from PHP.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 7 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>XAMPP</strong></div>
+          <div class="flashcard-back">A free, open-source web server solution stack that includes Apache (web server), MySQL (database), PHP, and Perl. Used for local web development and testing.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 8 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Ordering System</strong></div>
+          <div class="flashcard-back">The core project application with 3 functionalities: (1) Manage Products, (2) Make an Order, (3) View an Order. This is transformed from a 2-tier desktop app to a 3-tier web application.</div>
+        </div>
+      </div>
+
+      <!-- Flashcard 9 -->
+      <div class="flashcard" onclick="this.classList.toggle('flipped')">
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><strong>Self-Directed Task</strong></div>
+          <div class="flashcard-back">Each project task is self-directed, meaning you are guided by written instructions but must work independently to implement the requirements, debug issues, and produce the final deliverable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== QUIZ 1 ==================== -->
+  <div class="card">
+    <h2>6. Quiz &mdash; Test Your Understanding</h2>
+
+    <!-- Quiz Question 1 -->
+    <div class="quiz" id="quiz1">
+      <p><strong>Q1:</strong> What type of system did you develop in TU2983 (Advanced Database)?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">A) A 3-tier web-based system</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">B) A 2-tier ordering system</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">C) A mobile application</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">D) A desktop game</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 2 -->
+    <div class="quiz" id="quiz2">
+      <p><strong>Q2:</strong> What are the 3 basic functionalities of the ordering system?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">A) Login, Register, Logout</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">B) Manage products, Make an order, View an order</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">C) Create database, Insert data, Delete data</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">D) Design UI, Write CSS, Add JavaScript</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 3 -->
+    <div class="quiz" id="quiz3">
+      <p><strong>Q3:</strong> How many project tasks are there in TP2543?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">A) 2</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">B) 3</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">C) 5</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">D) 1</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 4 -->
+    <div class="quiz" id="quiz4">
+      <p><strong>Q4:</strong> In a 3-tier architecture, which tier runs PHP on the server?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">A) Presentation Tier</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">B) Logic Tier</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">C) Data Tier</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">D) Client Tier</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 5 -->
+    <div class="quiz" id="quiz5">
+      <p><strong>Q5:</strong> The project instructions use &ldquo;motorbike&rdquo; as the product. What should you do for your submission?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A) Submit the motorbike version as-is</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">B) Only change the product name in the title</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">C) Replace &ldquo;motorbike&rdquo; with your own products (from your TU2983 project)</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">D) Ask the lecturer for permission first</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 6 -->
+    <div class="quiz" id="quiz6">
+      <p><strong>Q6:</strong> In a 2-tier system, which two layers communicate directly?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">A) Frontend and Web Server</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">B) Client (application logic) and Database</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">C) Web Server and Application Server</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">D) Browser and Operating System</div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <!-- Quiz Question 7 -->
+    <div class="quiz" id="quiz7">
+      <p><strong>Q7:</strong> What software stack will you use for local development in this course?</p>
+      <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">A) Docker, Kubernetes, AWS</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">B) XAMPP (Apache, MySQL, PHP)</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">C) MERN (MongoDB, Express, React, Node.js)</div>
+      <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">D) Visual Studio, .NET, SQL Server</div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </div>
+
+  <!-- ==================== FILL IN THE BLANKS ==================== -->
+  <div class="card">
+    <h2>7. Fill in the Blanks</h2>
+    <p>Type the correct word into each blank, then click <strong>Check</strong> to verify your answers.</p>
+
+    <div class="fill-blank" id="fb1">
+      <p>Q1: A 3-tier system has three layers: Presentation Tier, __________ Tier, and Data Tier.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="logic">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb2">
+      <p>Q2: The four basic CRUD operations are Create, Read, Update, and __________.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="delete">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb3">
+      <p>Q3: In a 2-tier system, the application logic runs on the __________ and communicates directly with the database.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="client">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb4">
+      <p>Q4: Your TP2543 project transforms a __________ system into a web-based system.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="2-tier">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb5">
+      <p>Q5: The __________ tier of a 3-tier system runs in the user&rsquo;s browser.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="presentation">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+
+    <div class="fill-blank" id="fb6">
+      <p>Q6: The previous course code was TU2983, which stands for Advanced __________.</p>
+      <input type="text" placeholder="Type your answer here" data-answer="database">
+      <button class="quiz-btn" onclick="checkFillBlank(this)">Check</button>
+      <span class="quiz-feedback"></span>
+    </div>
+  </div>
+
+  <!-- ==================== COLLAPSIBLE: TIPS ==================== -->
+  <div class="card">
+    <h2>8. Important Reminders</h2>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; All Labs Are Connected
+      </div>
+      <div class="collapsible-body">
+        <p>Every lab session builds upon the previous one. The project tasks span across multiple labs. If you miss a lab or fall behind, it becomes increasingly difficult to catch up because each task depends on the work done before it. Plan your time carefully and stay on schedule.</p>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Do Not Procrastinate
+      </div>
+      <div class="collapsible-body">
+        <p>Web development requires consistent, hands-on practice. You cannot cram for this course the night before. Start each project task as soon as it is assigned. If you encounter difficulties, seek help early from your lecturer or lab assistants rather than waiting until the deadline.</p>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Practice with Real Examples
+      </div>
+      <div class="collapsible-body">
+        <p>Use <a href="https://www.w3schools.com" target="_blank">w3schools.com</a> as your go-to reference. It has interactive examples for HTML, CSS, PHP, MySQL, JavaScript, and more. When you encounter a concept you don&rsquo;t understand, search for it on w3schools and try the examples yourself.</p>
+      </div>
+    </div>
+
+    <div class="collapsible">
+      <div class="collapsible-header" onclick="this.parentElement.classList.toggle('active')">
+        &#x25B6; Remember: Replace Motorbike with Your Products
+      </div>
+      <div class="collapsible-body">
+        <p>This cannot be stressed enough. The instructions use &ldquo;motorbike&rdquo; as the example product, but <strong>your submission must use your own products</strong> from your TU2983 project. Keep track of every place where &ldquo;motorbike&rdquo; appears in your code and replace it with your own product data. This includes product names, descriptions, database entries, and any hardcoded references.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUMMARY ==================== -->
+  <div class="card">
+    <h2>9. Summary</h2>
+    <div class="summary">
+      <h3>What You Learned in This Topic:</h3>
+      <ol>
+        <li>In <strong>TU2983</strong> you built a <strong>2-tier ordering system</strong> with 3 functionalities: manage products, make an order, and view an order.</li>
+        <li>In <strong>TP2543</strong>, you will transform this same system into a <strong>web-based 3-tier system</strong> using the same theme, problems, data, and functionalities.</li>
+        <li>The <strong>3-tier architecture</strong> consists of: <strong>Presentation Tier</strong> (frontend/browser), <strong>Logic Tier</strong> (backend/PHP server), and <strong>Data Tier</strong> (MySQL database).</li>
+        <li>You will complete <strong>3 self-directed project tasks</strong>, each building on the previous one to progressively create your web application.</li>
+        <li>The instructions use &ldquo;motorbike&rdquo; as the example product, but you <strong>must replace it with your own products</strong> at the end of each task.</li>
+        <li>All labs are connected &mdash; <strong>do not procrastinate</strong>. Start early, practice consistently, and use <a href="https://www.w3schools.com" target="_blank">w3schools.com</a> for learning.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ==================== END PROGRESS ==================== -->
+  <div class="card" style="text-align:center;">
+    <h2>&#x2705; Topic 2 Complete!</h2>
+    <p>Great work! You now understand the course project structure. Move on to <a href="topic3-html-basics.html"><strong>Topic 3: HTML Basics</strong></a> to start learning the foundation of the frontend.</p>
+    <div class="progress-text" style="margin-top:10px;">You have completed Topic 2 &mdash; Course Project Overview.</div>
+  </div>
+
+</div><!-- end container -->
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+  // ---- Progress Bar ----
+  window.addEventListener('DOMContentLoaded', function () {
+    var fill = document.getElementById('progressFill');
+    if (fill) {
+      setTimeout(function () { fill.style.width = '100%'; }, 200);
+    }
+  });
+
+  // ---- Quiz Logic ----
+  function checkAnswer(quizId, element, isCorrect) {
+    var quiz = document.getElementById(quizId);
+    var feedback = quiz.querySelector('.quiz-feedback');
+    if (quiz.getAttribute('data-answered') === 'true') return;
+    quiz.setAttribute('data-answered', 'true');
+
+    var options = quiz.querySelectorAll('.quiz-option');
+    options.forEach(function (opt) {
+      opt.style.pointerEvents = 'none';
+      opt.style.opacity = '0.6';
+    });
+
+    if (isCorrect) {
+      element.style.background = '#22c55e';
+      element.style.color = '#fff';
+      element.style.opacity = '1';
+      feedback.textContent = 'Correct! Well done.';
+      feedback.style.color = '#22c55e';
+    } else {
+      element.style.background = '#ef4444';
+      element.style.color = '#fff';
+      element.style.opacity = '1';
+      feedback.textContent = 'Incorrect. Review the material above and try to understand why.';
+      feedback.style.color = '#ef4444';
+    }
+  }
+
+  // ---- Fill in the Blank Logic ----
+  function checkFillBlank(button) {
+    var container = button.parentElement;
+    var input = container.querySelector('input');
+    var feedback = container.querySelector('.quiz-feedback');
+    var correct = input.getAttribute('data-answer').toLowerCase().trim();
+    var userAnswer = input.value.toLowerCase().trim();
+
+    if (userAnswer === correct) {
+      feedback.textContent = 'Correct!';
+      feedback.style.color = '#22c55e';
+      input.style.borderColor = '#22c55e';
+    } else {
+      feedback.textContent = 'Incorrect. The correct answer is: ' + input.getAttribute('data-answer');
+      feedback.style.color = '#ef4444';
+      input.style.borderColor = '#ef4444';
+    }
+  }
+</script>
+
+</body>
+</html>

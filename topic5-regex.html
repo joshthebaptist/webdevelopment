@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 5 - Regular Expressions (Regex) | TP2543</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .regex-demo { background: #1e1e2e; color: #a6e3a1; padding: 12px 16px; border-radius: 6px; font-family: 'Courier New', monospace; margin: 8px 0; overflow-x: auto; }
+    .regex-demo .match { color: #f38ba8; font-weight: bold; }
+    .regex-demo .nomatch { color: #6c7086; text-decoration: line-through; }
+    .char-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    .char-table th, .char-table td { border: 1px solid #45475a; padding: 10px 14px; text-align: left; }
+    .char-table th { background: #313244; color: #cdd6f4; }
+    .char-table code { background: #45475a; padding: 2px 6px; border-radius: 3px; color: #f5c2e7; }
+    .pattern-breakdown { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; align-items: flex-start; }
+    .pattern-part { background: #313244; border: 1px solid #45475a; border-radius: 6px; padding: 8px 12px; text-align: center; }
+    .pattern-part .symbol { font-size: 1.3em; font-weight: bold; color: #f5c2e7; font-family: monospace; }
+    .pattern-part .label { font-size: 0.8em; color: #a6adc8; margin-top: 4px; }
+    .live-test { background: #313244; border-radius: 8px; padding: 16px; margin: 12px 0; }
+    .live-test input { width: 100%; padding: 10px; border: 1px solid #45475a; border-radius: 4px; background: #1e1e2e; color: #cdd6f4; font-family: monospace; font-size: 1em; box-sizing: border-box; margin-bottom: 8px; }
+    .live-test .result { padding: 8px 12px; border-radius: 4px; font-family: monospace; min-height: 24px; }
+    .live-test .result.match { background: rgba(166, 227, 161, 0.15); color: #a6e3a1; border: 1px solid #a6e3a1; }
+    .live-test .result.no-match { background: rgba(243, 139, 168, 0.15); color: #f38ba8; border: 1px solid #f38ba8; }
+    .highlight { color: #f9e2af; font-weight: bold; }
+    .scam-box { background: linear-gradient(135deg, #f38ba822, #fab38722); border: 1px solid #f38ba8; border-radius: 8px; padding: 16px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="progress-bar"><div class="progress-text">Topic 5 of 14</div><div class="progress-text">36% Complete</div></div>
+
+<div class="container">
+  <h1>Topic 5: Regular Expressions (Regex)</h1>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Regex is like a Stamp:</strong> Imagine you have a rubber stamp with a specific shape cut out. You drag that stamp across a page of text, and it only "inks" the parts that match the shape. A regex pattern is your stamp — it defines a shape of text, and the regex engine drags it across your string to find matches. Simple stamp = simple match. Complex stamp = complex pattern matching.
+  </div>
+
+  <!-- ===================== SECTION 1: WHAT IS REGEX ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>1. What Are Regular Expressions?</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Regular Expressions (commonly called <strong>regex</strong> or <strong>RegExp</strong>) are <span class="highlight">specially formatted text strings used to find patterns in other text</span>. They are one of the most powerful tools available for text processing and manipulation.</p>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Regex as a Detective:</strong> Imagine you are a detective looking for a suspect who matches a description: "tall, wearing a red hat, carrying a briefcase." You don't know the suspect's name, but you know these characteristics. A regex pattern works the same way — it describes the <em>characteristics</em> of the text you're looking for, not the exact text itself. You give the regex engine a "description" and it finds all matching "suspects" in your text.
+      </div>
+
+      <h3>What Can Regex Do?</h3>
+      <p>Regex is used for two main purposes:</p>
+      <ol>
+        <li><strong>Verify data format</strong> — Is this a valid email address? Does this phone number follow the right pattern? Is this matric number properly formatted?</li>
+        <li><strong>Find and/or replace matching strings</strong> — Find all phone numbers in a document, replace all dates from one format to another, extract all links from a webpage.</li>
+      </ol>
+
+      <div class="info-box note">
+        <strong>Where is regex used?</strong> Regex is used everywhere — in programming languages (PHP, JavaScript, Python, Java), in text editors (VS Code, Sublime Text), in command-line tools (grep, sed), in form validation, in search-and-replace operations, and much more. Learning regex once gives you a skill that transfers across all these tools.
+      </div>
+
+      <h3>A Simple Example</h3>
+      <p>Suppose you want to check if a string contains the word "cat":</p>
+      <div class="regex-demo">Pattern: <span class="match">cat</span><br>Matches: "<span class="match">cat</span>" in "The <span class="match">cat</span> sat on the mat"</div>
+      <p>Simple enough. But what if you want to find <em>any</em> three-letter word starting with "c" and ending with "t"? That's where regex special syntax comes in.</p>
+      <div class="regex-demo">Pattern: <span class="match">c.t</span>  (the dot matches any single character)<br>Matches: "<span class="match">cat</span>", "<span class="match">cot</span>", "<span class="match">cut</span>", "<span class="match">cit</span>" in "The cat sat on the cot"</div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 2: SYNTAX & SPECIAL CHARACTERS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>2. Regex Syntax & Special Characters</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Regex uses a set of <strong>special characters</strong> that have specific meanings. These characters are the building blocks of every regex pattern.</p>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Special Characters are Like Instructions:</strong> Think of regex as a recipe. The special characters are like cooking instructions: "chop" means cut into pieces, "simmer" means cook slowly. In regex, <code>[ ]</code> means "pick one from this group," <code>{ }</code> means "repeat this many times," and <code>.</code> means "any single character." Learn these instructions and you can write any recipe.
+      </div>
+
+      <h3>The Main Special Characters</h3>
+      <table class="char-table">
+        <tr>
+          <th>Character</th>
+          <th>Name</th>
+          <th>Meaning</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td><code>.</code></td>
+          <td>Dot / Period</td>
+          <td>Matches <strong>any single character</strong> (except newline)</td>
+          <td><code>c.t</code> matches "cat", "cot", "cut"</td>
+        </tr>
+        <tr>
+          <td><code>[ ]</code></td>
+          <td>Square Brackets</td>
+          <td>Matches <strong>one character</strong> from the given set</td>
+          <td><code>[abc]</code> matches "a", "b", or "c"</td>
+        </tr>
+        <tr>
+          <td><code>[^ ]</code></td>
+          <td>Negated Brackets</td>
+          <td>Matches any character <strong>NOT</strong> in the set</td>
+          <td><code>[^abc]</code> matches "d", "x", "1", etc.</td>
+        </tr>
+        <tr>
+          <td><code>( )</code></td>
+          <td>Parentheses</td>
+          <td><strong>Groups</strong> patterns together; captures matches</td>
+          <td><code>(ab)+</code> matches "ab", "abab", "ababab"</td>
+        </tr>
+        <tr>
+          <td><code>{ }</code></td>
+          <td>Curly Braces</td>
+          <td><strong>Quantifier</strong> — specifies how many times to repeat</td>
+          <td><code>a{3}</code> matches "aaa"</td>
+        </tr>
+        <tr>
+          <td><code>\</code></td>
+          <td>Backslash</td>
+          <td><strong>Escapes</strong> special characters; also starts shortcut classes</td>
+          <td><code>\.</code> matches a literal dot</td>
+        </tr>
+        <tr>
+          <td><code>|</code></td>
+          <td>Pipe</td>
+          <td><strong>OR</strong> operator — matches either side</td>
+          <td><code>cat|dog</code> matches "cat" or "dog"</td>
+        </tr>
+        <tr>
+          <td><code>^</code></td>
+          <td>Caret</td>
+          <td>Matches the <strong>start</strong> of the string</td>
+          <td><code>^Hello</code> matches strings starting with "Hello"</td>
+        </tr>
+        <tr>
+          <td><code>$</code></td>
+          <td>Dollar Sign</td>
+          <td>Matches the <strong>end</strong> of the string</td>
+          <td><code>world$</code> matches strings ending with "world"</td>
+        </tr>
+        <tr>
+          <td><code>*</code></td>
+          <td>Asterisk</td>
+          <td>Zero or more repetitions of the preceding element</td>
+          <td><code>ab*</code> matches "a", "ab", "abb", "abbb"</td>
+        </tr>
+        <tr>
+          <td><code>+</code></td>
+          <td>Plus</td>
+          <td>One or more repetitions of the preceding element</td>
+          <td><code>ab+</code> matches "ab", "abb", "abbb" (not "a")</td>
+        </tr>
+        <tr>
+          <td><code>?</code></td>
+          <td>Question Mark</td>
+          <td>Zero or one repetition (makes it optional)</td>
+          <td><code>colou?r</code> matches "color" and "colour"</td>
+        </tr>
+      </table>
+
+      <div class="info-box warning">
+        <strong>Using Special Characters Literally:</strong> If you want to match a special character itself (like a dot in an IP address or a plus in a math expression), you must <strong>escape it with a backslash</strong>. For example, to match the literal "+" character, write <code>\+</code>. To match a literal dot, write <code>\.</code>.
+      </div>
+
+      <h3>The Basic Pattern Structure</h3>
+      <p>Most regex patterns follow this general structure:</p>
+      <div class="pattern-breakdown">
+        <div class="pattern-part"><div class="symbol">[ ]</div><div class="label">Character Class<br>(what to match)</div></div>
+        <div class="pattern-part"><div class="symbol">{ }</div><div class="label">Quantifier<br>(how many times)</div></div>
+      </div>
+      <p>This <strong>[character class]{quantifier}</strong> pattern is the most common building block. The character class defines <em>what</em> characters are allowed, and the quantifier defines <em>how many</em> of them are expected.</p>
+
+      <div class="regex-demo">
+        Example: <span class="match">[a-z]{3}</span> — matches exactly 3 lowercase letters<br>
+        Matches: "cat", "dog", "the", "end"<br>
+        No match: "ab" (too short), "ABCD" (uppercase), "123" (digits)
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 3: CHARACTER CLASSES ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>3. Character Classes</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Character classes are defined using <strong>square brackets [ ]</strong>. They tell the regex engine to match <span class="highlight">exactly one character</span> from the specified set.</p>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Character Classes are Like Multiple Choice:</strong> In a multiple-choice question, you can pick one answer from the options A, B, C, or D. A character class works the same way — it says "this position can be any ONE of these characters." <code>[abc]</code> means "a" OR "b" OR "c" — just like picking one answer from a multiple-choice question.
+      </div>
+
+      <h3>Basic Character Classes</h3>
+      <table class="char-table">
+        <tr>
+          <th>Pattern</th>
+          <th>Meaning</th>
+          <th>Matches</th>
+          <th>Doesn't Match</th>
+        </tr>
+        <tr>
+          <td><code>[abc]</code></td>
+          <td>Any one of a, b, or c</td>
+          <td>"a", "b", "c"</td>
+          <td>"d", "A", "1"</td>
+        </tr>
+        <tr>
+          <td><code>[a-z]</code></td>
+          <td>Any lowercase letter</td>
+          <td>"a" to "z"</td>
+          <td>"A", "1", "@"</td>
+        </tr>
+        <tr>
+          <td><code>[A-Z]</code></td>
+          <td>Any uppercase letter</td>
+          <td>"A" to "Z"</td>
+          <td>"a", "1", "@"</td>
+        </tr>
+        <tr>
+          <td><code>[0-9]</code></td>
+          <td>Any digit</td>
+          <td>"0" to "9"</td>
+          <td>"a", "A", "@"</td>
+        </tr>
+        <tr>
+          <td><code>[a-zA-Z]</code></td>
+          <td>Any letter (upper or lower)</td>
+          <td>"a" to "z", "A" to "Z"</td>
+          <td>"1", "@"</td>
+        </tr>
+        <tr>
+          <td><code>[a-zA-Z0-9]</code></td>
+          <td>Any letter or digit</td>
+          <td>"a-z", "A-Z", "0-9"</td>
+          <td>"@", "!", " "</td>
+        </tr>
+      </table>
+
+      <h3>Negated Character Classes</h3>
+      <p>Putting a <code>^</code> inside the square brackets <strong>negates</strong> the class — it matches any character <em>not</em> in the set.</p>
+      <table class="char-table">
+        <tr>
+          <th>Pattern</th>
+          <th>Meaning</th>
+          <th>Matches</th>
+          <th>Doesn't Match</th>
+        </tr>
+        <tr>
+          <td><code>[^abc]</code></td>
+          <td>Any character EXCEPT a, b, c</td>
+          <td>"d", "1", "@", " "</td>
+          <td>"a", "b", "c"</td>
+        </tr>
+        <tr>
+          <td><code>[^0-9]</code></td>
+          <td>Any non-digit character</td>
+          <td>"a", "A", "@", " "</td>
+          <td>"0" to "9"</td>
+        </tr>
+        <tr>
+          <td><code>[^a-z]</code></td>
+          <td>Any non-lowercase character</td>
+          <td>"A", "1", "@", " "</td>
+          <td>"a" to "z"</td>
+        </tr>
+      </table>
+
+      <div class="info-box tip">
+        <strong>Tip — Ranges Can Be Combined:</strong> You can combine ranges inside a single pair of square brackets. <code>[a-zA-Z0-9]</code> matches any letter or digit. <code>[aeiou]</code> matches any vowel. The key is: the character class matches <strong>exactly one character</strong> from whatever you put inside the brackets.
+      </div>
+
+      <h3>Examples in Action</h3>
+      <div class="regex-demo">
+        Pattern: <span class="match">[A-Z][a-z]+</span><br>
+        Meaning: One uppercase letter followed by one or more lowercase letters<br>
+        Matches: "<span class="match">Hello</span>", "<span class="match">World</span>", "<span class="match">Java</span>"<br>
+        No match: "hello" (starts lowercase), "JAVA" (all uppercase), "123" (digits)
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 4: SHORTCUT CLASSES ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>4. Shortcut (Shorthand) Classes</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Regex provides <strong>shorthand notations</strong> for commonly used character classes. Instead of writing <code>[0-9]</code>, you can simply write <code>\d</code>. These shortcuts make your patterns shorter and more readable.</p>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Shorthand is Like Abbreviations:</strong> Just like "Dr." is shorthand for "Doctor" and "NYC" is shorthand for "New York City," regex shorthand classes are abbreviations for common character classes. <code>\d</code> is short for <code>[0-9]</code>, <code>\w</code> is short for <code>[a-zA-Z0-9_]</code>. They mean the same thing — one is just faster to write.
+      </div>
+
+      <table class="char-table">
+        <tr>
+          <th>Shortcut</th>
+          <th>Equivalent</th>
+          <th>Meaning</th>
+          <th>Example Matches</th>
+        </tr>
+        <tr>
+          <td><code>.</code></td>
+          <td>(any character)</td>
+          <td>Matches <strong>any single character</strong> except newline (\n)</td>
+          <td>"a", "1", "@", " " (space)</td>
+        </tr>
+        <tr>
+          <td><code>\d</code></td>
+          <td><code>[0-9]</code></td>
+          <td>Matches any <strong>digit</strong></td>
+          <td>"0", "5", "9"</td>
+        </tr>
+        <tr>
+          <td><code>\D</code></td>
+          <td><code>[^0-9]</code></td>
+          <td>Matches any <strong>non-digit</strong> character</td>
+          <td>"a", "A", "@", " "</td>
+        </tr>
+        <tr>
+          <td><code>\s</code></td>
+          <td><code>[ \t\n\r\f]</code></td>
+          <td>Matches any <strong>whitespace</strong> character (space, tab, newline, etc.)</td>
+          <td>" " (space), "\t" (tab), "\n" (newline)</td>
+        </tr>
+        <tr>
+          <td><code>\S</code></td>
+          <td><code>[^ \t\n\r\f]</code></td>
+          <td>Matches any <strong>non-whitespace</strong> character</td>
+          <td>"a", "1", "@", "!"</td>
+        </tr>
+        <tr>
+          <td><code>\w</code></td>
+          <td><code>[a-zA-Z_0-9]</code></td>
+          <td>Matches any <strong>word character</strong> (letters, digits, underscore)</td>
+          <td>"a", "Z", "0", "_"</td>
+        </tr>
+        <tr>
+          <td><code>\W</code></td>
+          <td><code>[^a-zA-Z_0-9]</code></td>
+          <td>Matches any <strong>non-word</strong> character</td>
+          <td>"@", "!", " ", "-"</td>
+        </tr>
+      </table>
+
+      <div class="info-box warning">
+        <strong>Case Matters!</strong> In regex, uppercase and lowercase shortcuts have <strong>opposite meanings</strong>. <code>\d</code> matches digits, but <code>\D</code> matches non-digits. <code>\w</code> matches word characters, but <code>\W</code> matches non-word characters. Always pay attention to the case.
+      </div>
+
+      <h3>Practical Examples</h3>
+      <div class="regex-demo">
+        Pattern: <span class="match">\d{3}-\d{4}</span><br>
+        Meaning: Three digits, a hyphen, four digits (like a phone number)<br>
+        Matches: "<span class="match">123-4567</span>", "<span class="match">555-0199</span>"<br>
+        No match: "12-34567" (wrong digit count), "abc-defg" (not digits)
+      </div>
+
+      <div class="regex-demo">
+        Pattern: <span class="match">\w+@\w+\.\w+</span><br>
+        Meaning: word chars, @, word chars, dot, word chars (simple email-like)<br>
+        Matches: "<span class="match">user@domain.com</span>", "<span class="match">test@mail_org.net</span>"<br>
+        No match: "@domain.com" (missing username), "user@.com" (missing domain)
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 5: QUANTIFIERS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>5. Repetition Quantifiers</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Quantifiers specify <strong>how many times</strong> a character, group, or character class must be present for a match. They are placed <em>after</em> the character or group they modify.</p>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Quantifiers are Like Quantity Orders:</strong> Imagine ordering food at a restaurant. You might say "I want 1 pizza" (exactly one), "I want at least 2 pizzas" (2 or more), or "I want 2 to 5 pizzas" (a range). Quantifiers work the same way for regex — they tell the engine exactly how many of the preceding element you need.
+      </div>
+
+      <table class="char-table">
+        <tr>
+          <th>Quantifier</th>
+          <th>Meaning</th>
+          <th>Example Pattern</th>
+          <th>Matches</th>
+        </tr>
+        <tr>
+          <td><code>p+</code></td>
+          <td><strong>One or more</strong> (at least 1)</td>
+          <td><code>a+</code></td>
+          <td>"a", "aa", "aaa", ... (not empty string)</td>
+        </tr>
+        <tr>
+          <td><code>p*</code></td>
+          <td><strong>Zero or more</strong> (can be absent)</td>
+          <td><code>a*</code></td>
+          <td>"" (empty), "a", "aa", "aaa", ...</td>
+        </tr>
+        <tr>
+          <td><code>p?</code></td>
+          <td><strong>Zero or one</strong> (optional)</td>
+          <td><code>colou?r</code></td>
+          <td>"color", "colour" (the "u" is optional)</td>
+        </tr>
+        <tr>
+          <td><code>p{n}</code></td>
+          <td><strong>Exactly n</strong> times</td>
+          <td><code>a{3}</code></td>
+          <td>"aaa" only (exactly 3 a's)</td>
+        </tr>
+        <tr>
+          <td><code>p{min,max}</code></td>
+          <td><strong>Between min and max</strong> times</td>
+          <td><code>a{2,5}</code></td>
+          <td>"aa", "aaa", "aaaa", "aaaaa"</td>
+        </tr>
+        <tr>
+          <td><code>p{min,}</code></td>
+          <td><strong>At least min</strong> times (no upper limit)</td>
+          <td><code>a{2,}</code></td>
+          <td>"aa", "aaa", "aaaa", ... (not "a")</td>
+        </tr>
+      </table>
+
+      <h3>Key Differences to Understand</h3>
+      <div class="regex-demo">
+        <strong>+ vs *:</strong><br>
+        <span class="match">a+</span> — requires at least ONE "a": matches "a", "aa", "aaa"<br>
+        <span class="match">a*</span> — allows ZERO "a"s: matches "", "a", "aa", "aaa"<br><br>
+        <strong>{n} vs {min,max}:</strong><br>
+        <span class="match">a{3}</span> — exactly 3: matches only "aaa"<br>
+        <span class="match">a{2,5}</span> — 2 to 5: matches "aa", "aaa", "aaaa", "aaaaa"
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip — {n} is a Common Pattern:</strong> The pattern <code>p{3}</code> means "exactly 3 of p." This is extremely useful. For example, <code>\d{6}</code> matches exactly 6 digits, <code>[a-z]{3}</code> matches exactly 3 lowercase letters, and <code>\w{4,8}</code> matches between 4 and 8 word characters.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 6: ANCHORS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>6. Position Anchors</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Anchors don't match characters — they match <strong>positions</strong> in the string. They let you say "the pattern must be at the start" or "the pattern must be at the end."</p>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Anchors are Like Bookmarks:</strong> Imagine you're reading a book and you place a bookmark at the beginning of a chapter. The <code>^</code> anchor is like saying "this word must appear right at the bookmark (the start)." The <code>$</code> anchor is like saying "this word must appear at the very last page (the end)." Anchors don't care about what the text <em>is</em> — they care about <em>where</em> the text is.
+      </div>
+
+      <table class="char-table">
+        <tr>
+          <th>Anchor</th>
+          <th>Position</th>
+          <th>Example</th>
+          <th>Matches</th>
+        </tr>
+        <tr>
+          <td><code>^</code></td>
+          <td><strong>Start</strong> of the string (or line)</td>
+          <td><code>^Hello</code></td>
+          <td>"<strong>Hello</strong> World" — yes | "Say <strong>Hello</strong>" — no</td>
+        </tr>
+        <tr>
+          <td><code>$</code></td>
+          <td><strong>End</strong> of the string (or line)</td>
+          <td><code>world$</code></td>
+          <td>"Hello <strong>world</strong>" — yes | "<strong>world</strong> Hello" — no</td>
+        </tr>
+      </table>
+
+      <h3>Using Both Anchors Together</h3>
+      <p>When you use both <code>^</code> and <code>$</code>, the pattern must match the <strong>entire string</strong> from start to end. This is very useful for validation.</p>
+      <div class="regex-demo">
+        Pattern: <span class="match">^[A-Z][a-z]+$</span><br>
+        Meaning: String must start with an uppercase letter, followed by one or more lowercase letters, and end there.<br>
+        Matches: "<span class="match">Hello</span>", "<span class="match">World</span>", "<span class="match">Alice</span>"<br>
+        No match: "hello" (starts lowercase), "Hello World" (has space), "HELLO" (uppercase at end)
+      </div>
+
+      <div class="info-box note">
+        <strong>Note on Multi-line Mode:</strong> In most regex engines, <code>^</code> and <code>$</code> match the start/end of the entire string by default. In "multi-line" mode, they also match the start/end of each line within the string. For form validation, you usually use the default (entire string) mode.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 7: GROUPS, OR, AND FLAGS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>7. Groups, Alternation, and Flags</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <h3>Capture Groups ( )</h3>
+      <p>Parentheses <code>( )</code> create <strong>groups</strong> in your pattern. Groups serve two purposes: they let you apply quantifiers to an entire group, and they "capture" matched text for later use.</p>
+
+      <div class="regex-demo">
+        Pattern: <span class="match">(ha)+</span><br>
+        The + applies to the entire group "ha", so it matches:<br>
+        "<span class="match">ha</span>", "<span class="match">haha</span>", "<span class="match">hahaha</span>", ...
+      </div>
+
+      <h3>Alternation (OR) with Pipe |</h3>
+      <p>The pipe <code>|</code> acts as an <strong>OR operator</strong> inside groups or patterns.</p>
+      <div class="regex-demo">
+        Pattern: <span class="match">(cat|dog)</span><br>
+        Matches: "<span class="match">cat</span>" or "<span class="match">dog</span>"<br><br>
+        Pattern: <span class="match">I like (cats|dogs|birds)</span><br>
+        Matches: "I like <span class="match">cats</span>", "I like <span class="match">dogs</span>", "I like <span class="match">birds</span>"
+      </div>
+
+      <h3>Case-Insensitive Flag (?i)</h3>
+      <p>By default, regex is <strong>case-sensitive</strong>. "A" and "a" are different. Adding <code>(?i)</code> at the start of your pattern makes it case-insensitive.</p>
+      <div class="regex-demo">
+        Pattern: <span class="match">(?i)hello</span><br>
+        Matches: "<span class="match">hello</span>", "<span class="match">Hello</span>", "<span class="match">HELLO</span>", "<span class="match">hElLo</span>"
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip — Combining with Other Features:</strong> You can combine groups with quantifiers and alternation. For example: <code>^(Mon|Tue|Wed|Thu|Fri)</code> matches strings starting with a weekday abbreviation. <code>\d{2,4}(-\d{2,4})?</code> matches "12-34", "1234-5678", or just "1234".
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 8: PRACTICAL PATTERNS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>8. Practical Regex Patterns</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Let's put everything together with real-world patterns you'll actually use.</p>
+
+      <!-- Matric Number -->
+      <h3>Matric Number Validation</h3>
+      <div class="regex-demo">
+        Pattern: <span class="match">[aA][1][0-9]{6}</span><br>
+      </div>
+      <div class="pattern-breakdown">
+        <div class="pattern-part"><div class="symbol">[aA]</div><div class="label">Starts with "a" or "A"</div></div>
+        <div class="pattern-part"><div class="symbol">[1]</div><div class="label">Followed by literal "1"</div></div>
+        <div class="pattern-part"><div class="symbol">[0-9]{6}</div><div class="label">Exactly 6 digits</div></div>
+      </div>
+      <div class="regex-demo">
+        Matches: "<span class="match">a1234567</span>", "<span class="match">A1000001</span>"<br>
+        No match: "b1234567" (wrong letter), "a123456" (only 5 digits), "a12345678" (8 digits)
+      </div>
+
+      <!-- Date -->
+      <h3>Date Validation (DD.MM.YYYY)</h3>
+      <div class="regex-demo">
+        Pattern: <span class="match">(0[1-9]|1[0-9]|2[0-9]|3[01])\.(0[1-9]|1[012])\.[0-9]{4}</span><br>
+      </div>
+      <div class="pattern-breakdown">
+        <div class="pattern-part"><div class="symbol">(0[1-9]|1[0-9]|2[0-9]|3[01])</div><div class="label">Day: 01–31</div></div>
+        <div class="pattern-part"><div class="symbol">\.</div><div class="label">Literal dot</div></div>
+        <div class="pattern-part"><div class="symbol">(0[1-9]|1[012])</div><div class="label">Month: 01–12</div></div>
+        <div class="pattern-part"><div class="symbol">\.</div><div class="label">Literal dot</div></div>
+        <div class="pattern-part"><div class="symbol">[0-9]{4}</div><div class="label">Year: 4 digits</div></div>
+      </div>
+      <div class="regex-demo">
+        Matches: "<span class="match">25.12.2024</span>", "<span class="match">01.01.2000</span>"<br>
+        No match: "32.01.2024" (day 32), "25.13.2024" (month 13), "5.1.2024" (missing leading zeros)
+      </div>
+
+      <!-- Phone Number -->
+      <h3>Malaysian Phone Number</h3>
+      <div class="regex-demo">
+        Pattern: <span class="match">\+60[0-9]{2}\-[0-9]{7}</span><br>
+      </div>
+      <div class="pattern-breakdown">
+        <div class="pattern-part"><div class="symbol">\+</div><div class="label">Literal "+" sign</div></div>
+        <div class="pattern-part"><div class="symbol">60</div><div class="label">Malaysia code</div></div>
+        <div class="pattern-part"><div class="symbol">[0-9]{2}</div><div class="label">2 digits (area/provider)</div></div>
+        <div class="pattern-part"><div class="symbol">\-</div><div class="label">Literal hyphen</div></div>
+        <div class="pattern-part"><div class="symbol">[0-9]{7}</div><div class="label">7 digits (number)</div></div>
+      </div>
+      <div class="regex-demo">
+        Matches: "<span class="match">+6012-3456789</span>", "<span class="match">+6019-8765432</span>"<br>
+        No match: "012-3456789" (missing +60), "+60123456789" (missing hyphen)
+      </div>
+
+      <!-- Viagra Scam Detection -->
+      <h3>Spam/Scam Detection (Viagra)</h3>
+      <div class="scam-box">
+        <strong>Why this matters:</strong> Spammers use character substitutions (l33t speak) to bypass simple filters. Regex helps catch these tricks.
+      </div>
+      <div class="regex-demo">
+        Pattern: <span class="match">v[i!1][a@]gr[a@]</span><br>
+      </div>
+      <div class="pattern-breakdown">
+        <div class="pattern-part"><div class="symbol">v</div><div class="label">Literal "v"</div></div>
+        <div class="pattern-part"><div class="symbol">[i!1]</div><div class="label">"i" or "!" or "1"</div></div>
+        <div class="pattern-part"><div class="symbol">[a@]</div><div class="label">"a" or "@"</div></div>
+        <div class="pattern-part"><div class="symbol">gr</div><div class="label">Literal "gr"</div></div>
+        <div class="pattern-part"><div class="symbol">[a@]</div><div class="label">"a" or "@"</div></div>
+      </div>
+      <div class="regex-demo">
+        Matches: "<span class="match">viagra</span>", "<span class="match">v!agra</span>", "<span class="match">v1@gr@</span>", "<span class="match">vi@gra</span>"<br>
+        Catches all common spammer substitutions!
+      </div>
+
+      <!-- .com ending -->
+      <h3>String Ending with .com</h3>
+      <div class="regex-demo">
+        Pattern: <span class="match">.*(\.com)$</span><br>
+        Meaning: Any characters, followed by a literal ".com" at the end of the string<br>
+        Matches: "<span class="match">google.com</span>", "<span class="match">www.example.com</span>", "<span class="match">site-name.com</span>"<br>
+        No match: "example.com.org", "example.com/bad"
+      </div>
+
+      <!-- Starting with "The" -->
+      <h3>String Starting with "The"</h3>
+      <div class="regex-demo">
+        Pattern: <span class="match">^The</span><br>
+        Meaning: The string must begin with "The"<br>
+        Matches: "<span class="match">The</span> cat sat", "<span class="match">The</span>re once was..."<br>
+        No match: "A the cat", "them", "other"
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== SECTION 9: LIVE TESTER ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>9. Live Regex Tester</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <p>Try out regex patterns below. Enter a pattern and a test string to see if they match.</p>
+
+      <div class="live-test">
+        <label><strong>Regex Pattern:</strong></label>
+        <input type="text" id="regexPattern" placeholder="e.g. [a-z]+@[a-z]+\.[a-z]+" value="[aA][1][0-9]{6}">
+        <label><strong>Test String:</strong></label>
+        <input type="text" id="regexString" placeholder="Enter text to test..." value="A1234567">
+        <button class="quiz-btn" onclick="testRegex()" style="margin-top: 8px;">Test Match</button>
+        <div class="result" id="regexResult" style="margin-top: 10px;">Enter a pattern and string, then click Test.</div>
+      </div>
+
+      <h3>Quick Test Examples</h3>
+      <p>Click a button to load a preset pattern and test string:</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0;">
+        <button class="quiz-btn" onclick="loadPreset('[aA][1][0-9]{6}', 'A1234567')">Matric Number</button>
+        <button class="quiz-btn" onclick="loadPreset('(0[1-9]|1[0-9]|2[0-9]|3[01])\\.(0[1-9]|1[012])\\.[0-9]{4}', '25.12.2024')">Date DD.MM.YYYY</button>
+        <button class="quiz-btn" onclick="loadPreset('\\+60[0-9]{2}\\-[0-9]{7}', '+6012-3456789')">Phone Number</button>
+        <button class="quiz-btn" onclick="loadPreset('v[i!1][a@]gr[a@]', 'viagra')">Spam Detector</button>
+        <button class="quiz-btn" onclick="loadPreset('.*(\\.com)$', 'www.example.com')">Ends with .com</button>
+        <button class="quiz-btn" onclick="loadPreset('^The', 'The cat sat on the mat')">Starts with "The"</button>
+        <button class="quiz-btn" onclick="loadPreset('\\d{3}-\\d{4}', '555-1234')">Phone XXX-XXXX</button>
+        <button class="quiz-btn" onclick="loadPreset('[A-Z][a-z]+', 'Hello')">Capitalized Word</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== FLASHCARDS ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>10. Flashcards — Key Concepts</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What does <code>.</code> (dot) match in regex?</div>
+            <div class="flashcard-back">Any single character except the newline character (\n).</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What is the difference between <code>+</code> and <code>*</code>?</div>
+            <div class="flashcard-back"><code>+</code> = one or more (at least 1).<br><code>*</code> = zero or more (can be 0).</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What does <code>\d</code> match?</div>
+            <div class="flashcard-back">Any digit — equivalent to <code>[0-9]</code>.</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What do <code>^</code> and <code>$</code> do?</div>
+            <div class="flashcard-back"><code>^</code> matches the start of the string.<br><code>$</code> matches the end of the string.</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">How do you match a literal "+" in regex?</div>
+            <div class="flashcard-back">Escape it: <code>\+</code>. The backslash removes the special meaning.</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What does <code>[^abc]</code> match?</div>
+            <div class="flashcard-back">Any character that is NOT "a", "b", or "c". The <code>^</code> inside brackets means "NOT".</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What does <code>{2,5}</code> mean?</div>
+            <div class="flashcard-back">Match the preceding element 2 to 5 times (inclusive).</div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">What does <code>(cat|dog)</code> match?</div>
+            <div class="flashcard-back">Either "cat" or "dog". The pipe <code>|</code> is the OR operator.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box tip">
+        <strong>How to use flashcards:</strong> Click any card to flip it and reveal the answer. Click again to flip back. Try to answer before you flip!
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== QUIZ ===================== -->
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleCollapsible(this)">
+      <h2>11. Quiz — Test Your Knowledge</h2>
+      <span class="toggle-icon">▼</span>
+    </div>
+    <div class="collapsible-body">
+
+      <div class="quiz" id="quiz1">
+        <h3>Question 1: What does the regex <code>\w</code> match?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">A. Any character including newline</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">B. Any whitespace character</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">C. Any word character (letters, digits, underscore)</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">D. Any non-word character</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz2">
+        <h3>Question 2: Which pattern matches exactly 4 digits?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">A. \d+</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">B. \d{4}</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">C. \d[4]</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">D. \d(4)</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz3">
+        <h3>Question 3: What does <code>[^0-9]</code> match?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">A. Any digit from 0 to 9</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">B. Any character that is NOT a digit</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">C. The characters "^", "0", "-", "9"</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">D. Exactly zero to nine characters</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz4">
+        <h3>Question 4: Which pattern matches "color" and "colour"?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">A. color|colour</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">B. colou?r</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">C. colo[u]*r</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">D. Both B and C</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz5">
+        <h3>Question 5: What does <code>^The</code> check for?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">A. Strings containing "The" anywhere</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">B. Strings ending with "The"</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">C. Strings starting with "The"</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">D. Strings that are exactly "The"</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz6">
+        <h3>Question 6: What does the <code>+</code> quantifier mean?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">A. Zero or more</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">B. One or more</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">C. Zero or one</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">D. Exactly one</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz7">
+        <h3>Question 7: To match a literal dot (.) in regex, you write:</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">A. .</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">B. \.</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">C. [/]</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">D. ..</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz8">
+        <h3>Question 8: What does <code>(?i)</code> do in a regex pattern?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">A. Makes the pattern match numbers only</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">B. Makes the pattern match international characters</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)">C. Makes the pattern case-insensitive</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">D. Enables multi-line mode</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="resetQuiz()" style="margin-top: 16px;">Reset Quiz</button>
+
+    </div>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <div class="summary">
+    <h2>Summary — Regular Expressions</h2>
+    <ul>
+      <li><strong>Regex</strong> is a powerful pattern-matching tool used for text verification, searching, and replacement.</li>
+      <li><strong>Character Classes</strong> <code>[ ]</code> match one character from a set. Use ranges like <code>[a-z]</code>, <code>[0-9]</code>, and negation <code>[^ ]</code>.</li>
+      <li><strong>Shortcut Classes</strong>: <code>\d</code> (digit), <code>\w</code> (word char), <code>\s</code> (whitespace), <code>.</code> (any char). Uppercase versions negate.</li>
+      <li><strong>Quantifiers</strong>: <code>+</code> (1+), <code>*</code> (0+), <code>?</code> (0 or 1), <code>{n}</code> (exactly n), <code>{min,max}</code> (range).</li>
+      <li><strong>Anchors</strong>: <code>^</code> (start), <code>$</code> (end) — match positions, not characters.</li>
+      <li><strong>Groups &amp; OR</strong>: <code>( )</code> groups patterns, <code>|</code> provides alternation (OR).</li>
+      <li><strong>Escaping</strong>: Use <code>\</code> before special characters to match them literally.</li>
+      <li><strong>Practical patterns</strong>: Matric numbers, dates, phone numbers, spam detection, email-like patterns.</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+function toggleCollapsible(header) {
+  const body = header.nextElementSibling;
+  const icon = header.querySelector('.toggle-icon');
+  body.classList.toggle('active');
+  icon.textContent = body.classList.contains('active') ? '▲' : '▼';
+}
+
+function testRegex() {
+  const patternStr = document.getElementById('regexPattern').value;
+  const testStr = document.getElementById('regexString').value;
+  const resultDiv = document.getElementById('regexResult');
+
+  try {
+    const regex = new RegExp(patternStr);
+    const match = testStr.match(regex);
+
+    if (match) {
+      const highlighted = testStr.replace(regex, function(m) { return '<strong style="background:#a6e3a133;padding:1px 3px;border-radius:2px;">' + m + '</strong>'; });
+      resultDiv.className = 'result match';
+      resultDiv.innerHTML = '✓ Match found! Matched: "<strong>' + match[0] + '</strong>"<br>Full text: ' + highlighted;
+    } else {
+      resultDiv.className = 'result no-match';
+      resultDiv.innerHTML = '✗ No match found.';
+    }
+  } catch (e) {
+    resultDiv.className = 'result no-match';
+    resultDiv.innerHTML = '⚠ Invalid regex pattern: ' + e.message;
+  }
+}
+
+function loadPreset(pattern, testStr) {
+  document.getElementById('regexPattern').value = pattern;
+  document.getElementById('regexString').value = testStr;
+  testRegex();
+}
+
+function checkAnswer(quizId, option, isCorrect) {
+  const quiz = document.getElementById(quizId);
+  if (quiz.dataset.answered) return;
+  quiz.dataset.answered = 'true';
+
+  const feedback = quiz.querySelector('.quiz-feedback');
+  const options = quiz.querySelectorAll('.quiz-option');
+
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+    if (opt === option) {
+      if (isCorrect) {
+        opt.style.background = 'rgba(166,227,161,0.25)';
+        opt.style.border = '2px solid #a6e3a1';
+        feedback.textContent = '✓ Correct!';
+        feedback.style.color = '#a6e3a1';
+      } else {
+        opt.style.background = 'rgba(243,139,168,0.25)';
+        opt.style.border = '2px solid #f38ba8';
+        feedback.textContent = '✗ Incorrect. The correct answer is highlighted below.';
+        feedback.style.color = '#f38ba8';
+      }
+    }
+    if (isCorrect === false && opt.onclick && opt.onclick.toString().includes('true')) {
+      opt.style.background = 'rgba(166,227,161,0.15)';
+      opt.style.border = '1px solid #a6e3a1';
+    }
+  });
+}
+
+function resetQuiz() {
+  document.querySelectorAll('.quiz').forEach(function(quiz) {
+    delete quiz.dataset.answered;
+    quiz.querySelectorAll('.quiz-option').forEach(function(opt) {
+      opt.style.background = '';
+      opt.style.border = '';
+      opt.style.pointerEvents = '';
+    });
+    const feedback = quiz.querySelector('.quiz-feedback');
+    feedback.textContent = '';
+    feedback.style.color = '';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.collapsible-body').forEach(function(body) {
+    body.classList.remove('active');
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 8: Advanced PHP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Topic 8: Advanced PHP</h1>
+
+  <!-- Progress -->
+  <div class="progress-bar"><div class="progress-text">0% Complete</div></div>
+
+  <div class="info-box analogy">
+    <strong>Analogy:</strong> If basic PHP is learning to cook simple meals (boil water, make toast), then advanced PHP is learning to manage an entire kitchen — handling multiple chefs (sessions), checking ingredients for freshness (filters), managing the fridge (cookies), dealing with power outages (exceptions), and accepting food deliveries (file uploads).
+  </div>
+
+  <!-- ==================== SECTION 1: PHP Superglobals ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>1. PHP Superglobals</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>What are Superglobals?</h3>
+        <p><strong>Superglobals</strong> are built-in PHP variables that are <strong>always available</strong> in every script, regardless of scope. You do not need to declare them or pass them as parameters. They are always written in <strong>ALL CAPS with underscores</strong>.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Superglobals are like the essential tools always hanging on a mechanic's belt — wrench, screwdriver, pliers. No matter which car they are working on or where they are in the garage, those tools are always within reach. You never have to go look for them.
+      </div>
+
+      <div class="card">
+        <h3>The Nine Superglobals</h3>
+        <table>
+          <thead>
+            <tr><th>Superglobal</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>$GLOBALS</code></td><td>Reference to all global variables available in the current script</td></tr>
+            <tr><td><code>$_GET</code></td><td>Associative array of variables passed via URL query string (GET method)</td></tr>
+            <tr><td><code>$_POST</code></td><td>Associative array of variables passed via HTTP POST method (form data)</td></tr>
+            <tr><td><code>$_REQUEST</code></td><td>Contains the contents of <code>$_GET</code>, <code>$_POST</code>, and <code>$_COOKIE</code></td></tr>
+            <tr><td><code>$_SERVER</code></td><td>Information about the server and execution environment</td></tr>
+            <tr><td><code>$_SESSION</code></td><td>Session variables — user data that persists across multiple page loads</td></tr>
+            <tr><td><code>$_COOKIE</code></td><td>Cookies sent by the browser to the server</td></tr>
+            <tr><td><code>$_FILES</code></td><td>Information about files uploaded via HTTP POST (file uploads)</td></tr>
+            <tr><td><code>$_ENV</code></td><td>Environment variables passed to the script via the shell or other methods</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>How many superglobals does PHP have?</h3></div>
+            <div class="flashcard-back"><p>Nine: $GLOBALS, $_GET, $_POST, $_REQUEST, $_SERVER, $_SESSION, $_COOKIE, $_FILES, $_ENV.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What does $_REQUEST contain?</h3></div>
+            <div class="flashcard-back"><p>The combined contents of $_GET, $_POST, and $_COOKIE.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 2: $_REQUEST ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>2. $_REQUEST — Form Data Collection</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>How $_REQUEST Works</h3>
+        <p>The <code>$_REQUEST</code> superglobal collects data after a form submission. It aggregates data from <code>$_GET</code>, <code>$_POST</code>, and <code>$_COOKIE</code> into a single array. This means it works regardless of whether the form used GET or POST method.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Imagine a reception desk at a hotel. Guests can arrive by car (<code>$_GET</code>), by taxi (<code>$_POST</code>), or by walking (<code>$_COOKIE</code>). The receptionist (<code>$_REQUEST</code>) does not care how they arrived — she collects information from all of them into one guest book.
+      </div>
+
+      <div class="card">
+        <h3>Example: Form with $_REQUEST</h3>
+        <pre><code>&lt;!-- HTML Form --&gt;
+&lt;form method="post" action="process.php"&gt;
+    &lt;label&gt;Name: &lt;input type="text" name="username"&gt;&lt;/label&gt;
+    &lt;label&gt;Email: &lt;input type="email" name="useremail"&gt;&lt;/label&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        <pre><code>&lt;?php
+// process.php — data collected via $_REQUEST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name  = $_REQUEST['username'];
+    $email = $_REQUEST['useremail'];
+    echo "Welcome, $name! Your email is $email.";
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Warning:</strong> While <code>$_REQUEST</code> is convenient, for security-sensitive forms it is better to explicitly use <code>$_POST</code>. This ensures the data was submitted via POST and not via URL parameters (which can be logged in browser history and server logs).
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 3: $_SERVER ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>3. $_SERVER — Server Information</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>Common $_SERVER Elements</h3>
+        <p>The <code>$_SERVER</code> superglobal contains information about the server and the current request. Here are the most commonly used elements:</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Element</th><th>Description</th><th>Example Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>$_SERVER['PHP_SELF']</code></td><td>The filename of the currently executing script</td><td><code>/profile.php</code></td></tr>
+          <tr><td><code>$_SERVER['SERVER_NAME']</code></td><td>The name of the server (hostname)</td><td><code>localhost</code></td></tr>
+          <tr><td><code>$_SERVER['HTTP_HOST']</code></td><td>The Host header from the current request</td><td><code>localhost:8080</code></td></tr>
+          <tr><td><code>$_SERVER['HTTP_REFERER']</code></td><td>The URL of the page that linked to this page</td><td><code>https://example.com/home</code></td></tr>
+          <tr><td><code>$_SERVER['HTTP_USER_AGENT']</code></td><td>The browser/OS information of the visitor</td><td><code>Mozilla/5.0 ...</code></td></tr>
+          <tr><td><code>$_SERVER['SCRIPT_NAME']</code></td><td>The path of the current script</td><td><code>/folder/page.php</code></td></tr>
+        </tbody>
+      </table>
+
+      <div class="card">
+        <h3>Example: Display Server Info</h3>
+        <pre><code>&lt;?php
+echo "Current page: " . $_SERVER['PHP_SELF'] . "&lt;br&gt;";
+echo "Server name: " . $_SERVER['SERVER_NAME'] . "&lt;br&gt;";
+echo "Your browser: " . $_SERVER['HTTP_USER_AGENT'] . "&lt;br&gt;";
+echo "Referring page: " . ($_SERVER['HTTP_REFERER'] ?? 'None') . "&lt;br&gt;";
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box note">
+        <strong>Note:</strong> Some <code>$_SERVER</code> elements may not be set depending on the server configuration. Always check if an element exists before using it, for example with <code>isset()</code> or the null coalescing operator <code>??</code>.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 4: Sessions ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>4. PHP Sessions — Persistent User Data</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>The Problem: HTTP is Stateless</h3>
+        <p>Every HTTP request is <strong>stateless</strong> — the server treats each request as if it comes from a brand-new user. It has no memory of who you are between page loads. Sessions solve this problem.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Stateless vs Sessions:</strong> Imagine a shop where the shopkeeper has amnesia. Every time you walk in the door, he asks "Who are you?" and "What were we talking about?" <strong>Sessions</strong> are like giving each customer a loyalty card. When you walk in, you show the card, and the shopkeeper checks his file cabinet (server) to remember everything about you — your name, what you bought last time, and what's in your shopping cart.
+      </div>
+
+      <div class="card">
+        <h3>How Sessions Work</h3>
+        <ol>
+          <li>When you call <code>session_start()</code>, PHP creates a unique session ID for the user</li>
+          <li>This ID is stored as a <strong>cookie</strong> in the user's browser (named <code>PHPSESSID</code>)</li>
+          <li>The actual data is stored <strong>on the server</strong> in a temporary file</li>
+          <li>On each page load, the browser sends the session ID cookie back, and PHP retrieves the stored data</li>
+          <li>Session variables are stored in the <code>$_SESSION</code> superglobal array</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>Session Lifecycle</h3>
+        <div class="steps">
+          <div class="step-item"><strong>Start:</strong> Call <code>session_start()</code> at the top of your script</div>
+          <div class="step-item"><strong>Write:</strong> Store data: <code>$_SESSION["name"] = "Ali";</code></div>
+          <div class="step-item"><strong>Read:</strong> Access data: <code>echo $_SESSION["name"];</code></div>
+          <div class="step-item"><strong>Modify:</strong> Overwrite: <code>$_SESSION["name"] = "Siti";</code></div>
+          <div class="step-item"><strong>Destroy:</strong> <code>session_destroy()</code> removes all session data</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Complete Session Example</h3>
+        <pre><code>&lt;?php
+session_start(); // Must be at the top, before any output
+
+// Store session variables
+$_SESSION["username"] = "Ali";
+$_SESSION["role"]     = "admin";
+$_SESSION["loggedin"] = true;
+
+echo "Session started for: " . $_SESSION["username"];
+?&gt;</code></pre>
+        <pre><code>&lt;?php
+session_start(); // Must be called on every page that uses sessions
+
+// Read session variables
+if (isset($_SESSION["loggedin"]) &amp;&amp; $_SESSION["loggedin"] === true) {
+    echo "Welcome back, " . $_SESSION["username"] . "!";
+} else {
+    echo "Please log in.";
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Session Lifetime</h3>
+        <p>By default, session variables last <strong>until the browser is closed</strong>. After that, they are destroyed. You can change this by setting a custom timeout.</p>
+      </div>
+
+      <div class="card">
+        <h3>Destroying Sessions</h3>
+        <pre><code>&lt;?php
+session_start();
+
+// Remove all session variables
+session_unset();
+
+// Destroy the session entirely
+session_destroy();
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box note">
+        <strong>session_unset() vs session_destroy():</strong><br>
+        <code>session_unset()</code> — removes all variables from the session, but the session itself still exists<br>
+        <code>session_destroy()</code> — destroys the session entirely on the server (the session file is deleted)
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Why is HTTP called "stateless"?</h3></div>
+            <div class="flashcard-back"><p>Because the server does not remember anything about the user between requests. Each request is treated independently.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What function must be called before using sessions?</h3></div>
+            <div class="flashcard-back"><p><code>session_start()</code> — and it must be called before any HTML output.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Where is session data actually stored?</h3></div>
+            <div class="flashcard-back"><p>On the <strong>server</strong> (in temporary files). Only the session ID is stored as a cookie in the browser.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 5: Cookies ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>5. Cookies — Client-Side Storage</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>What is a Cookie?</h3>
+        <p>A <strong>cookie</strong> is a small file that the server embeds on the user's computer via the browser. On subsequent visits, the browser sends the cookie back to the server, allowing it to recognize the user.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Cookies vs Sessions:</strong> A <strong>cookie</strong> is like a wristband given to you at a concert. You wear it (on your computer), and whenever you walk through a door, the security guard reads it to know you have a ticket. A <strong>session</strong> is like the concert venue's internal guest list — it is stored backstage (on the server), and the wristband (session ID) is just the reference number that looks you up.
+      </div>
+
+      <div class="card">
+        <h3>Cookies vs Sessions</h3>
+        <table>
+          <thead>
+            <tr><th>Feature</th><th>Cookie</th><th>Session</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Storage Location</td><td>User's browser (client-side)</td><td>Server</td></tr>
+            <tr><td>Size Limit</td><td>~4 KB per cookie</td><td>Unlimited (server RAM)</td></tr>
+            <tr><td>Lifetime</td><td>Can be set to expire at a specific time</td><td>Until browser closes (by default)</td></tr>
+            <tr><td>Security</td><td>Less secure (visible to user)</td><td>More secure (data stays on server)</td></tr>
+            <tr><td>Can be disabled?</td><td>Yes, user can disable cookies</td><td>No (requires cookies for session ID)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Cookie Limits &amp; Rules</h3>
+        <ul>
+          <li>Max <strong>20 cookies</strong> per domain</li>
+          <li>Max <strong>4 KB</strong> per cookie</li>
+          <li>Max <strong>300 cookies</strong> total across all domains</li>
+          <li><strong>"One refresh delay"</strong> — a cookie set on one page is NOT available until the <em>next</em> page load. When you set a cookie with <code>setcookie()</code>, it is sent to the browser as a header. The browser will only send it back on the <em>next</em> request.</li>
+        </ul>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Important — "One refresh delay":</strong> If you set a cookie and immediately try to read it in the same script, it will NOT be available yet. You must wait for the next page load or refresh. This is because the cookie has been sent to the browser but the browser has not yet sent it back.
+      </div>
+
+      <div class="card">
+        <h3>Creating a Cookie</h3>
+        <pre><code>&lt;?php
+// setcookie(name, value, expire, path, domain, security)
+// Must be called BEFORE any HTML output (before &lt;html&gt; tag)
+
+setcookie(
+    "user",
+    "Ali",
+    time() + (86400 * 30),  // Expires in 30 days
+    "/",
+    "",
+    false,  // secure (HTTPS only)
+    true    // httpOnly (no JavaScript access)
+);
+
+echo "Cookie has been set!";
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Reading a Cookie</h3>
+        <pre><code>&lt;?php
+// Read from $_COOKIE superglobal
+if (isset($_COOKIE["user"])) {
+    echo "Welcome back, " . $_COOKIE["user"] . "!";
+} else {
+    echo "No cookie found. Welcome, new visitor!";
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Deleting a Cookie</h3>
+        <pre><code>&lt;?php
+// Delete by setting expiration to a time in the past
+setcookie("user", "", time() - 3600, "/");
+echo "Cookie deleted.";
+?&gt;</code></pre>
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Where is a cookie stored — server or client?</h3></div>
+            <div class="flashcard-back"><p>On the client (user's browser). Session data is stored on the server.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What is the "one refresh delay"?</h3></div>
+            <div class="flashcard-back"><p>A cookie set on the current page is not accessible via $_COOKIE until the next page load or refresh.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>How do you delete a cookie?</h3></div>
+            <div class="flashcard-back"><p>Call setcookie() with the same name and set the expiration time to a point in the past (e.g., <code>time() - 3600</code>).</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 6: Exception Handling ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>6. Exception Handling</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>What is Exception Handling?</h3>
+        <p>An <strong>exception</strong> is an error that occurs during program execution. <strong>Exception handling</strong> is a mechanism to catch and deal with these errors gracefully, instead of letting the script crash with a fatal error.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Imagine you are driving a car. An <strong>exception</strong> is like a roadblock ahead. Without exception handling, you would crash right into it (fatal error). With exception handling, you have a <code>try</code> block (you start driving toward the road), a <code>throw</code> (someone spots the roadblock and raises an alarm), and a <code>catch</code> block (you take a detour around it). The program keeps running instead of crashing.
+      </div>
+
+      <div class="card">
+        <h3>The Keywords</h3>
+        <table>
+          <thead>
+            <tr><th>Keyword</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>try</code></td><td>Wraps code that might cause an exception</td></tr>
+            <tr><td><code>throw</code></td><td>Triggers (throws) an exception when something goes wrong</td></tr>
+            <tr><td><code>catch</code></td><td>Catches the thrown exception and handles it</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Basic try-catch Example</h3>
+        <pre><code>&lt;?php
+try {
+    // Code that might fail
+    $num = 10;
+    $result = $num / 0; // Division by zero!
+
+    if ($result === false) {
+        throw new Exception("Calculation failed!");
+    }
+
+    echo "Result: $result";
+} catch (Exception $e) {
+    // Handle the error
+    echo "Error: " . $e-&gt;getMessage();
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Without try-catch</h3>
+        <pre><code>&lt;?php
+// If an exception is thrown and not caught:
+// PHP shows: Fatal error: Uncaught Exception in ...
+
+// This is what happens without a catch block:
+function divide($a, $b) {
+    if ($b == 0) {
+        throw new Exception("Cannot divide by zero!");
+    }
+    return $a / $b;
+}
+
+// This will crash the script:
+echo divide(10, 0);
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Warning:</strong> Without a <code>catch</code> block, an uncaught exception causes a <strong>fatal error</strong> that stops script execution entirely. Always wrap risky code in try-catch blocks, especially database operations and file handling.
+      </div>
+
+      <div class="card">
+        <h3>Database Connection with Exception Handling</h3>
+        <pre><code>&lt;?php
+try {
+    $pdo = new PDO('mysql:host=localhost;dbname=mydb', 'root', '');
+    $pdo-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected!";
+} catch (PDOException $e) {
+    echo "Database connection failed: " . $e-&gt;getMessage();
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What happens if an exception is thrown but not caught?</h3></div>
+            <div class="flashcard-back"><p>PHP generates a fatal error: "Uncaught Exception" and the script stops executing.</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What are the three keywords in exception handling?</h3></div>
+            <div class="flashcard-back"><p><code>try</code> (wraps risky code), <code>throw</code> (triggers the exception), <code>catch</code> (handles the exception).</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 7: PHP Filters ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>7. PHP Filters — Validate &amp; Sanitize</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>Why Use Filters?</h3>
+        <p>When data comes from user input (forms, URLs, uploads), you must check it for correctness and safety. PHP provides a built-in <strong>filter</strong> system for this.</p>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy — Airport Security:</strong> <strong>Validation</strong> is like checking if your passport is real and not expired — it answers "Is this document valid?" <strong>Sanitization</strong> is like the security scanner that removes any prohibited items from your bag — it answers "Let me clean this data of anything dangerous."
+      </div>
+
+      <div class="card">
+        <h3>Two Types of Filters</h3>
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Purpose</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Validate</strong></td><td>Checks if data is in the proper form. Returns <code>true</code> or <code>false</code>.</td><td>Is this a valid email address?</td></tr>
+            <tr><td><strong>Sanitize</strong></td><td>Removes illegal characters from the data. Returns the cleaned string.</td><td>Remove HTML tags from user input</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>The filter_var() Function</h3>
+        <pre><code>filter_var(variable, filter, options)</code></pre>
+        <p>This is the primary function for filtering in PHP. It takes a variable, a filter type, and optional settings.</p>
+      </div>
+
+      <div class="card">
+        <h3>Validation Examples</h3>
+        <pre><code>&lt;?php
+// Validate an email
+$email = "user@example.com";
+if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo "Valid email!";
+} else {
+    echo "Invalid email!";
+}
+
+// Validate an IP address
+$ip = "192.168.1.1";
+if (filter_var($ip, FILTER_VALIDATE_IP)) {
+    echo "Valid IP!";
+} else {
+    echo "Invalid IP!";
+}
+
+// Validate a URL
+$url = "https://www.google.com";
+if (filter_var($url, FILTER_VALIDATE_URL)) {
+    echo "Valid URL!";
+} else {
+    echo "Invalid URL!";
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Sanitization Examples</h3>
+        <pre><code>&lt;?php
+// Sanitize a string — remove HTML tags
+$dirty = "&lt;script&gt;alert('hacked')&lt;/script&gt;";
+$clean = filter_var($dirty, FILTER_SANITIZE_STRING);
+echo $clean; // Outputs: alert('hacked')
+
+// Sanitize an email
+$bad_email = "user(at)example.com";
+$clean_email = filter_var($bad_email, FILTER_SANITIZE_EMAIL);
+echo $clean_email; // Outputs: user@example.com
+
+// Sanitize a URL
+$bad_url = "https://www.example.com/path with spaces";
+$clean_url = filter_var($bad_url, FILTER_SANITIZE_URL);
+echo $clean_url; // Outputs: https://www.example.com/path%20with%20spaces
+?&gt;</code></pre>
+      </div>
+
+      <div class="info-box tip">
+        <strong>Tip:</strong> Always <strong>validate first</strong>, then <strong>sanitize</strong>. Validation tells you if the data is good. Sanitization cleans up data that might have illegal characters.
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What is the difference between validation and sanitization?</h3></div>
+            <div class="flashcard-back"><p>Validation checks if data is in proper form (true/false). Sanitization removes illegal characters from data (returns cleaned data).</p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Which function filters variables in PHP?</h3></div>
+            <div class="flashcard-back"><p><code>filter_var($variable, $filter, $options)</code></p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SECTION 8: File Uploading ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>8. File Uploading</h2></div>
+    <div class="collapsible-body">
+
+      <div class="card">
+        <h3>How File Uploads Work</h3>
+        <ol>
+          <li>User selects a file in an HTML form with <code>type="file"</code></li>
+          <li>Form is submitted via <strong>POST</strong> with a special encoding type</li>
+          <li>PHP receives the file in the <code>$_FILES</code> superglobal</li>
+          <li>The file is temporarily stored on the server</li>
+          <li>You move it from the temp location to a permanent directory using <code>move_uploaded_file()</code></li>
+        </ol>
+      </div>
+
+      <div class="info-box analogy">
+        <strong>Analogy:</strong> Uploading a file is like mailing a package. You (the user) put the package (file) in a mailbox (form submission). The postal service (PHP) receives it at a temporary sorting center (<code>tmp_name</code>). You then need to move it from the sorting center to its final destination (<code>move_uploaded_file()</code>). You also check the package size, type, and whether a similar package already exists before delivering it.
+      </div>
+
+      <div class="card">
+        <h3>The $_FILES Array</h3>
+        <p>When a file is uploaded, PHP stores information about it in the <code>$_FILES</code> superglobal:</p>
+        <table>
+          <thead>
+            <tr><th>Key</th><th>Description</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>$_FILES['file']['name']</code></td><td>Original filename on user's computer</td><td><code>photo.jpg</code></td></tr>
+            <tr><td><code>$_FILES['file']['type']</code></td><td>MIME type of the file</td><td><code>image/jpeg</code></td></tr>
+            <tr><td><code>$_FILES['file']['size']</code></td><td>File size in bytes</td><td><code>204800</code></td></tr>
+            <tr><td><code>$_FILES['file']['tmp_name']</code></td><td>Temporary path on server</td><td><code>C:\Windows\Temp\php1234.tmp</code></td></tr>
+            <tr><td><code>$_FILES['file']['error']</code></td><td>Error code (0 = no error)</td><td><code>0</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>HTML Form for File Upload</h3>
+        <pre><code>&lt;form action="upload.php" method="post" enctype="multipart/form-data"&gt;
+    &lt;label&gt;Select a file to upload:&lt;/label&gt;
+    &lt;input type="file" name="myfile"&gt;
+    &lt;button type="submit"&gt;Upload&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Required:</strong> The form <strong>must</strong> have:<br>
+        • <code>method="post"</code> — GET cannot handle file data<br>
+        • <code>enctype="multipart/form-data"</code> — this encoding type allows binary file data to be transmitted
+      </div>
+
+      <div class="card">
+        <h3>PHP Upload Script</h3>
+        <pre><code>&lt;?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $targetDir = "uploads/";
+    $fileName  = basename($_FILES["myfile"]["name"]);
+    $targetPath = $targetDir . $fileName;
+    $fileType  = pathinfo($targetPath, PATHINFO_EXTENSION);
+
+    // --- ALLOWED FILE FORMATS ---
+    $allowedTypes = ["jpg", "jpeg", "png", "gif", "pdf"];
+
+    // --- CHECK FILE FORMAT ---
+    if (!in_array(strtolower($fileType), $allowedTypes)) {
+        die("Error: Only JPG, JPEG, PNG, GIF, and PDF files are allowed.");
+    }
+
+    // --- CHECK FILE SIZE (max 5 MB) ---
+    if ($_FILES["myfile"]["size"] > 5 * 1024 * 1024) {
+        die("Error: File size must be under 5 MB.");
+    }
+
+    // --- CHECK IF FILE ALREADY EXISTS ---
+    if (file_exists($targetPath)) {
+        die("Error: File already exists.");
+    }
+
+    // --- MOVE FILE FROM TEMP TO TARGET ---
+    if (move_uploaded_file($_FILES["myfile"]["tmp_name"], $targetPath)) {
+        echo "File uploaded successfully: $fileName";
+    } else {
+        echo "Error: Failed to upload file.";
+    }
+}
+?&gt;</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>Security Checklist for File Uploads</h3>
+        <ul>
+          <li>✅ Always check the <strong>file format</strong> (extension and/or MIME type)</li>
+          <li>✅ Always check the <strong>file size</strong></li>
+          <li>✅ Always check if the file <strong>already exists</strong> to prevent overwriting</li>
+          <li>✅ Generate a <strong>unique filename</strong> (e.g., using <code>uniqid()</code> or time) to prevent conflicts</li>
+          <li>✅ Store uploads <strong>outside the web root</strong> or with <strong>.htaccess</strong> rules to prevent direct access</li>
+          <li>✅ Rename files — never trust user-provided filenames</li>
+        </ul>
+      </div>
+
+      <div class="flashcard-container">
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>What encoding type is required for file upload forms?</h3></div>
+            <div class="flashcard-back"><p><code>enctype="multipart/form-data"</code></p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Which function moves an uploaded file to its destination?</h3></div>
+            <div class="flashcard-back"><p><code>move_uploaded_file($tmp_path, $destination)</code></p></div>
+          </div>
+        </div>
+        <div class="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front"><h3>Which superglobal holds uploaded file information?</h3></div>
+            <div class="flashcard-back"><p><code>$_FILES</code></p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== QUIZ ==================== -->
+  <div class="collapsible">
+    <div class="collapsible-header"><h2>Knowledge Check</h2></div>
+    <div class="collapsible-body">
+
+      <div class="quiz" id="quiz1">
+        <h3>Q1: How many PHP superglobals are there?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">5</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)">7</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)">9</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz2">
+        <h3>Q2: What does $_REQUEST contain?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">Only POST data</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)">Contents of $_GET, $_POST, and $_COOKIE</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">Server environment variables</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz3">
+        <h3>Q3: Where is session data stored?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">In a cookie on the user's browser</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)">On the server in temporary files</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)">In a database by default</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz4">
+        <h3>Q4: What is the "one refresh delay" for cookies?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">A cookie set on the current page is not available until the next page load</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Cookies expire after one refresh</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">You must refresh the page to delete a cookie</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz5">
+        <h3>Q5: What happens without a catch block when an exception is thrown?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">The exception is silently ignored</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">A fatal error "Uncaught Exception" occurs</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">PHP automatically catches it</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz6">
+        <h3>Q6: What is the difference between validation and sanitization?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">They are the same thing</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">Validation checks if data is proper; sanitization removes illegal characters</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Sanitization checks data; validation cleans it</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz7">
+        <h3>Q7: What encoding type must a file upload form use?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">application/x-www-form-urlencoded</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)">multipart/form-data</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">text/plain</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <div class="quiz" id="quiz8">
+        <h3>Q8: Which superglobal contains uploaded file information?</h3>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">$_POST</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)">$_REQUEST</div>
+        <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)">$_FILES</div>
+        <div class="quiz-feedback"></div>
+      </div>
+
+      <button class="quiz-btn" onclick="resetAllQuizzes()">Reset All Answers</button>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUMMARY ==================== -->
+  <div class="summary">
+    <h2>Topic 8 Summary</h2>
+    <ul>
+      <li><strong>Superglobals</strong> are nine built-in PHP variables always available regardless of scope (e.g., <code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_FILES</code>).</li>
+      <li><code>$_REQUEST</code> collects data from <code>$_GET</code>, <code>$_POST</code>, and <code>$_COOKIE</code>.</li>
+      <li><code>$_SERVER</code> provides information about the server environment (PHP_SELF, SERVER_NAME, HTTP_HOST, etc.).</li>
+      <li><strong>Sessions</strong> solve the stateless nature of HTTP by storing user data on the server, referenced by a session ID cookie.</li>
+      <li>Use <code>session_start()</code> to begin, <code>$_SESSION[]</code> to read/write, <code>session_destroy()</code> to end.</li>
+      <li><strong>Cookies</strong> are small files stored on the client's browser. Max 4KB, 20 per domain, 300 total.</li>
+      <li>The <strong>"one refresh delay"</strong> means a newly set cookie is not available until the next page load.</li>
+      <li><strong>Exception handling</strong> uses <code>try</code>, <code>throw</code>, and <code>catch</code> to handle errors gracefully without crashing.</li>
+      <li><strong>PHP Filters</strong> validate (check if data is proper) and sanitize (remove illegal characters) user input using <code>filter_var()</code>.</li>
+      <li><strong>File uploads</strong> require <code>enctype="multipart/form-data"</code>, use the <code>$_FILES</code> superglobal, and <code>move_uploaded_file()</code> to save.</li>
+    </ul>
+  </div>
+
+</div><!-- /.container -->
+
+<script>
+// Collapsible sections
+document.querySelectorAll('.collapsible-header').forEach(header => {
+  header.addEventListener('click', () => {
+    header.parentElement.classList.toggle('active');
+  });
+});
+
+// Quiz logic
+function checkAnswer(quizId, element, isCorrect) {
+  const quiz = document.getElementById(quizId);
+  const feedback = quiz.querySelector('.quiz-feedback');
+  quiz.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.remove('correct', 'incorrect');
+    opt.style.pointerEvents = 'none';
+  });
+  if (isCorrect) {
+    element.classList.add('correct');
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#27ae60';
+  } else {
+    element.classList.add('incorrect');
+    feedback.textContent = 'Incorrect. Try again after reset.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+
+function resetAllQuizzes() {
+  document.querySelectorAll('.quiz').forEach(quiz => {
+    quiz.querySelectorAll('.quiz-option').forEach(opt => {
+      opt.classList.remove('correct', 'incorrect');
+      opt.style.pointerEvents = 'auto';
+    });
+    quiz.querySelector('.quiz-feedback').textContent = '';
+  });
+}
+
+// Progress tracking
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = Math.min(100, Math.round((scrolled / total) * 100));
+  const bar = document.querySelector('.progress-bar .progress-text');
+  if (bar) bar.textContent = pct + '% Complete';
+});
+</script>
+
+</body>
+</html>

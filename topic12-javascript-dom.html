@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topic 12: JavaScript & DOM</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">TP2543</a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="topic1-introduction.html">Intro</a>
+    <a href="topic2-project.html">Project</a>
+    <a href="topic3-html-basics.html">HTML</a>
+    <a href="topic4-html-forms.html">Forms</a>
+    <a href="topic5-regex.html">Regex</a>
+    <a href="topic6-php-basics.html">PHP</a>
+    <a href="topic7-php-mysql.html">PHP+MySQL</a>
+    <a href="topic8-advanced-php.html">Adv PHP</a>
+    <a href="topic9-mvc-framework.html">MVC</a>
+    <a href="topic10-css.html">CSS</a>
+    <a href="topic11-responsive-bootstrap.html">RWD</a>
+    <a href="topic12-javascript-dom.html">JS+DOM</a>
+    <a href="topic13-jquery.html">jQuery</a>
+    <a href="topic14-ajax-json-rest.html">AJAX</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <h1>Topic 12: JavaScript & the Document Object Model (DOM)</h1>
+
+  <div class="progress-bar">
+    <div class="progress-text">Topic Progress: 80% Complete</div>
+  </div>
+
+  <!-- SECTION 1: What is JavaScript -->
+  <h2>1. What is JavaScript?</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Three Languages of the Web:</strong> Think of building a website like constructing a house. <strong>HTML</strong> is the <em>structure</em> — the walls, floors, and roof. <strong>CSS</strong> is the <em>appearance</em> — the paint colours, furniture styles, and decorations. <strong>JavaScript</strong> is the <em>electricity and plumbing</em> — it makes things <em>happen</em>. Lights turn on when you flip switches, water flows when you turn taps, the garage door opens when you press a button. JavaScript brings your static house to life.
+  </div>
+
+  <p>JavaScript is a <strong>cross-platform, object-oriented scripting language</strong> that makes web pages interactive. It powers:</p>
+
+  <ul>
+    <li>Complex animations and visual effects</li>
+    <li>Clickable buttons and interactive forms</li>
+    <li>Popup menus and modal dialogs</li>
+    <li>Real-time content updates without page reloads</li>
+    <li>Games and multimedia applications</li>
+  </ul>
+
+  <h3>Client-Side vs Server-Side</h3>
+
+  <table>
+    <tr>
+      <th>Aspect</th>
+      <th>Client-Side JavaScript</th>
+      <th>Server-Side JavaScript (e.g., Node.js)</th>
+    </tr>
+    <tr>
+      <td><strong>Runs on</strong></td>
+      <td>The user's browser</td>
+      <td>The web server</td>
+    </tr>
+    <tr>
+      <td><strong>Purpose</strong></td>
+      <td>Controls the browser and DOM, responds to user actions</td>
+      <td>Communicates with databases, reads/writes files, handles HTTP requests</td>
+    </tr>
+    <tr>
+      <td><strong>Examples</strong></td>
+      <td>Form validation, animations, dynamic content</td>
+      <td>API servers, real-time chat backends, file processing</td>
+    </tr>
+  </table>
+
+  <!-- SECTION 2: JavaScript Features -->
+  <h2>2. JavaScript Features & Characteristics</h2>
+
+  <div class="collapsible">
+    <div class="collapsible-header">Click to expand: Key Features of JavaScript</div>
+    <div class="collapsible-body">
+      <ul>
+        <li><strong>Interpreted, not compiled</strong> — The browser reads and executes JS line by line (no compilation step)</li>
+        <li><strong>Not strongly typed</strong> — Variables can hold any type of data without declaring the type</li>
+        <li><strong>Dynamic subprograms</strong> — Functions can be added at runtime</li>
+        <li><strong>Direct execution</strong> — Code runs immediately in the browser</li>
+        <li><strong>Associative arrays</strong> — Objects that work like key-value dictionaries</li>
+        <li><strong>Regular expressions</strong> — Built-in pattern matching for text</li>
+        <li><strong>String processing</strong> — Rich built-in methods for manipulating text</li>
+        <li><strong>Objects and classes</strong> — Object-oriented programming support</li>
+        <li><strong>Inheritance</strong> — Objects can inherit properties from other objects</li>
+        <li><strong>Case-sensitive</strong> — <code>myVar</code> and <code>myvar</code> are different variables</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="info-box warning">
+    <strong>JavaScript is NOT Java!</strong> Despite the similar name, JavaScript and Java are completely different languages. They share some C-like syntax (if/for/while structures), but that's where the similarity ends. The name "JavaScript" was a marketing decision when it was created in 10 days — it had nothing to do with Java.
+  </div>
+
+  <!-- SECTION 3: JavaScript Syntax -->
+  <h2>3. JavaScript Syntax</h2>
+
+  <h3>Including JavaScript in HTML</h3>
+
+  <p>There are three ways to include JavaScript in an HTML page:</p>
+
+  <h4>1. Inline (in the body)</h4>
+  <pre><code>&lt;body&gt;
+  &lt;script&gt;
+    alert('Hello, World!');
+  &lt;/script&gt;
+&lt;/body&gt;</code></pre>
+
+  <h4>2. In the head</h4>
+  <pre><code>&lt;head&gt;
+  &lt;script&gt;
+    // JavaScript goes here
+  &lt;/script&gt;
+&lt;/head&gt;</code></pre>
+
+  <h4>3. External file (recommended)</h4>
+  <pre><code>&lt;!-- At the end of the body, just before &lt;/body&gt; --&gt;
+  &lt;script src="myscript.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+
+  <div class="info-box tip">
+    <strong>Best Practice:</strong> Place <code>&lt;script&gt;</code> tags at the <strong>end of the body</strong>, just before <code>&lt;/html&gt;</code>. This lets the HTML and CSS load and render first, making the page feel faster. The user sees the content before JavaScript starts processing.
+  </div>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Script Placement:</strong> Think of it like a restaurant. HTML and CSS are the food and presentation — they should be served to the customer first. JavaScript is the entertainment (live music, table-side cooking) — it starts <em>after</em> the customer is seated and has their menu. If you start the entertainment before the food is ready, the customer has a bad experience.
+  </div>
+
+  <!-- SECTION 4: Selecting Elements -->
+  <h2>4. Selecting HTML Elements</h2>
+
+  <p>JavaScript can find and select HTML elements using <code>querySelector()</code> and <code>querySelectorAll()</code>. These use <strong>CSS selectors</strong> — the same syntax you already know from CSS!</p>
+
+  <pre><code>// Select the FIRST matching element
+document.querySelector('h1')         // First &lt;h1&gt; element
+document.querySelector('.header')    // First element with class "header"
+document.querySelector('#demo')      // Element with id "demo"
+document.querySelector('p.intro')    // First &lt;p&gt; with class "intro"
+
+// Select ALL matching elements (returns a NodeList)
+document.querySelectorAll('p')       // All &lt;p&gt; elements
+document.querySelectorAll('.item')   // All elements with class "item"</code></pre>
+
+  <div class="info-box analogy">
+    <strong>Analogy — querySelector is like GPS:</strong> <code>querySelector()</code> is like a GPS that finds <em>one specific address</em> — it stops at the first match. <code>querySelectorAll()</code> is like a GPS that finds <em>all branches of a chain</em> — it returns every matching location. CSS selectors are the "address format" you use to tell the GPS where to look.
+  </div>
+
+  <!-- SECTION 5: Display Possibilities -->
+  <h2>5. Displaying Output</h2>
+
+  <p>JavaScript has several ways to display information to the user or developer:</p>
+
+  <table>
+    <tr>
+      <th>Method</th>
+      <th>Where It Displays</th>
+      <th>Use Case</th>
+    </tr>
+    <tr>
+      <td><code>document.write()</code></td>
+      <td>Directly into the HTML page</td>
+      <td>Quick testing (not recommended for production)</td>
+    </tr>
+    <tr>
+      <td><code>element.innerHTML</code></td>
+      <td>Inside a specific HTML element</td>
+      <td>Updating page content dynamically</td>
+    </tr>
+    <tr>
+      <td><code>console.log()</code></td>
+      <td>Browser's developer console</td>
+      <td>Debugging — invisible to users</td>
+    </tr>
+    <tr>
+      <td><code>window.alert()</code></td>
+      <td>Popup alert dialog</td>
+      <td>Important notifications to the user</td>
+    </tr>
+  </table>
+
+  <pre><code>// Write directly to the page (overwrites everything!)
+document.write('Hello!');
+
+// Update a specific element's content
+document.querySelector('#output').innerHTML = 'New content here';
+
+// Log to developer console (for debugging)
+console.log('This value is:', someVariable);
+
+// Show a popup alert
+window.alert('Warning! Something happened.');</code></pre>
+
+  <div class="info-box warning">
+    <strong>Avoid <code>document.write()</code></strong> in real projects. If called after the page has loaded, it will <em>overwrite the entire page</em>. Use <code>innerHTML</code> or <code>textContent</code> to update specific elements instead.
+  </div>
+
+  <!-- SECTION 6: Variables -->
+  <h2>6. Variables</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Variables are Labeled Boxes:</strong> Imagine you have a storage room with labeled boxes. Each box has a name label (variable name) and can hold different items (values). You can put a number in one box, a word in another, or even a list of items. The label lets you find and use what's inside later. In JavaScript, variables are these labeled boxes — they store data you need to reference later.
+  </div>
+
+  <p>Variables in JavaScript are declared with the <code>var</code> keyword:</p>
+
+  <pre><code>var name = 'Alice';      // String
+var age = 25;            // Number
+var isStudent = true;    // Boolean
+var grades = [90, 85, 92]; // Array</code></pre>
+
+  <h3>Variable Naming Rules</h3>
+  <table>
+    <tr>
+      <th>Rule</th>
+      <th>Valid ✅</th>
+      <th>Invalid ❌</th>
+    </tr>
+    <tr>
+      <td>Must begin with a letter, underscore (_), or dollar sign ($)</td>
+      <td><code>_name</code>, <code>$total</code>, <code>userName</code></td>
+      <td><code>2name</code>, <code>-age</code></td>
+    </tr>
+    <tr>
+      <td>Cannot contain spaces</td>
+      <td><code>firstName</code></td>
+      <td><code>first Name</code></td>
+    </tr>
+    <tr>
+      <td>Cannot be a reserved word</td>
+      <td><code>myVar</code></td>
+      <td><code>var</code>, <code>function</code>, <code>return</code></td>
+    </tr>
+    <tr>
+      <td>Case-sensitive</td>
+      <td><code>myVar</code> and <code>myvar</code> are different</td>
+      <td>Using them interchangeably</td>
+    </tr>
+  </table>
+
+  <div class="info-box note">
+    <strong>Dynamic Typing:</strong> Unlike languages like Java or C++, you don't declare what type a variable holds. JavaScript figures it out at runtime. The same variable can even change types: <code>var x = 5;</code> then <code>x = 'hello';</code> is perfectly valid (though not recommended).
+  </div>
+
+  <!-- SECTION 7: Data Types -->
+  <h2>7. Data Types</h2>
+
+  <h3>Strings</h3>
+  <pre><code>var greeting = 'Hello, World!';    // Single quotes
+var name = "Alice";                // Double quotes
+var full = greeting + ' ' + name;  // Concatenation with +
+
+console.log(full);  // "Hello, World! Alice"</code></pre>
+
+  <h3>Numbers</h3>
+  <pre><code>var wholeNumber = 42;
+var decimal = 3.14;
+var negative = -10;
+
+// Math operations
+var sum = 10 + 5;      // 15
+var product = 3 * 4;   // 12
+var remainder = 17 % 5; // 2 (modulus)</code></pre>
+
+  <h3>Booleans</h3>
+  <pre><code>var isLearning = true;
+var isSleeping = false;
+
+// Comparisons return booleans
+var result = 10 > 5;   // true
+var check = 3 === 7;   // false</code></pre>
+
+  <h3>Arrays</h3>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Arrays are Numbered Lists:</strong> An array is like a numbered to-do list. Item #0 is "Buy groceries", item #1 is "Walk the dog", item #2 is "Study JavaScript". You access items by their position number, and you can add, remove, or change items.
+  </div>
+
+  <pre><code>var fruits = ['Apple', 'Banana', 'Cherry'];
+
+// Access items (index starts at 0!)
+console.log(fruits[0]);  // 'Apple'
+console.log(fruits[2]);  // 'Cherry'
+
+// Loop through an array
+fruits.forEach(function(fruit) {
+  console.log(fruit);
+});
+
+// Add an item
+fruits.push('Date');
+
+console.log(fruits.length);  // 4</code></pre>
+
+  <h3>The typeof Operator</h3>
+  <pre><code>typeof 'hello'      // 'string'
+typeof 42           // 'number'
+typeof true         // 'boolean'
+typeof [1, 2, 3]    // 'object' (arrays are objects!)
+typeof undefined    // 'undefined'</code></pre>
+
+  <!-- SECTION 8: Popup Boxes -->
+  <h2>8. Popup Boxes</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The Three Receptionists:</strong> <code>alert()</code> is the receptionist who just tells you something and waits for you to acknowledge it. <code>confirm()</code> is the one who asks a yes/no question. <code>prompt()</code> is the one who asks for your information and writes it down. All three stop everything else until you respond — they're "modal" (blocking) interactions.
+  </div>
+
+  <table>
+    <tr>
+      <th>Popup Type</th>
+      <th>Syntax</th>
+      <th>Returns</th>
+      <th>Use Case</th>
+    </tr>
+    <tr>
+      <td><strong>alert()</strong></td>
+      <td><code>alert('Message');</code></td>
+      <td>Nothing (void)</td>
+      <td>Simple notifications</td>
+    </tr>
+    <tr>
+      <td><strong>confirm()</strong></td>
+      <td><code>confirm('Are you sure?');</code></td>
+      <td><code>true</code> (OK) or <code>false</code> (Cancel)</td>
+      <td>Yes/No decisions</td>
+    </tr>
+    <tr>
+      <td><strong>prompt()</strong></td>
+      <td><code>prompt('Enter your name:');</code></td>
+      <td>The typed string, or <code>null</code> if Cancelled</td>
+      <td>Getting user input</td>
+    </tr>
+  </table>
+
+  <pre><code>// Simple alert
+alert('Welcome to my website!');
+
+// Confirm returns true or false
+var agreed = confirm('Do you agree to the terms?');
+if (agreed) {
+  console.log('User agreed.');
+} else {
+  console.log('User declined.');
+}
+
+// Prompt returns the user's input
+var userName = prompt('What is your name?');
+if (userName !== null) {
+  alert('Hello, ' + userName + '!');
+}</code></pre>
+
+  <!-- SECTION 9: Functions -->
+  <h2>9. Functions</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Functions are Recipes:</strong> A recipe is a reusable set of instructions. You write it once, then follow it whenever you want to make that dish. You can customize it by changing ingredients (parameters). A function works the same way: you define the instructions once, then "call" (execute) the function whenever you need it, passing in different data each time.
+  </div>
+
+  <h3>Function Syntax</h3>
+  <pre><code>// Defining a function
+function greet(name) {
+  return 'Hello, ' + name + '!';
+}
+
+// Calling the function
+var message = greet('Alice');
+console.log(message);  // 'Hello, Alice!'
+
+// Function without parameters
+function sayGoodbye() {
+  console.log('Goodbye!');
+}
+sayGoodbye();</code></pre>
+
+  <h3>Parts of a Function</h3>
+  <table>
+    <tr>
+      <th>Part</th>
+      <th>Example</th>
+      <th>Purpose</th>
+    </tr>
+    <tr>
+      <td><code>function</code> keyword</td>
+      <td><code>function</code></td>
+      <td>Tells JavaScript you're defining a function</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td><code>greet</code></td>
+      <td>What you call it by</td>
+    </tr>
+    <tr>
+      <td>Parameters</td>
+      <td><code>(name)</code></td>
+      <td>Placeholder variables for input data</td>
+    </tr>
+    <tr>
+      <td>Body</td>
+      <td><code>{ ... }</code></td>
+      <td>The instructions to execute</td>
+    </tr>
+    <tr>
+      <td><code>return</code></td>
+      <td><code>return value;</code></td>
+      <td>Sends a result back to whoever called the function</td>
+    </tr>
+  </table>
+
+  <!-- SECTION 10: Objects -->
+  <h2>10. Objects</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Objects are Profile Cards:</strong> Imagine a profile card (like a contact card or employee badge). It has <em>properties</em> like name, phone number, and department. It can also have <em>methods</em> — actions like "call()" or "email()". A JavaScript object works exactly the same way: properties hold data, methods perform actions. And the <code>this</code> keyword is like saying "this card" — referring to the current object's own properties.
+  </div>
+
+  <pre><code>// Creating a singleton object
+var person = {
+  name: 'Alice',          // Property (key-value pair)
+  age: 25,                // Property
+  occupation: 'Developer',// Property
+
+  // Method (function as a property)
+  introduce: function() {
+    return 'Hi, I am ' + this.name + ', age ' + this.age;
+  }
+};
+
+// Accessing properties
+console.log(person.name);           // 'Alice'
+console.log(person['occupation']);   // 'Developer'
+
+// Calling a method
+console.log(person.introduce());    // 'Hi, I am Alice, age 25'</code></pre>
+
+  <div class="info-box note">
+    <strong>The <code>this</code> keyword:</strong> Inside an object's method, <code>this</code> refers to the object itself. So <code>this.name</code> means "this object's name property". It's how an object refers to its own data from within its methods.
+  </div>
+
+  <!-- SECTION 11: Events -->
+  <h2>11. Events</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — Events are Doorbells:</strong> Events are like doorbells in your house. You don't constantly check the door — you install a doorbell and set up a handler (you go answer it when it rings). Similarly, you don't constantly check if the user clicked something. You attach an event handler, and JavaScript runs that code <em>when the event happens</em>. The doorbell rings → you answer. The button is clicked → your code runs.
+  </div>
+
+  <p>Events are <strong>things that happen to HTML elements</strong>. You can respond to them with JavaScript:</p>
+
+  <table>
+    <tr>
+      <th>Event</th>
+      <th>When It Fires</th>
+      <th>Common Use</th>
+    </tr>
+    <tr>
+      <td><code>onclick</code></td>
+      <td>Element is clicked</td>
+      <td>Buttons, links, any clickable element</td>
+    </tr>
+    <tr>
+      <td><code>onchange</code></td>
+      <td>Element's value changes</td>
+      <td>Input fields, select dropdowns</td>
+    </tr>
+    <tr>
+      <td><code>onmouseover</code></td>
+      <td>Mouse hovers over element</td>
+      <td>Hover effects, tooltips</td>
+    </tr>
+    <tr>
+      <td><code>onmouseout</code></td>
+      <td>Mouse leaves element</td>
+      <td>Reverting hover effects</td>
+    </tr>
+    <tr>
+      <td><code>onkeydown</code></td>
+      <td>User presses a key</td>
+      <td>Keyboard shortcuts, search-as-you-type</td>
+    </tr>
+    <tr>
+      <td><code>onload</code></td>
+      <td>Page or resource finishes loading</td>
+      <td>Initialization code, animations</td>
+    </tr>
+  </table>
+
+  <pre><code>&lt;!-- Inline event handler --&gt;
+&lt;button onclick="alert('Clicked!')"&gt;Click Me&lt;/button&gt;
+
+&lt;!-- Better: Event handler in script --&gt;
+&lt;button id="myBtn"&gt;Click Me&lt;/button&gt;
+
+&lt;script&gt;
+  document.querySelector('#myBtn').addEventListener('click', function() {
+    alert('Button was clicked!');
+  });
+&lt;/script&gt;</code></pre>
+
+  <div class="info-box tip">
+    <strong><code>addEventListener()</code> is preferred</strong> over inline <code>onclick</code> attributes because it separates HTML from JavaScript, allows multiple handlers per event, and gives you more control (like removing handlers later).
+  </div>
+
+  <!-- SECTION 12: The DOM -->
+  <h2>12. The Document Object Model (DOM)</h2>
+
+  <div class="info-box analogy">
+    <strong>Analogy — The DOM is a Family Tree:</strong> When a web page loads, the browser creates an invisible <em>family tree</em> of the page. <code>document</code> is the great-grandparent. <code>&lt;html&gt;</code> is the grandparent. <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code> are the parents. All other elements are children, grandchildren, etc. JavaScript can walk along this tree, find any "family member" (element), and change them — update their content, move them, remove them, or add new members.
+  </div>
+
+  <p>The DOM is a <strong>programming interface</strong> for web documents. It is <em>not a language</em> — it's a <strong>model</strong> (a structured representation) that JavaScript uses to interact with the page.</p>
+
+  <h3>DOM Tree Structure</h3>
+
+  <div class="diagram">
+    <strong>The DOM Tree</strong><br><br>
+    document<br>
+    &nbsp;&nbsp;└── html<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── head<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── meta<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── title<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── link (CSS)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── body<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── nav<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── h1<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── p<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── div<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── h2<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── p<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── script<br>
+  </div>
+
+  <h3>DOM and JavaScript Together</h3>
+  <p>The DOM provides the <em>model</em>; JavaScript provides the <em>manipulation</em>. Together they can:</p>
+
+  <ul>
+    <li>Change HTML element content and attributes</li>
+    <li>Change CSS styles dynamically</li>
+    <li>Add new HTML elements to the page</li>
+    <li>Remove existing HTML elements</li>
+    <li>React to user events (clicks, key presses, etc.)</li>
+  </ul>
+
+  <!-- SECTION 13: Common DOM Operations -->
+  <h2>13. Common DOM Operations</h2>
+
+  <h3>Selecting Elements</h3>
+  <pre><code>// Select single element
+var heading = document.querySelector('h1');
+var box = document.querySelector('#myDiv');
+var first = document.querySelector('.highlight');
+
+// Select multiple elements
+var allItems = document.querySelectorAll('.item');</code></pre>
+
+  <h3>Changing Content</h3>
+  <pre><code>// Change the text inside an element
+heading.innerHTML = 'New Heading Text';
+
+// Change styles directly
+heading.style.color = 'blue';
+heading.style.fontSize = '24px';</code></pre>
+
+  <h3>Creating and Adding Elements</h3>
+  <pre><code>// Create a new element
+var newDiv = document.createElement('div');
+
+// Create text for it
+var textNode = document.createTextNode('Hello, I am new here!');
+
+// Add the text to the element
+newDiv.appendChild(textNode);
+
+// Add the element to the page
+document.body.appendChild(newDiv);</code></pre>
+
+  <h3>Removing Elements</h3>
+  <pre><code>// Select the element to remove
+var oldItem = document.querySelector('#oldItem');
+
+// Remove it from its parent
+oldItem.parentNode.removeChild(oldItem);</code></pre>
+
+  <h3>Working with Attributes</h3>
+  <pre><code>// Set an attribute
+var img = document.querySelector('img');
+img.setAttribute('src', 'new-photo.jpg');
+img.setAttribute('alt', 'A beautiful photo');
+
+// Get an attribute
+var src = img.getAttribute('src');
+console.log(src);  // 'new-photo.jpg'</code></pre>
+
+  <!-- SECTION 14: Fundamental DOM Data Types -->
+  <h2>14. Fundamental DOM Data Types</h2>
+
+  <table>
+    <tr>
+      <th>Data Type</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td><strong>document</strong></td>
+      <td>The root of the entire DOM tree; entry point to all page content</td>
+      <td><code>document.querySelector('h1')</code></td>
+    </tr>
+    <tr>
+      <td><strong>element</strong></td>
+      <td>Any HTML tag (div, p, h1, etc.) with its attributes and content</td>
+      <td><code>document.createElement('div')</code></td>
+    </tr>
+    <tr>
+      <td><strong>node</strong></td>
+      <td>A general term for anything in the DOM tree (elements, text, comments)</td>
+      <td><code>textNode.parentNode</code></td>
+    </tr>
+    <tr>
+      <td><strong>nodeList</strong></td>
+      <td>A collection of nodes (like an array) returned by querySelectorAll</td>
+      <td><code>document.querySelectorAll('p')</code></td>
+    </tr>
+    <tr>
+      <td><strong>attr</strong></td>
+      <td>An attribute of an element (like class, id, src, href)</td>
+      <td><code>element.getAttribute('class')</code></td>
+    </tr>
+    <tr>
+      <td><strong>window</strong></td>
+      <td>The browser window; top-level object representing the entire browser</td>
+      <td><code>window.alert('Hello')</code></td>
+    </tr>
+  </table>
+
+  <div class="info-box analogy">
+    <strong>Analogy — DOM Data Types as a Library:</strong> <code>document</code> is the entire library building. <code>element</code> is a specific book on a shelf. <code>node</code> is anything in the library (book, shelf, label, sign). <code>nodeList</code> is a list of search results showing multiple items. <code>attr</code> is the metadata card for a book (title, author, ISBN). <code>window</code> is the entire city block that contains the library.
+  </div>
+
+  <!-- SECTION 15: Complete Example -->
+  <h2>15. Putting It All Together — Complete Example</h2>
+
+  <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;JavaScript &amp; DOM Demo&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;h1 id="title"&gt;My To-Do List&lt;/h1&gt;
+
+  &lt;input type="text" id="taskInput" placeholder="Enter a task..."&gt;
+  &lt;button id="addBtn"&gt;Add Task&lt;/button&gt;
+
+  &lt;ul id="taskList"&gt;&lt;/ul&gt;
+
+  &lt;script&gt;
+    // Select elements
+    var input = document.querySelector('#taskInput');
+    var addBtn = document.querySelector('#addBtn');
+    var taskList = document.querySelector('#taskList');
+
+    // Add task when button is clicked
+    addBtn.addEventListener('click', function() {
+      var taskText = input.value.trim();
+
+      if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+      }
+
+      // Create new list item
+      var li = document.createElement('li');
+      li.textContent = taskText;
+
+      // Click to remove
+      li.addEventListener('click', function() {
+        taskList.removeChild(this);
+      });
+
+      // Add to the list
+      taskList.appendChild(li);
+
+      // Clear the input
+      input.value = '';
+    });
+  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <div class="info-box tip">
+    <strong>This example demonstrates:</strong> selecting elements (<code>querySelector</code>), event handling (<code>addEventListener</code>), creating elements (<code>createElement</code>), setting content (<code>textContent</code>), adding elements (<code>appendChild</code>), removing elements (<code>removeChild</code>), and getting user input (<code>input.value</code>).
+  </div>
+
+  <!-- SECTION 16: Summary -->
+  <h2>16. Summary</h2>
+
+  <div class="summary">
+    <h3>Key Takeaways</h3>
+    <ul>
+      <li><strong>JavaScript</strong> is an interpreted, case-sensitive, object-oriented language that brings web pages to life.</li>
+      <li>It is <strong>NOT related to Java</strong> despite the similar name — they just share C-like syntax.</li>
+      <li><strong>Variables</strong> are declared with <code>var</code> and can hold any data type (dynamically typed).</li>
+      <li><strong>Data types</strong> include Strings, Numbers, Booleans, and Arrays.</li>
+      <li><strong>Functions</strong> are reusable blocks of code that accept parameters and return values.</li>
+      <li><strong>Objects</strong> have properties (key-value pairs) and methods (functions), using <code>this</code> to reference themselves.</li>
+      <li><strong>Events</strong> let JavaScript respond to user actions like clicks, key presses, and hover.</li>
+      <li>The <strong>DOM</strong> is a tree-shaped model of the page that JavaScript uses to find and manipulate elements.</li>
+      <li>Use <code>querySelector</code> to find elements, <code>createElement</code>/<code>appendChild</code> to add them, and <code>removeChild</code> to remove them.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 17: Flashcards -->
+  <h2>17. Flashcards</h2>
+
+  <div class="flashcard-container">
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What is JavaScript and what does it do on a web page?</div>
+        <div class="flashcard-back">JavaScript is an interpreted, object-oriented scripting language that makes web pages interactive. On the client side, it controls the browser and DOM — responding to user events, updating content, and creating animations.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What is the difference between <code>querySelector</code> and <code>querySelectorAll</code>?</div>
+        <div class="flashcard-back"><code>querySelector()</code> returns the <strong>first</strong> matching element. <code>querySelectorAll()</code> returns <strong>all</strong> matching elements as a NodeList (collection).</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">How do you declare a variable in JavaScript?</div>
+        <div class="flashcard-back">Using the <code>var</code> keyword: <code>var myVariable = value;</code> JavaScript variables are dynamically typed — you don't specify the data type.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What does the <code>this</code> keyword refer to inside an object method?</div>
+        <div class="flashcard-back"><code>this</code> refers to the <strong>current object</strong> — the object that owns the method being executed. For example, in <code>person.introduce()</code>, <code>this.name</code> refers to <code>person.name</code>.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What is the DOM?</div>
+        <div class="flashcard-back">The Document Object Model is a tree-shaped programming interface that the browser creates when a page loads. It represents every HTML element as an object that JavaScript can find, create, modify, or remove.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What does <code>prompt()</code> return if the user clicks Cancel?</div>
+        <div class="flashcard-back"><code>null</code>. If the user types something and clicks OK, it returns the typed string. If they click Cancel, it returns <code>null</code>.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What are the three main data types in JavaScript?</div>
+        <div class="flashcard-back"><strong>String</strong> (text in quotes), <strong>Number</strong> (integers or decimals), and <strong>Boolean</strong> (true/false). Arrays and Objects are also important compound types.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">How do you create and add a new element to the page using the DOM?</div>
+        <div class="flashcard-back">1. <code>document.createElement('tag')</code> to create it<br>2. <code>document.createTextNode('text')</code> for content (optional)<br>3. <code>parent.appendChild(child)</code> to add it to the page</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">Why should you place <code>&lt;script&gt;</code> tags at the end of the body?</div>
+        <div class="flashcard-back">So HTML and CSS load and render first, making the page feel faster. The user sees content before JavaScript starts processing.</div>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">What is the difference between <code>alert()</code>, <code>confirm()</code>, and <code>prompt()</code>?</div>
+        <div class="flashcard-back"><code>alert()</code> shows a message (returns nothing). <code>confirm()</code> asks yes/no (returns true/false). <code>prompt()</code> asks for text input (returns the string or null if cancelled).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 18: Quiz -->
+  <h2>18. Knowledge Check</h2>
+
+  <div class="quiz" id="quiz1">
+    <p><strong>Q1:</strong> Which method selects the FIRST matching HTML element using CSS selectors?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)"><code>document.getElementById()</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, true)"><code>document.querySelector()</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)"><code>document.querySelectorAll()</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz1', this, false)"><code>document.getElementsByClassName()</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz2">
+    <p><strong>Q2:</strong> What does <code>prompt('Enter name:')</code> return if the user clicks Cancel?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">An empty string <code>''</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)">The message text</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, true)"><code>null</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz2', this, false)"><code>undefined</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz3">
+    <p><strong>Q3:</strong> How do you declare a variable in JavaScript?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)"><code>int x = 5;</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, true)"><code>var x = 5;</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)"><code>let x = 5;</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz3', this, false)"><code>x := 5;</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz4">
+    <p><strong>Q4:</strong> What does the DOM stand for?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Digital Object Manager</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, true)">Document Object Model</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Data Output Mode</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz4', this, false)">Document Orientation Mapping</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz5">
+    <p><strong>Q5:</strong> What is the correct order of steps to add a new element to the page?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">appendChild → createElement → appendChild to body</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, true)">createElement → appendChild to parent → (optionally set content)</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">querySelector → removeChild → createElement</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz5', this, false)">innerHTML → appendChild → document.write</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz6">
+    <p><strong>Q6:</strong> What does <code>innerHTML</code> do?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Creates a new HTML element</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, true)">Gets or sets the HTML content inside an element</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Removes an element from the page</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz6', this, false)">Adds an event listener to an element</div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz7">
+    <p><strong>Q7:</strong> What is the difference between <code>var</code> and a strongly typed language declaration like <code>int x = 5;</code>?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)">There is no difference</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, true)"><code>var</code> is dynamically typed — it doesn't require specifying the data type, and the same variable can hold different types</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)"><code>var</code> can only hold numbers</div>
+    <div class="quiz-option" onclick="checkAnswer('quiz7', this, false)"><code>var</code> is faster than <code>int</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <div class="quiz" id="quiz8">
+    <p><strong>Q8:</strong> Which event fires when a user clicks on an element?</p>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)"><code>onmouseover</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)"><code>onkeydown</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, true)"><code>onclick</code></div>
+    <div class="quiz-option" onclick="checkAnswer('quiz8', this, false)"><code>onchange</code></div>
+    <div class="quiz-feedback"></div>
+  </div>
+
+  <!-- Fill in the Blank -->
+  <h2>19. Fill in the Blank</h2>
+
+  <p>Complete the code to select the element with id "demo" and change its text:</p>
+
+  <pre><code>document.querySelector('________').innerHTML = 'Hello!';</code></pre>
+
+  <div class="fill-blank">
+    <input type="text" id="blank1" placeholder="Type your answer...">
+    <button class="quiz-btn" onclick="checkBlank('blank1', '#demo')">Check Answer</button>
+    <span class="quiz-feedback" id="blank1-feedback"></span>
+  </div>
+
+  <p>Complete the code to add an event listener for a click on a button:</p>
+
+  <pre><code>button.________('click', function() { alert('Clicked!'); });</code></pre>
+
+  <div class="fill-blank">
+    <input type="text" id="blank2" placeholder="Type your answer...">
+    <button class="quiz-btn" onclick="checkBlank('blank2', 'addEventListener')">Check Answer</button>
+    <span class="quiz-feedback" id="blank2-feedback"></span>
+  </div>
+
+  <p>Complete the code to create a new paragraph element:</p>
+
+  <pre><code>var p = document.________('p');</code></pre>
+
+  <div class="fill-blank">
+    <input type="text" id="blank3" placeholder="Type your answer...">
+    <button class="quiz-btn" onclick="checkBlank('blank3', 'createElement')">Check Answer</button>
+    <span class="quiz-feedback" id="blank3-feedback"></span>
+  </div>
+
+</div>
+
+<script>
+function checkAnswer(quizId, element, isCorrect) {
+  var quiz = document.getElementById(quizId);
+  var feedback = quiz.querySelector('.quiz-feedback');
+  var options = quiz.querySelectorAll('.quiz-option');
+
+  options.forEach(function(opt) {
+    opt.style.pointerEvents = 'none';
+    opt.style.opacity = '0.6';
+  });
+
+  element.style.opacity = '1';
+
+  if (isCorrect) {
+    element.style.backgroundColor = '#27ae60';
+    element.style.color = '#fff';
+    feedback.textContent = 'Correct! Well done.';
+    feedback.style.color = '#27ae60';
+  } else {
+    element.style.backgroundColor = '#e74c3c';
+    element.style.color = '#fff';
+    feedback.textContent = 'Incorrect. Try reviewing the material above.';
+    feedback.style.color = '#e74c3c';
+  }
+}
+
+function checkBlank(inputId, correctAnswer) {
+  var input = document.getElementById(inputId);
+  var feedback = document.getElementById(inputId + '-feedback');
+  var userAnswer = input.value.trim().toLowerCase();
+
+  if (userAnswer === correctAnswer.toLowerCase()) {
+    feedback.textContent = 'Correct!';
+    feedback.style.color = '#27ae60';
+    input.style.borderColor = '#27ae60';
+  } else {
+    feedback.textContent = 'Incorrect. The answer is: ' + correctAnswer;
+    feedback.style.color = '#e74c3c';
+    input.style.borderColor = '#e74c3c';
+  }
+}
+
+var collapsibles = document.querySelectorAll('.collapsible-header');
+collapsibles.forEach(function(header) {
+  header.addEventListener('click', function() {
+    this.parentElement.classList.toggle('active');
+  });
+});
+</script>
+
+</body>
+</html>

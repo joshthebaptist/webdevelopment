@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP2543 - Web Development & Technology Stack</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, #1a73e8, #1557b0);
+      color: #fff;
+      padding: 3rem 2rem;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .hero h1 { color: #fff; font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .hero p { opacity: 0.9; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+    .stats { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 700; }
+    .stat-label { font-size: 0.85rem; opacity: 0.8; }
+    .section-title { font-size: 1.3rem; font-weight: 600; margin: 2rem 0 0.5rem; color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <nav class="topnav">
+    <a href="index.html" class="nav-brand">TP2543</a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="topic1-introduction.html">Intro</a>
+      <a href="topic3-html-basics.html">HTML</a>
+      <a href="topic4-html-forms.html">Forms</a>
+      <a href="topic5-regex.html">Regex</a>
+      <a href="topic6-php-basics.html">PHP</a>
+      <a href="topic7-php-mysql.html">PHP+MySQL</a>
+      <a href="topic8-advanced-php.html">Adv PHP</a>
+      <a href="topic9-mvc-framework.html">MVC</a>
+      <a href="topic10-css.html">CSS</a>
+      <a href="topic11-responsive-bootstrap.html">RWD</a>
+      <a href="topic12-javascript-dom.html">JS+DOM</a>
+      <a href="topic13-jquery.html">jQuery</a>
+      <a href="topic14-ajax-json-rest.html">AJAX</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="hero">
+      <h1>TP2543 Web Development & Technology Stack</h1>
+      <p>A comprehensive, interactive learning companion for Assoc. Prof. Mohammad Faidzul Nasrudin's course.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-num">14</div><div class="stat-label">Topics</div></div>
+        <div class="stat"><div class="stat-num">12</div><div class="stat-label">Weeks Covered</div></div>
+        <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Quizzes & Exercises</div></div>
+      </div>
+    </div>
+
+    <div class="section-title">Getting Started</div>
+    <div class="topic-grid">
+      <div class="topic-card">
+        <span class="topic-num">1</span>
+        <h3>Course Introduction & Tech Stack</h3>
+        <p>Overview of web development, frontend vs backend, technology stacks, and how everything fits together.</p>
+        <a href="topic1-introduction.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">2</span>
+        <h3>Course Project Overview</h3>
+        <p>Understanding the 3-tier web-based ordering system project and the three project tasks.</p>
+        <a href="topic2-project.html" class="topic-link">Start Learning</a>
+      </div>
+    </div>
+
+    <div class="section-title">HTML & Markup</div>
+    <div class="topic-grid">
+      <div class="topic-card">
+        <span class="topic-num">3</span>
+        <h3>HTML Fundamentals (Part 1)</h3>
+        <p>HTML structure, elements, tags, hyperlinks, images, tables, lists, special characters, and meta elements.</p>
+        <a href="topic3-html-basics.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">4</span>
+        <h3>HTML Forms (Part 2)</h3>
+        <p>Form elements, input types, method attributes, URL encoding, and all 22 form input types explained.</p>
+        <a href="topic4-html-forms.html" class="topic-link">Start Learning</a>
+      </div>
+    </div>
+
+    <div class="section-title">Validation & Backend</div>
+    <div class="topic-grid">
+      <div class="topic-card">
+        <span class="topic-num">5</span>
+        <h3>Regular Expressions</h3>
+        <p>Regex syntax, character classes, quantifiers, anchors, and practical patterns for validation.</p>
+        <a href="topic5-regex.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">6</span>
+        <h3>PHP Fundamentals</h3>
+        <p>PHP syntax, variables, data types, operators, control structures, functions, arrays, and sessions.</p>
+        <a href="topic6-php-basics.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">7</span>
+        <h3>PHP & MySQL/MariaDB</h3>
+        <p>Database connections with PDO, CRUD queries, prepared statements, transactions, and SQL injection prevention.</p>
+        <a href="topic7-php-mysql.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">8</span>
+        <h3>Advanced PHP</h3>
+        <p>Superglobals, sessions, cookies, exception handling, filters, and file uploading.</p>
+        <a href="topic8-advanced-php.html" class="topic-link">Start Learning</a>
+      </div>
+    </div>
+
+    <div class="section-title">Architecture & Design Patterns</div>
+    <div class="topic-grid">
+      <div class="topic-card">
+        <span class="topic-num">9</span>
+        <h3>CRUD, OOP, MVC & Frameworks</h3>
+        <p>OOP in PHP, CRUD operations, Model-View-Controller pattern, and PHP frameworks.</p>
+        <a href="topic9-mvc-framework.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">10</span>
+        <h3>CSS (Cascading Style Sheets)</h3>
+        <p>Selectors, box model, colors, fonts, positioning, display, and styling web pages beautifully.</p>
+        <a href="topic10-css.html" class="topic-link">Start Learning</a>
+      </div>
+    </div>
+
+    <div class="section-title">Modern Frontend</div>
+    <div class="topic-grid">
+      <div class="topic-card">
+        <span class="topic-num">11</span>
+        <h3>Responsive Web Design & Bootstrap</h3>
+        <p>Viewport, media queries, grid systems, Bootstrap framework, and mobile-first design.</p>
+        <a href="topic11-responsive-bootstrap.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">12</span>
+        <h3>JavaScript & DOM</h3>
+        <p>JavaScript syntax, variables, functions, objects, events, and the Document Object Model.</p>
+        <a href="topic12-javascript-dom.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">13</span>
+        <h3>jQuery</h3>
+        <p>Selectors, event handling, effects, animations, AJAX methods, and Bootstrap integration.</p>
+        <a href="topic13-jquery.html" class="topic-link">Start Learning</a>
+      </div>
+      <div class="topic-card">
+        <span class="topic-num">14</span>
+        <h3>AJAX, JSON & RESTful APIs</h3>
+        <p>Asynchronous requests, JSON data format, REST architecture, and building SPAs.</p>
+        <a href="topic14-ajax-json-rest.html" class="topic-link">Start Learning</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Save progress to localStorage
+    function getProgress() {
+      try { return JSON.parse(localStorage.getItem('tp2543_progress') || '{}'); } catch(e) { return {}; }
+    }
+    function setProgress(topic, completed) {
+      const p = getProgress();
+      if (completed) p[topic] = Date.now(); else delete p[topic];
+      localStorage.setItem('tp2543_progress', JSON.stringify(p));
+    }
+    // Mark topics visited as "started"
+    document.querySelectorAll('.topic-card').forEach((card, i) => {
+      const p = getProgress();
+      const link = card.querySelector('.topic-link');
+      if (p[i+1]) { card.style.borderLeft = '4px solid var(--accent)'; }
+    });
+  </script>
+</body>
+</html>
