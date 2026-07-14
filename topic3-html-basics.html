@@ -340,16 +340,16 @@ new line with spacing between them.&lt;/p&gt;</code></pre>
     <!-- Quiz: Paragraphs and Headings -->
     <div class="card">
         <h3>Quiz: Paragraphs &amp; Headings</h3>
-        <div class="quiz" id="quiz-ph">
+        <div class="quiz" id="quiz-ph1">
             <p><strong>Question 1:</strong> How many heading levels does HTML provide?</p>
             <div class="quiz-option" data-correct="false">3 (h1, h2, h3)</div>
             <div class="quiz-option" data-correct="true">6 (h1 through h6)</div>
             <div class="quiz-option" data-correct="false">5 (h1 through h5)</div>
             <div class="quiz-option" data-correct="false">Unlimited</div>
             <div class="quiz-feedback"></div>
+        </div>
 
-            <hr style="margin:12px 0;">
-
+        <div class="quiz" id="quiz-ph2">
             <p><strong>Question 2:</strong> Which element is a block-level element?</p>
             <div class="quiz-option" data-correct="false">&lt;span&gt;</div>
             <div class="quiz-option" data-correct="false">&lt;a&gt;</div>
@@ -1027,16 +1027,16 @@ website/
     <!-- Quiz: Meta & Formatting -->
     <div class="card">
         <h3>Quiz: Meta Elements &amp; Formatting</h3>
-        <div class="quiz" id="quiz-meta">
+        <div class="quiz" id="quiz-meta1">
             <p><strong>Question 1:</strong> Which meta tag is essential for supporting all characters and symbols?</p>
             <div class="quiz-option" data-correct="false">&lt;meta name="keywords"&gt;</div>
             <div class="quiz-option" data-correct="true">&lt;meta charset="UTF-8"&gt;</div>
             <div class="quiz-option" data-correct="false">&lt;meta name="viewport"&gt;</div>
             <div class="quiz-option" data-correct="false">&lt;meta name="description"&gt;</div>
             <div class="quiz-feedback"></div>
+        </div>
 
-            <hr style="margin:12px 0;">
-
+        <div class="quiz" id="quiz-meta2">
             <p><strong>Question 2:</strong> What is the semantic equivalent of <code>&lt;b&gt;</code> tag?</p>
             <div class="quiz-option" data-correct="false">&lt;i&gt;</div>
             <div class="quiz-option" data-correct="true">&lt;strong&gt;</div>
@@ -1302,13 +1302,6 @@ function checkFillBlanks(id) {
 document.querySelectorAll('.collapsible-header').forEach(function(header) {
     header.addEventListener('click', function() {
         this.parentElement.classList.toggle('active');
-    });
-});
-
-// Flashcard flip
-document.querySelectorAll('.flashcard').forEach(function(card) {
-    card.addEventListener('click', function() {
-        this.classList.toggle('flipped');
     });
 });
 </script>
